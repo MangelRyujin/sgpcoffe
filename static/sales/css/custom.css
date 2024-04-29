@@ -21,3 +21,48 @@
 .dropdown-item{
     color: #fff;
 }
+
+
+.btn-primary{
+    border-radius: .5rem !important;
+    border-color: #3f6791;
+    background: #3f6791 !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active{
+    border-radius: .5rem !important;
+    border-color: #33567b;
+    background: #33567b !important;
+}
+
+.text a{    
+    color: #007bff!important;
+}
+
+.card{
+    border-radius: .25rem !important;
+}
+
+.card-body{
+    background-color: #343a40 !important;
+    border-radius: .25rem !important;
+}
+
+
+.table thead th {
+    background-color: #343a40 !important;
+    border-bottom: 0 !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #303030 !important;
+}
+
+.table {
+    --bs-table-color: #ffffff !important;
+    --bs-table-bg:  transparent !important;
+    --bs-table-striped-color: #fff !important;
+    margin-bottom: 0 !important;
+    border-color: transparent !important;
+}

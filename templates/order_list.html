@@ -1,0 +1,270 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+
+{% block contend %}
+
+<div class="content-wrapper" style="min-height: 520.438px">
+  <div class="content  mb-2">
+   
+      <div class="row p-3">
+        <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+          <div class="row p-3">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item h1 text"><a href="/">Modulos</a></li>
+              <li class="breadcrumb-item h1 active">Cuentas</li>
+            </ol>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="container-fluid">
+      <section
+        id="content"
+        class="content"
+        data-select2-id="select2-data-content"
+      >
+        <div class="row">
+          <div class="col-3 pb-4" id="change-list-filters">
+            <form id="changelist-search" class="form-inline" method="GET">
+              <div class="form-group">
+                <select
+                  class="form-control search-filter select2-hidden-accessible"
+                  style="width: 100%"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  data-name="paid_method"
+                  data-select2-id="select2-data-4-iu02"
+                >
+                  <option value="" data-select2-id="select2-data-6-48k5">
+                    método de pago
+                  </option>
+                  <option data-name="paid_method" value="cocina">
+                    transferencia
+                  </option>
+
+                  <option data-name="paid_method" value="bar">
+                    efectivo
+                  </option>
+                  <option data-name="paid_method" value="cocina">
+                    ambos
+                  </option></select
+                ><span
+                  class="select2 select2-container select2-container--default"
+                  dir="ltr"
+                  data-select2-id="select2-data-5-m9zu"
+                  style="width: 100%"
+                  ><span class="selection"
+                    ><span
+                      class="select2-selection select2-selection--single"
+                      role="combobox"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      tabindex="-1"
+                      aria-disabled="false"
+                      aria-labelledby="select2-859u-container"
+                      aria-controls="select2-859u-container"
+                      ><span
+                        class="select2-selection__rendered"
+                        id="select2-859u-container"
+                        role="textbox"
+                        aria-readonly="true"
+                        title="paid_method"
+                        ></span
+                      ><span
+                        class="select2-selection__arrow"
+                        role="presentation"
+                        ><b role="presentation"></b></span></span></span
+                  ><span class="dropdown-wrapper" aria-hidden="true"></span
+                ></span>
+              </div>
+
+              <div class="form-group">
+                <select
+                  class="form-control search-filter select2-hidden-accessible"
+                  style="width: 100%"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  data-name="user"
+                  data-select2-id="select2-data-7-3hij"
+                >
+                  <option value="" data-select2-id="select2-data-9-8n5q">
+                    usuario
+                  </option>
+                  <option data-name="user__exact" value="miguel">miguel</option>
+
+                  <option data-name="user__exact" value="enmauel">enmauel</option>
+                  </select
+                ><span
+                  class="select2 select2-container select2-container--default"
+                  dir="ltr"
+                  data-select2-id="select2-data-8-fyfe"
+                  style="width: 100%"
+                  ><span class="selection"
+                    ><span
+                      class="select2-selection select2-selection--single"
+                      role="combobox"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      tabindex="-1"
+                      aria-disabled="false"
+                      aria-labelledby="select2-c6w7-container"
+                      aria-controls="select2-c6w7-container"
+                      ><span
+                        class="select2-selection__rendered"
+                        id="select2-c6w7-container"
+                        role="textbox"
+                        aria-readonly="true"
+                        title="user"
+                        ></span
+                      ><span
+                        class="select2-selection__arrow"
+                        role="presentation"
+                        ><b role="presentation"></b></span></span></span
+                  ><span class="dropdown-wrapper" aria-hidden="true"></span
+                ></span>
+              </div>
+
+                <div class="form-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="q"
+                    value=""
+                    id="searchbar"
+                  />
+                </div>
+              <div class="form-group" id="search_group">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+              </div>
+              
+            </form>
+            
+          </div>
+
+          <div class="col-12">
+            <div data-select2-id="select2-data-11-t58z">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-body table-responsive p-0">
+                            <table id="result_list" class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    rowspan="1"
+                                    colspan="1"
+                                  >
+                                    <div class="text">
+                                      <a href="#">Orden</a>
+                                    </div>
+                                  </th>
+
+                                  <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    rowspan="1"
+                                    colspan="1"
+                                  >
+                                    <div class="text">
+                                      <a href="#">Usuario</a>
+                                    </div>
+                                  </th>
+
+                                  <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    rowspan="1"
+                                    colspan="1"
+                                  >
+                                    <div class="text">
+                                      <a href="#">Mesa</a>
+                                    </div>
+                                  </th>
+
+                                  <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    rowspan="1"
+                                    colspan="1"
+                                  >
+                                    <div class="text">
+                                      <a href="#">Método de pago</a>
+                                    </div>
+                                  </th>
+
+                                  <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    rowspan="1"
+                                    colspan="1"
+                                  >
+                                    <div class="text">
+                                      <a href="#">Total cobrado</a>
+                                    </div>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr role="row" class="even">
+                                  <th class="field-name text">
+                                    <a href="/admin/productos/product/2/change/"
+                                      >pizza de jamon y queso</a
+                                    >
+                                  </th>
+                                  <td class="field-place">Miguel</td>
+                                  <td class="field-place">mesa 2</td>
+                                  <td class="field-price">transferencia</td>
+                                  <td class="field-price">230,00</td>
+                                </tr>
+                                 <tr role="row" class="">
+                                  <th class="field-name text">
+                                    <a href="/admin/productos/product/2/change/"
+                                      >pizza de jamon y queso</a
+                                    >
+                                  </th>
+                                  <td class="field-place">Miguel</td>
+                                  <td class="field-place">mesa 2</td>
+                                  <td class="field-price">transferencia</td>
+                                  <td class="field-price">230,00</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        
+                    </div>
+                    {% comment %} <div class="row">
+                      <div class="col-5">
+                        <div
+                          class="dataTables_info"
+                          role="status"
+                          aria-live="polite"
+                        >
+                          2 Productos
+                        </div>
+                      </div>
+
+                      <div class="col-7">
+                        <ul
+                          class="pagination pagination-sm m-0 float-right"
+                        ></ul>
+                      </div>
+                    </div> {% endcomment %}
+                  </div>
+                </div>
+              
+            </div>
+
+            <br class="clear" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

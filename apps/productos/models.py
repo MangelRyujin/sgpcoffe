@@ -19,6 +19,7 @@ class Stock(models.Model):
     name=models.CharField('nombre',max_length=100,blank=False,null=False)
     stock=models.DecimalField('almacenamiento en stock', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
     measure_unit = models.CharField("unidad de medida",max_length=13, choices=MEASURE_UNIT_CHOICES, default='unidades') 
+    expiration_date = models.DateField('Próximo a vencer',blank=True,null=True)
     
     class Meta:
         verbose_name = "Almacenamiento"

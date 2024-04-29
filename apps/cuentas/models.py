@@ -20,7 +20,8 @@ class Order(models.Model):
     )
     is_paid = models.CharField('estado',max_length=9, choices=PAID_CHOICES, default='no pagada') 
     paid_method = models.CharField('mótodo de pago',max_length=13, choices=PAID_METHODS_CHOICES, default='efectivo') 
-    total_paid = models.DecimalField('Precio total', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
+    transfer = models.DecimalField('Pagado por transferencia', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
+    cash = models.DecimalField('Pagado por efectivo', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     created_date = models.DateField('dia de apertura',auto_now_add=True,null=True)
     created_time = models.TimeField('hora de apertura',auto_now_add=True,null=True)
     table = models.ForeignKey(Table,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('mesa')) 
@@ -33,6 +34,9 @@ class Order(models.Model):
     def __str__(self) -> str:
         return f'Cuenta {self.pk} de la mesa {self.table}'
 
+    @property
+    def total_paid(self):
+        return self.transfer + self.cash
     
 # Order item model.
 class Item(models.Model):

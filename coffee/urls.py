@@ -30,7 +30,8 @@ urlpatterns = [
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view,name='home'),
-    path('reportes/',include("apps.reportes.urls"))
+    path('reportes/',include("apps.reportes.urls")),
+    path('ventas/',include("apps.cuentas.urls"))
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
