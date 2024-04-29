@@ -1,0 +1,16 @@
+/* Ajustar el color de fondo y el color del texto de los campos select */
+select {
+    background-color: #fff !important; /* Cambia a un color de fondo oscuro */
+    color: #000 !important; /* Cambia al color del texto que prefieras */
+    font-size: 10px !important;
+}
+
+option{
+    font-size: 10px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-top: .4rem;
+    background: #2b2b2b !important;
+
+}

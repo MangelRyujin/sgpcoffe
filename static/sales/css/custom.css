@@ -1,0 +1,23 @@
+/* your styles go here */
+.card-chart{
+    background: #000000a3 !important;
+    border-radius: .5rem;
+    color: #3498db;
+}
+
+
+.dropdown-toggle:not(.btn)::after {
+    display: none !important;
+}
+
+.nav-close-sesion {
+    padding-left: 10px;
+}
+
+.nav-close-sesion:hover {
+    color: #000 !important;
+}
+
+.dropdown-item{
+    color: #fff;
+}

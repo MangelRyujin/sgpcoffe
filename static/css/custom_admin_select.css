@@ -1,0 +1,21 @@
+
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #000000 !important;
+    line-height: 28px;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid #aaa;
+}
+.dark-mode .select2-dropdown .select2-search__field, .dark-mode .select2-search--inline .select2-search__field {
+    background-color: #ffffff;
+    border-color: #6c757d;
+    color: #000000;
+}
+
+.select2-results {
+    display: block;
+    background: #ffffff !important;
+}
+

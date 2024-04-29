@@ -1,0 +1,295 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block contend %}
+<section>
+    <div class="container-fluid p-3">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card-chart card ">
+            <div class="card-chart card-header  border-bottom">
+              <h4>Reporte representado en linea</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="lineChartExample"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card-chart card">
+            <div class="card-chart card-header border-bottom">
+              <h4>Reporte representado en barra</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="barChartExample"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card-chart card">
+            <div class="card-chart card-header border-bottom">
+              <h4>Reporte representado en pastel</h4>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="pieChartExample"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var brandTotal = "rgba(0, 0, 0,.5)";
+        var brandTotalActive = "rgba(255, 255, 255,1)";
+        var brandPrimary = "rgba(0, 188, 140,1)";
+        var brandPrimaryActive = "rgba(0, 188, 140,1)";
+        var brandSecundary = "rgba(75,192,192,1)";
+        var brandSecundaryActive = "rgba(75,192,192,1)";
+       
+    
+        var LINECHARTEXMPLE = document.getElementById("lineChartExample"),
+            PIECHARTEXMPLE = document.getElementById("pieChartExample"),
+            BARCHARTEXMPLE = document.getElementById("barChartExample")
+    
+        var lineChartExample = new Chart(LINECHARTEXMPLE, {
+            type: "line",
+            data: {
+                labels: [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "octubre",
+                "Noviembre",
+                "Diciembre"
+                ],
+                datasets: [
+                  {
+                    label: "total",
+                    fill: true,
+                    lineTension: 0.3,
+                    backgroundColor: brandTotal,
+                    borderColor: "rgba(255, 255, 255,1)",
+                    borderCapStyle: "butt",
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: "miter",
+                    borderWidth: 1,
+                    pointBorderColor: "rgba(0, 0, 0,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: brandTotalActive,
+                    pointHoverBorderColor: brandTotalActive,
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [234, 120, 340, 231, 132, 122, 210,170, 120, 340, 231, 132, 222, 110],
+                    spanGaps: false,
+                },
+                    
+                    {
+                        label: "cocina",
+                        fill: true,
+                        lineTension: 0.3,
+                        backgroundColor: brandPrimary,
+                        borderColor: brandPrimary,
+                        borderCapStyle: "butt",
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: "miter",
+                        borderWidth: 1,
+                        pointBorderColor: brandPrimary,
+                        pointBackgroundColor: "#fff",
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: brandPrimary,
+                        pointHoverBorderColor: brandPrimary,
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data: [50, 20, 40, 31, 32, 22, 10,70, 20, 40, 31, 32, 22, 10],
+                        spanGaps: false,
+                    },
+                    {
+                        label: "bar",
+                        fill: true,
+                        lineTension: 0.3,
+                        backgroundColor: brandSecundary,
+                        borderColor: brandSecundary,
+                        borderCapStyle: "butt",
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: "miter",
+                        borderWidth: 1,
+                        pointBorderColor: brandSecundary,
+                        pointBackgroundColor: "#fff",
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: brandSecundary,
+                        pointHoverBorderColor: brandSecundary,
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data: [65, 59, 30, 81, 56, 55, 40,65, 59, 30, 81, 56, 55],
+                        spanGaps: false,
+                    },
+                    
+                ],
+            },
+        });
+    
+        var pieChartExample = new Chart(PIECHARTEXMPLE, {
+            type: "doughnut",
+            data: {
+                labels: ["cocina", "bar"],
+                datasets: [
+                    {
+                        data: [7000, 5550],
+                        borderWidth: [1, 1],
+                        backgroundColor: [brandPrimary, brandSecundary, "#FFCE56"],
+                        hoverBackgroundColor: [brandPrimaryActive, brandSecundaryActive, "#FFCE56"],
+                    },
+                ],
+            },
+        });
+    
+        var pieChartExample = {
+            responsive: true,
+        };
+    
+        var barChartExample = new Chart(BARCHARTEXMPLE, {
+            type: "bar",
+            data: {
+                labels: [
+                  "Enero",
+                  "Febrero",
+                  "Marzo",
+                  "Abril",
+                  "Mayo",
+                  "Junio",
+                  "Julio",
+                  "Agosto",
+                  "Septiembre",
+                  "octubre",
+                  "Noviembre",
+                  "Diciembre"
+                ],
+                datasets: [
+                  {
+                    label: "total",
+                    backgroundColor: [
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                      brandTotal,
+                    ],
+                    borderColor: [
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                      brandTotalActive,
+                    ],
+                    borderWidth: 1,
+                    data: [111, 234, 300, 212, 123, 160, 90,332, 230, 110, 347, 188],
+                },
+                    {
+                        label: "cocina",
+                        backgroundColor: [
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                          brandPrimary,
+                        ],
+                        borderColor: [
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                          brandPrimaryActive,
+                        ],
+                        borderWidth: 1,
+                        data: [35, 40, 60, 47, 88, 27, 30,35, 40, 60, 47, 88],
+                    },
+                    {
+                        label: "bar",
+                        backgroundColor: [
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                          brandSecundary,
+                        ],
+                        borderColor: [
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                          brandSecundaryActive,
+                        ],
+                        borderWidth: 1,
+                        data: [35, 40, 60, 47, 88, 27, 30,35, 40, 60, 47, 88],
+                    },
+                    
+                ],
+            },
+        });
+    });
+    
+  </script>
+  
+{% endblock %}
