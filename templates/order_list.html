@@ -11,7 +11,7 @@
         <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
           <div class="row p-3">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item h1 text"><a href="/">Modulos</a></li>
+              <li class="breadcrumb-item h1 text"><a href="/">Módulos</a></li>
               <li class="breadcrumb-item h1 active">Cuentas</li>
             </ol>
           </div>
@@ -28,9 +28,9 @@
         data-select2-id="select2-data-content"
       >
         <div class="row">
-          <div class="col-3 pb-4" id="change-list-filters">
-            <form id="changelist-search" class="form-inline" method="GET">
-              <div class="form-group">
+          <div class="col-12 pb-4" id="change-list-filters">
+            <form id="changelist-search" class="form-inline row" method="GET">
+              <div class="col-2 form-group min-select">
                 <select
                   class="form-control search-filter select2-hidden-accessible"
                   style="width: 100%"
@@ -39,17 +39,17 @@
                   data-name="paid_method"
                   data-select2-id="select2-data-4-iu02"
                 >
-                  <option value="" data-select2-id="select2-data-6-48k5">
+                  <option value="" data-select2-id="select2-data-6-48k5" >
                     método de pago
                   </option>
-                  <option data-name="paid_method" value="cocina">
+                  <option class="select-option" data-name="paid_method" value="cocina">
                     transferencia
                   </option>
 
-                  <option data-name="paid_method" value="bar">
+                  <option class="select-option" data-name="paid_method" value="bar">
                     efectivo
                   </option>
-                  <option data-name="paid_method" value="cocina">
+                  <option  class="select-option" data-name="paid_method" value="cocina">
                     ambos
                   </option></select
                 ><span
@@ -82,7 +82,7 @@
                 ></span>
               </div>
 
-              <div class="form-group">
+              <div class="col-2 form-group min-select">
                 <select
                   class="form-control search-filter select2-hidden-accessible"
                   style="width: 100%"
@@ -128,7 +128,7 @@
                 ></span>
               </div>
 
-                <div class="form-group">
+                <div class="col-2 form-group min-select">
                   <input
                     class="form-control"
                     type="text"
@@ -137,7 +137,7 @@
                     id="searchbar"
                   />
                 </div>
-              <div class="form-group" id="search_group">
+              <div class="col-12 form-group mt-3" id="search_group">
                 <button type="submit" class="btn btn-primary">Buscar</button>
               </div>
               

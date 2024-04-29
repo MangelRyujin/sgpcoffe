@@ -47,6 +47,7 @@
 .card-body{
     background-color: #343a40 !important;
     border-radius: .25rem !important;
+    
 }
 
 
@@ -66,3 +67,36 @@
     margin-bottom: 0 !important;
     border-color: transparent !important;
 }
+
+.min-select{
+    min-width: 200px !important;
+}
+
+.min-select select{
+    border-radius: .25rem !important;
+    border:none !important;
+}
+
+.min-select select:hover,
+.min-select select:active,
+.min-select select:focus{
+    box-shadow:  none !important;
+    
+    
+}
+
+
+.min-select input{
+    border-radius: .25rem !important;
+    border-color: #6c757d;
+    background-color: #343a40 !important;
+    color: #fff !important;
+}
+
+.min-select input:active,
+.min-select input:focus,
+.min-select input:hover{
+    border-color: #4694d9db;
+    box-shadow:  0px 0px 7px -1px #4694d9db !important;
+}
+
