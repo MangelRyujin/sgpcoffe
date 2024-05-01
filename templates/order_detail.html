@@ -103,7 +103,7 @@
         <div class="col-12 col-lg-6 col-md-6">
             <div class="container-fluid p-3">
                 <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
-                    <div class="row p-3">
+                    <div class="row ">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item h1 text-light">Pedidos realizados</li>
                     </ol>
@@ -111,14 +111,14 @@
                 </div>
             </div>
             <div class="content">
-                <div class="container-fluid items-row p-3 ">
+                <div class="container-fluid items-row  ">
                         <!-- Daily Feed Widget-->
                         {% for item in items_delivered %}
                             <div class="card-item-order p-3 card mt-1 col-12">
                                 <div class="card-item-order-header card-header ">
-                                    <h3 class="mt-1">{{item.delivered.product.name}}</h3>
-                                    <span>Cantidad: {{item.delivered.cant}}</span>
-                                    <p>Precio total: <span class="h5">{{item.delivered.total_price}}</span> CUP</span>
+                                    <h3 class="mt-1 delivered">{{item.delivered.product.name}}</h3>
+                                    <span>Cantidad: <span class=" delivered">{{item.delivered.cant}}</span></span>
+                                    <p>Precio total: <span class="h5 delivered">{{item.delivered.total_price}}</span> CUP</span>
                                 </div>
                             {% if item.add %}
                                 <div class="card-item-order-header card-header border-bottom ">
@@ -157,7 +157,7 @@
         <div class="col-12 col-lg-6 col-md-6">
             <div class="container-fluid p-3">
                 <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
-                    <div class="row p-3">
+                    <div class="row ">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item h1 text-light">Pedidos cancelados</li>
                     </ol>
@@ -165,14 +165,16 @@
                 </div>
             </div>
             <div class="content">
-                <div class="container-fluid items-row p-3 ">
+                <div class="container-fluid items-row  ">
                         <!-- Daily Feed Widget-->
                         {% for item in items_cancel %}
                             <div class="card-item-order p-3 card mt-1 col-12">
                                 <div class="card-item-order-header card-header ">
-                                    <h3 class="mt-1">{{item.cancel.product.name}}</h3>
-                                    <span>Cantidad: {{item.cancel.cant}}</span>
-                                    <p>Precio total: <span class="h5">{{item.cancel.total_price}}</span> CUP</span>
+                                    <h3 class="mt-1 cancel">{{item.cancel.product.name}}</h3>
+                                    <span>Cantidad: <span class=" cancel">{{item.cancel.cant}}</span></span>
+                                    <p>Precio total: <span class="h5 cancel">{{item.cancel.total_price}}</span> CUP</span>
+                                    <h3 class="mt-1 cancel">Motivo</h3>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, aspernatur illum quas necessitatibus eligendi beatae aliquam expedita eveniet autem accusamus.</span>
                                 </div>
                             {% if item.add %}
                                 <div class="card-item-order-header card-header border-bottom ">

@@ -148,3 +148,12 @@
 .text-item{
     color:#4694d9db;
 }
+
+
+.delivered{
+    color: rgba(75,192,192,1) !important;
+}
+
+.cancel{
+    color: rgb(232, 119, 58) !important;
+}
