@@ -70,6 +70,8 @@
 
 .min-select{
     min-width: 200px !important;
+    border-radius: .25rem !important;
+    margin: 0 .5rem;
 }
 
 .min-select select{
@@ -100,3 +102,49 @@
     box-shadow:  0px 0px 7px -1px #4694d9db !important;
 }
 
+
+.form-group .input-date{
+    border-radius: .25rem !important;
+    padding: 0.375rem 0.75rem;
+    border: none !important;
+    min-width: 150px !important;
+    box-shadow: none;
+
+}
+
+#changelist-search{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    justify-content:start;
+    
+}
+
+.items-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+.card-item-order{
+    background: #343a40 !important;
+    color: #fff;
+    border-radius: .25rem !important;
+    
+    
+}
+
+
+.card-item-order-header{
+    background: #303030 !important;
+    border-bottom: none !important;
+
+}
+
+
+
+.text-item{
+    color:#4694d9db;
+}

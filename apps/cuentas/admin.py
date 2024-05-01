@@ -18,18 +18,18 @@ from apps.cuentas.models import Order,Item,AddItem
 #     inlines = [AddItemInline,
 #                ]
     
-# # Admin Order 
-# @admin.register(Order)
-# class OrderAdmin(admin.ModelAdmin):
-#     list_display = ['table','user','is_paid','paid_method','total_paid','created_date','created_time']
-#     search_fields = ['user__name','table','is_paid','paid_method','created_date']
-#     list_filter = (
-#         'user__username',
-#         'table__name',
-#         'is_paid',
-#         'paid_method',
-#         'created_date',
-#     )
+# Admin Order 
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['table','user','is_paid','paid_method','total_paid','created_date','created_time']
+    search_fields = ['user__name','table','is_paid','paid_method','created_date']
+    list_filter = (
+        'user__username',
+        'table__name',
+        'is_paid',
+        'paid_method',
+        'created_date',
+    )
  
 
     
@@ -47,6 +47,6 @@ from apps.cuentas.models import Order,Item,AddItem
 #                ]
  
     
-# admin.site.register(Item)
-# admin.site.register(AddItem)
+admin.site.register(Item)
+admin.site.register(AddItem)
 
