@@ -116,7 +116,7 @@
                         {% for item in items_delivered %}
                             <div class="card-item-order p-3 card mt-1 col-12">
                                 <div class="card-item-order-header card-header ">
-                                    <h5 class="mt-1">{{item.delivered.product.name}}</h5>
+                                    <h3 class="mt-1">{{item.delivered.product.name}}</h3>
                                     <span>Cantidad: {{item.delivered.cant}}</span>
                                     <p>Precio total: <span class="h5">{{item.delivered.total_price}}</span> CUP</span>
                                 </div>
@@ -170,7 +170,7 @@
                         {% for item in items_cancel %}
                             <div class="card-item-order p-3 card mt-1 col-12">
                                 <div class="card-item-order-header card-header ">
-                                    <h5 class="mt-1">{{item.cancel.product.name}}</h5>
+                                    <h3 class="mt-1">{{item.cancel.product.name}}</h3>
                                     <span>Cantidad: {{item.cancel.cant}}</span>
                                     <p>Precio total: <span class="h5">{{item.cancel.total_price}}</span> CUP</span>
                                 </div>
