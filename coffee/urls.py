@@ -31,7 +31,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view,name='home'),
     path('reportes/',include("apps.reportes.urls")),
-    path('ventas/',include("apps.cuentas.urls"))
+    path('ventas/',include("apps.cuentas.urls")),
+    path('bar-launch/',include("apps.barandkitchen.urls")),
+    path('dependiente/',include("apps.waiter.urls"))
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

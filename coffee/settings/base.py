@@ -49,6 +49,8 @@ LOCAL_APPS = [
     'apps.cuentas',
     'apps.modulos',
     'apps.reportes',
+    'apps.barandkitchen',
+    'apps.waiter',
 ]
 
 THIRD_APPS = [

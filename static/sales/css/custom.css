@@ -157,3 +157,18 @@
 .cancel{
     color: rgb(232, 119, 58) !important;
 }
+
+
+.kitchen{
+    color: rgba(0, 188, 140,1) !important;
+}
+
+.btn-bar{
+    background: rgb(51, 160, 160) !important;
+    border-radius: .25rem !important;
+}
+
+.btn-kitchen{
+    background: rgba(0, 188, 140,1) !important;
+    border-radius: .25rem !important;
+}

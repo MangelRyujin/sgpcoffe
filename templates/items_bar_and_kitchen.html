@@ -1,0 +1,179 @@
+{% extends 'base.html' %} {% load static %} {% block contend %}
+<div class="content-wrapper" style="min-height: 520.438px">
+  <div class="container-fluid p-3">
+    <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+      <div class="row p-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item h1">
+            <a class="text-light" href="{% url 'home' %}">Módulos</a>
+          </li>
+          <li class="breadcrumb-item h1 active">Bar y Launch</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  {% if error %}<h1>{{error}}</h1>{% endif %}
+  
+  <div class="container-fluid p-3">
+    <div class="row">
+      {% if bars %}
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="container-fluid p-3">
+          <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+            <div class="row">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item h1 text-light">Bar</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container-fluid items-row">
+            <!-- Daily Feed Widget-->
+            {% for item in bars %}
+            <div class="card-item-order p-3 card mt-1 col-12">
+              <div class="card-item-order-header card-header">
+                <h3 class="mt-1 delivered">{{item.bar.product.name}}</h3>
+                <span
+                  >Cantidad:
+                  <span class="delivered">{{item.bar.cant}}</span></span
+                >
+                <p>
+                  Precio total:
+                  <span class="h5 delivered">{{item.bar.total_price}}</span>
+                  CUP
+                </p>
+                <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
+                  <!-- Formulario oculto para enviar la petición POST -->
+                  <form id="terminadoForm" method="post" action="{% url 'items_list_bar_and_kitchen' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="item" value="{{ item.bar.id }}">
+                      <button type="submit" class="btn btn-success float-right btn-bar">Terminado</button>
+                  </form>
+                </div>
+                
+              </div>
+              {% if item.add %}
+              <div class="card-item-order-header card-header border-bottom">
+                <h2 class="h5 fw-normal mb-0">
+                  <a
+                    class="card-collapse-link d-block text-light"
+                    data-bs-toggle="collapse"
+                    href="#{{ item.bar.id }}"
+                    aria-expanded="true"
+                    >agregados
+                    <div class="badge position-absolute end-0 me-4 text-base">
+                      {{item.add|length}}
+                    </div></a
+                  >
+                </h2>
+              </div>
+              <div class="card-body-0">
+                <div class="collapse" id="{{ item.bar.id }}" role="tabpanel">
+                  <!-- Item-->
+                  {% for add in item.add %}
+                  <div class="p-3 border-bottom border-gray-200">
+                    <div class="d-flex justify-content-between">
+                      <div class="ms-3">
+                        <h5 class="fw-normal">{{add.add.name}}</h5>
+                        <p class="mb-0 text-xs text-light lh-1">
+                          Cantidad: {{add.cant}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %} {% if kitchens %}
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="container-fluid p-3">
+          <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+            <div class="row">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item h1 text-light">Launch</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container-fluid items-row">
+            <!-- Daily Feed Widget-->
+            {% for item in kitchens %}
+            <div class="card-item-order p-3 card mt-1 col-12">
+              <div class="card-item-order-header card-header">
+                <h3 class="mt-1 kitchen">{{item.kitchen.product.name}}</h3>
+                <span
+                  >Cantidad:
+                  <span class="kitchen">{{item.kitchen.cant}}</span></span
+                >
+                <p>
+                  Precio total:
+                  <span class="h5 kitchen">{{item.kitchen.total_price}}</span>
+                  CUP
+                </p>
+                <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
+                  <!-- Formulario oculto para enviar la petición POST -->
+                  <form id="terminadoForm" method="post" action="{% url 'items_list_bar_and_kitchen' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="item" value="{{ item.kitchen.id }}">
+                      <button type="submit" class="btn btn-success float-right btn-kitchen">Terminado</button>
+                  </form>
+                </div>
+                
+              </div>
+              {% if item.add %}
+              <div class="card-item-order-header card-header border-bottom">
+                <h2 class="h5 fw-normal mb-0">
+                  <a
+                    class="card-collapse-link d-block text-light"
+                    data-bs-toggle="collapse"
+                    href="#{{ item.kitchen.id }}"
+                    aria-expanded="true"
+                    >agregados
+                    <div class="badge position-absolute end-0 me-4 text-base">
+                      {{item.add|length}}
+                    </div></a
+                  >
+                </h2>
+              </div>
+              <div class="card-body-0">
+                <div
+                  class="collapse"
+                  id="{{ item.kitchen.id }}"
+                  role="tabpanel"
+                >
+                  <!-- Item-->
+                  {% for add in item.add %}
+                  <div class="p-3 border-bottom border-gray-200">
+                    <div class="d-flex justify-content-between">
+                      <div class="ms-3">
+                        <h5 class="fw-normal">{{add.add.name}}</h5>
+                        <p class="mb-0 text-xs text-light lh-1">
+                          Cantidad: {{add.cant}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,223 +1,272 @@
-{% extends 'base.html' %} 
-{% load static %} 
-
-
-{% block contend %}
-{% if order %}
-    <div class="content-wrapper" style="min-height: 520.438px">
-        <div class="container-fluid p-3">
-            <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
-                <div class="row p-3">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item h1 "><a class="text-light" href="{% url 'home' %}">Módulos</a></li>
-                    <li class="breadcrumb-item h1 "><a class="text-light" href="{% url 'orders_list' %}">Cuentas </a></li>
-                    <li class="breadcrumb-item h1 active">{{order}}</li>
-                </ol>
-                </div>
-            </div>
-        </div>
-        <div class="content">
+{% extends 'base.html' %} {% load static %} {% block contend %} {% if order %}
+<div class="content-wrapper" style="min-height: 520.438px">
+  <div class="container-fluid p-3">
+    <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+      <div class="row p-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item h1">
+            <a class="text-light" href="{% url 'home' %}">Módulos</a>
+          </li>
+          <li class="breadcrumb-item h1">
+            <a class="text-light" href="{% url 'orders_list' %}">Cuentas </a>
+          </li>
+          <li class="breadcrumb-item h1 active">{{order}}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="container-fluid">
+      <section
+        id="content"
+        class="content"
+        data-select2-id="select2-data-content"
+      >
         <div class="container-fluid">
-            <section
-          id="content"
-          class="content"
-          data-select2-id="select2-data-content"
-          >
-            <div class="container-fluid">
-              <div class="col-12">
-                <div data-select2-id="select2-data-11-t58z">
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="card">
-                              <div class="card-body table-responsive p-0">
-                                <table id="result_list" class="table table-striped">
-                                  <thead>
-                                    <tr>
-                                      <th
-                                        class="sorting"
-                                        tabindex="0"
-                                        rowspan="1"
-                                        colspan="1"
-                                      >
-                                        <div class="text">
-                                          <a href="{% url 'order_detail' pk=order.pk %}">{{order}}</a>
-                                        </div>
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {% if order %}
-                                          <tr role="row" class="even">
-                                            <td class="field-place text"><a href="#">Dependiente: </a> {{order.user}}</td>
-                                          </tr>
-                                          <tr role="row" class="even">
-                                            <td class="field-place text"><a href="#">Mesa: </a> {{order.table.name}}</td>
-                                          </tr>
-                                          <tr role="row" class="even">
-                                            <td class="field-place text"><a href="#">Estado: </a> {{order.is_paid}}</td>
-                                          </tr>
-                                          <tr role="row" class="even">
-                                            <td class="field-place text"><a href="#">Creada el: </a> {{order.created_date}} a las {{order.created_time}}</td>
-                                          </tr>
-                                          <tr role="row" class="even">
-                                            <td class="field-place text"><a href="#">Método de pago: </a> {{order.paid_method}}</td>
-                                          </tr>
-                                          {% if order.paid_method == "ambos" %}
-                                            <tr role="row" class="even">
-                                                <td class="field-place text"><a href="#">Pagado en efectivo: </a> {{order.cash}}</td>
-                                            </tr>
-                                            <tr role="row" class="even">
-                                                <td class="field-place text"><a href="#">Pagado en transferencia: </a> {{order.transfer}}</td>
-                                            </tr>
-                                          {% endif %}
-                                          <tr role="row" class="even">
-                                            <td class="field-place text"><a href="#">Total pagado: </a> {{order.total_paid}}</td>
-                                          </tr>
-                                      {% else %}
-                                        
-                                        <tr role="row" class="">
-                                          <th class="field-name text">
-                                            -
-                                          </th>
-                                        </tr>
-                                    {% endif %}
-                                    
-                                     
-                                  </tbody>
-                                </table>
+          <div class="col-12">
+            <div data-select2-id="select2-data-11-t58z">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body table-responsive p-0">
+                      <table id="result_list" class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th
+                              class="sorting"
+                              tabindex="0"
+                              rowspan="1"
+                              colspan="1"
+                            >
+                              <div class="text">
+                                <a href="{% url 'order_detail' pk=order.pk %}"
+                                  >{{order}}</a
+                                >
                               </div>
-                        </div> 
-                       </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% if order %}
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Dependiente: </a> {{order.user}}
+                            </td>
+                          </tr>
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Mesa: </a> {{order.table.name}}
+                            </td>
+                          </tr>
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Estado: </a> {{order.is_paid}}
+                            </td>
+                          </tr>
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Creada el: </a> {{order.created_date}}
+                              a las {{order.created_time}}
+                            </td>
+                          </tr>
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Método de pago: </a>
+                              {{order.paid_method}}
+                            </td>
+                          </tr>
+                          {% if order.paid_method == "ambos" %}
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Pagado en efectivo: </a>
+                              {{order.cash}}
+                            </td>
+                          </tr>
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Pagado en transferencia: </a>
+                              {{order.transfer}}
+                            </td>
+                          </tr>
+                          {% endif %}
+                          <tr role="row" class="even">
+                            <td class="field-place text">
+                              <a href="#">Total pagado: </a>
+                              {{order.total_paid}}
+                            </td>
+                          </tr>
+                          {% else %}
+
+                          <tr role="row" class="">
+                            <th class="field-name text">-</th>
+                          </tr>
+                          {% endif %}
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
-            
-          
-          </section>
+          </div>
         </div>
+      </section>
+    </div>
+  </div>
+  <div class="container-fluid p-3">
+    <div class="row">
+      {% if items_delivered %}
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="container-fluid p-3">
+          <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+            <div class="row">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item h1 text-light">
+                  Pedidos realizados
+                </li>
+              </ol>
+            </div>
+          </div>
         </div>
-    <div class="container-fluid p-3">
-        <div class="row">
-        {% if items_delivered %}
-        <div class="col-12 col-lg-6 col-md-6">
-            <div class="container-fluid p-3">
-                <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
-                    <div class="row ">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item h1 text-light">Pedidos realizados</li>
-                    </ol>
+        <div class="content">
+          <div class="container-fluid items-row">
+            <!-- Daily Feed Widget-->
+            {% for item in items_delivered %}
+            <div class="card-item-order p-3 card mt-1 col-12">
+              <div class="card-item-order-header card-header">
+                <h3 class="mt-1 delivered">{{item.delivered.product.name}}</h3>
+                <span
+                  >Cantidad:
+                  <span class="delivered">{{item.delivered.cant}}</span></span
+                >
+                <p>
+                  Precio total:
+                  <span class="h5 delivered"
+                    >{{item.delivered.total_price}}</span
+                  >
+                  CUP
+                </p>
+              </div>
+              {% if item.add %}
+              <div class="card-item-order-header card-header border-bottom">
+                <h2 class="h5 fw-normal mb-0">
+                  <a
+                    class="card-collapse-link d-block text-light"
+                    data-bs-toggle="collapse"
+                    href="#{{ item.delivered.id }}"
+                    aria-expanded="true"
+                    >agregados
+                    <div class="badge position-absolute end-0 me-4 text-base">
+                      {{item.add|length}}
+                    </div></a
+                  >
+                </h2>
+              </div>
+              <div class="card-body-0">
+                <div
+                  class="collapse"
+                  id="{{ item.delivered.id }}"
+                  role="tabpanel"
+                >
+                  <!-- Item-->
+                  {% for add in item.add %}
+                    <div class="p-3 border-bottom border-gray-200">
+                      <div class="d-flex justify-content-between">
+                        <div class="ms-3">
+                          <h5 class="fw-normal">{{add.add.name}}</h5>
+                          <p class="mb-0 text-xs text-light lh-1">
+                            Cantidad: {{add.cant}}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                </div>
+                  {% endfor %}
+              </div>
+              </div>
+              {% endif %}
             </div>
-            <div class="content">
-                <div class="container-fluid items-row  ">
-                        <!-- Daily Feed Widget-->
-                        {% for item in items_delivered %}
-                            <div class="card-item-order p-3 card mt-1 col-12">
-                                <div class="card-item-order-header card-header ">
-                                    <h3 class="mt-1 delivered">{{item.delivered.product.name}}</h3>
-                                    <span>Cantidad: <span class=" delivered">{{item.delivered.cant}}</span></span>
-                                    <p>Precio total: <span class="h5 delivered">{{item.delivered.total_price}}</span> CUP</span>
-                                </div>
-                            {% if item.add %}
-                                <div class="card-item-order-header card-header border-bottom ">
-                                    <h2 class="h5 fw-normal mb-0 "><a class="card-collapse-link d-block text-light" data-bs-toggle="collapse" href="#{{ item.delivered.id }}" aria-expanded="true">agregados
-                                        <div class="badge position-absolute end-0 me-4 text-base">{{item.add|length}}</div></a></h2>
-                                </div>
-                                <div class="card-body-0">
-                                    <div class="collapse " id="{{ item.delivered.id }}" role="tabpanel">
-                                    <!-- Item-->
-                                    {% for add in item.add %}
-                                        <div class="p-3 border-bottom border-gray-200">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="ms-3">
-                                                    <h5 class="fw-normal">{{add.add.name}}</h5>
-                                                    <p class="mb-0 text-xs text-light lh-1">Cantidad: {{add.cant}}</p>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    
-                                </div>
-                            {% endif %}
-                            
-                            </div>
-                            
-                            
-                            
-                        {% endfor %}
-                        
-                </div>
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %} {% if items_cancel %}
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="container-fluid p-3">
+          <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+            <div class="row">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item h1 text-light">
+                  Pedidos cancelados
+                </li>
+              </ol>
             </div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container-fluid items-row">
+            <!-- Daily Feed Widget-->
+            {% for item in items_cancel %}
+            <div class="card-item-order p-3 card mt-1 col-12">
+              <div class="card-item-order-header card-header">
+                <h3 class="mt-1 cancel">{{item.cancel.product.name}}</h3>
+                <span
+                  >Cantidad:
+                  <span class="cancel">{{item.cancel.cant}}</span></span
+                >
+                <p>
+                  Precio total:
+                  <span class="h5 cancel">{{item.cancel.total_price}}</span> CUP
+                </p>
+                <h3 class="mt-1 cancel">Motivo</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Labore, aspernatur illum quas necessitatibus eligendi beatae
+                  aliquam expedita eveniet autem accusamus.
+                </p>
+              </div>
+              {% if item.add %}
+              <div class="card-item-order-header card-header border-bottom">
+                <h2 class="h5 fw-normal mb-0">
+                  <a
+                    class="card-collapse-link d-block text-light"
+                    data-bs-toggle="collapse"
+                    href="#{{ item.cancel.id }}"
+                    aria-expanded="true"
+                    >agregados
+                    <div class="badge position-absolute end-0 me-4 text-base">
+                      {{item.add|length}}
+                    </div></a
+                  >
+                </h2>
+              </div>
+              <div class="card-body-0">
+                <div class="collapse" id="{{ item.cancel.id }}" role="tabpanel">
+                  <!-- Item-->
+                  {% for add in item.add %}
+                    <div class="p-3 border-bottom border-gray-200">
+                      <div class="d-flex justify-content-between">
+                        <div class="ms-3">
+                          <h5 class="fw-normal">{{add.add.name}}</h5>
+                          <p class="mb-0 text-xs text-light lh-1">
+                            Cantidad: {{add.cant}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+                </div>
+                {% endif %}
+              </div>
+
+              {% endfor %}
+            </div>
+          </div>
         </div>
         {% endif %}
-        {% if items_cancel %}
-        <div class="col-12 col-lg-6 col-md-6">
-            <div class="container-fluid p-3">
-                <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
-                    <div class="row ">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item h1 text-light">Pedidos cancelados</li>
-                    </ol>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-                <div class="container-fluid items-row  ">
-                        <!-- Daily Feed Widget-->
-                        {% for item in items_cancel %}
-                            <div class="card-item-order p-3 card mt-1 col-12">
-                                <div class="card-item-order-header card-header ">
-                                    <h3 class="mt-1 cancel">{{item.cancel.product.name}}</h3>
-                                    <span>Cantidad: <span class=" cancel">{{item.cancel.cant}}</span></span>
-                                    <p>Precio total: <span class="h5 cancel">{{item.cancel.total_price}}</span> CUP</span>
-                                    <h3 class="mt-1 cancel">Motivo</h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, aspernatur illum quas necessitatibus eligendi beatae aliquam expedita eveniet autem accusamus.</span>
-                                </div>
-                            {% if item.add %}
-                                <div class="card-item-order-header card-header border-bottom ">
-                                    <h2 class="h5 fw-normal mb-0 "><a class="card-collapse-link d-block text-light" data-bs-toggle="collapse" href="#{{ item.cancel.id }}" aria-expanded="true">agregados
-                                            <div class="badge position-absolute end-0 me-4 text-base">{{item.add|length}}</div></a></h2>
-                                </div>
-                                <div class="card-body-0">
-                                    <div class="collapse " id="{{ item.cancel.id }}" role="tabpanel">
-                                    <!-- Item-->
-                                    {% for add in item.add %}
-                                        <div class="p-3 border-bottom border-gray-200">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="ms-3">
-                                                <h5 class="fw-normal">{{add.add.name}}</h5>
-                                                <p class="mb-0 text-xs text-light lh-1">Cantidad: {{add.cant}}</p>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    
-                                </div>
-                            
-                            {% endif %}
-                            
-                            </div>
-                            
-                            
-                            
-                        {% endfor %}
-                        
-                </div>
-            </div>
-        </div>
-        {% endif %}
+      </div>
     </div>
-        
-    </div>
-       
-    </div>
-{% endif %}
-
-  
- 
-{% endblock %}
-
-
+  </div>
+  {% endif %} {% endblock %}
+</div>
