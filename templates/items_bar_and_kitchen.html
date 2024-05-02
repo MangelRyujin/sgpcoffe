@@ -12,8 +12,14 @@
       </div>
     </div>
   </div>
-  {% if error %}<h1>{{error}}</h1>{% endif %}
-  
+  {% if error %}
+  <div class="container-fluid p-3">
+    <div class="alert alert-error alert-danger alert-dismissible fade show m-3" role="alert">
+      {{error}}
+      <button type="button" class="fa fa-times btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+  {% endif %}
   <div class="container-fluid p-3">
     <div class="row">
       {% if bars %}

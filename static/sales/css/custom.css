@@ -221,3 +221,34 @@
     box-shadow: none !important;
 }
 
+
+
+.alert-error{
+    border-radius: .25rem;
+}
+
+.alert-error .btn-close{
+    border: none;
+    box-shadow: none !important;
+}
+.alert-error .btn-close:active,
+.alert-error .btn-close:hover,
+.alert-error .btn-close:focus{
+    border: none;
+    box-shadow: none !important;
+}
+
+
+/* 
+@keyframes animate-error-mesage {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        height: 0px !important;
+    }
+} */
