@@ -4,4 +4,4 @@ __pycache__
 .env
 env
 tailwind*
-*.sqlite3
+*sqlite3
