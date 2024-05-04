@@ -15,6 +15,7 @@ def mesas(request):
 def menu(request):
     return render(request, 'mesero/partials/menu.html')
 
+# Dos views vacias
 @login_required(login_url='admin/login/')
 def notificaciones(request):
     return HttpResponse('''<div class="flex items-center justify-center">

@@ -3,5 +3,5 @@ media
 __pycache__
 .env
 env
-tailwind*.*
+tailwind*
 *.sqlite3
