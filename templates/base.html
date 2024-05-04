@@ -60,7 +60,7 @@
         </div>
       </nav>
     </header>
-      {% block contend%}
+      {% block contend %}
       {% endblock %}
       
   </div>
@@ -93,7 +93,7 @@
         // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
         // while using file:// protocol
         // pls don't forget to change to your domain :)
-        injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg'); 
+        {% comment %} injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');  {% endcomment %}
         
         
       </script>
@@ -105,6 +105,8 @@
       <script src="{% static './sales/vendor/choices.js/public/assets/scripts/choices.min.js' %}"></script>
       <script src="{% static './sales/vendor/overlayscrollbars/js/OverlayScrollbars.min.js' %}"></script>
       <script src="{% static './sales/js/charts.js' %}"></script>
+      <script src="{% static './prueba/js/htmx.min.js' %}"></script>
+      
     </body>
 {% endblock %}
 </html>

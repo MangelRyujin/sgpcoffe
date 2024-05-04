@@ -7,15 +7,25 @@ DEBUG =  config("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = []
 
 # Data Base config
-DATABASES = {
-    "default": {
+
+ALTERNATIVE_DBS = {
+    "postgres": {
         "ENGINE": config("ENGINE",default="django.db.backends.postgresql"),
         "NAME": config("DB_NAME", default="django_template"),
         "USER": config("DB_USER", default="postgres"),
         "PASSWORD": config("DB_PASSWORD", default="postgres"),
         "HOST": config("DB_HOST", default="127.0.0.1"),
         "PORT": config("DB_PORT", default=5432),
+    },
+    
+    'sqlite3': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+DATABASES = {
+    "default": ALTERNATIVE_DBS[config("USERDB", default="postgres")],
 }
 
 # Static media file config

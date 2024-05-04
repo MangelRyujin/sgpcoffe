@@ -55,6 +55,7 @@ LOCAL_APPS = [
 
 THIRD_APPS = [
     'django_filters',
+
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
@@ -156,6 +157,7 @@ MIDDLEWARE = [
     'apps.modulos.custom_middleware.RedirectAfterLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'coffee.urls'

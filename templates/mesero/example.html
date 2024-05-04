@@ -1,0 +1,185 @@
+{% extends 'base.html' %} {% load static %} {% block contend %}
+
+<div class="flex">
+  <div class="flex">
+    <span class="absolute text-white text-4xl top-16 left-4 cursor-pointer">
+      <i
+        class="fas fa-navicon p-2 bg-gray-900 rounded-md text-white text-xs"
+        onclick="openSidebar()"
+      ></i>
+    </span>
+    <div class="flex z-20">
+      <div
+        class="sidebar fixed top-0 bottom-0 left-[-300px] lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900"
+      >
+        <div class="text-gray-100 text-xl">
+          <div class="p-2.5 mt-8 flex items-center">
+            {% comment %} <i class="fas fa-cutlery text-white px-2 py-1"></i>
+            <h1 class="font-bold text-gray-200 text-[15px] ml-3">
+              Tailwind Restaurant
+            </h1>
+            <i
+              class="fas fa-close lg:!hidden ml-20 cursor-pointer"
+              onclick="openSidebar()"
+            ></i>
+            {% endcomment %}
+          </div>
+          {% comment %}
+          <hr class="my-2 text-gray-600" />
+          {% endcomment %}
+        </div>
+        <div class="text-gray-100 text-xl">
+          <div class="p-2.5 mt-1 flex items-center">
+            <i class="fas fa-cutlery text-white px-2 py-1"></i>
+            <h1 class="font-bold text-gray-200 text-[15px] ml-3">
+              Tailwind Restaurant
+            </h1>
+            <i
+              class="fas fa-close lg:!hidden ml-20 cursor-pointer"
+              onclick="openSidebar()"
+            ></i>
+          </div>
+          <hr class="my-2 text-gray-600" />
+        </div>
+        {% comment %}
+        <div
+          class="p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 hover:bg-gray-900"
+        >
+          <i class="fas fa-search text-sm cursor-pointer"></i>
+          <input
+            type="text"
+            placeholder="Buscar"
+            class="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
+          />
+        </div>
+        {% endcomment %}
+
+        <div
+          class="sidebar-item p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-400 active:bg-blue-400"
+        >
+          <i class="fas fa-spoon text-sm"></i>
+          <span
+            hx-get="/dependiente/mesas/"
+            hx-swap="innerHTML"
+            hx-target="#contenido"
+            class="text-[15px] ml-4 text-gray-200"
+            >Gestionar Mesas</span
+          >
+        </div>
+
+        <div
+          class="sidebar-item p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-400"
+        >
+          <i class="fas fa-shopping-cart text-sm"></i>
+          <span
+            hx-get="/dependiente/menu/"
+            hx-swap="innerHTML"
+            hx-target="#contenido"
+            class="text-[15px] ml-4 text-gray-200"
+            >Gestionar Menu</span
+          >
+        </div>
+
+        <div
+          class="sidebar-item p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-400"
+        >
+          <i class="fas fa-bell text-sm"></i>
+          <span
+            hx-get="/dependiente/notificaciones/"
+            hx-swap="innerHTML"
+            hx-target="#contenido"
+            class="text-[15px] ml-4 text-gray-200"
+            >Notificaciones</span
+          >
+        </div>
+
+        <hr class="my-3 text-gray-600" />
+
+        <div
+          class="sidebar-item p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-400"
+        >
+          <i class="fas fa-bar-chart text-sm"></i>
+          <div
+            class="flex justify-between w-full items-center"
+            onclick="dropDown()"
+          >
+            <span class="text-[15px] ml-4 text-gray-200">Reportes</span>
+            <span class="text-sm rotate-0 arrow">
+              <i class="fas fa-chevron-up"></i>
+            </span>
+          </div>
+        </div>
+        <div
+          class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200 submenu"
+        >
+          <div
+            hx-get="/dependiente/barras/"
+            hx-swap="innerHTML"
+            hx-target="#contenido"
+            class="sidebar-item cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1"
+          >
+            Barras
+            <!-- </div>
+          <div class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">
+            Pastel
+          </div>
+          <div class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">
+            Lineas
+          </div> -->
+          </div>
+        </div>
+
+        <div
+          class="sidebar-item p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-400 text-white"
+        >
+          <i class="fas fa-sign-out text-sm"></i>
+          <span class="text-[15px] ml-4 text-gray-200">Cerrar sesión</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Relleno para la barra lateral -->
+  <div class="ml-0 lg:ml-[300px]"></div>
+
+  <div class="flex flex-col sm:mt-0 px-2 sm:px-7">
+    <div>
+      <h1 class="mx-auto mt-3 text-2xl text-white font-semibold text-center">
+        {% block subtitulo%} {% endblock %}
+      </h1>
+    </div>
+
+    
+
+    <div id="contenido"></div>
+  </div>
+
+  <script type="text/javascript">
+    function dropDown() {
+      document.querySelector(".submenu").classList.toggle("hidden");
+      document.querySelector(".arrow").classList.toggle("rotate-180");
+    }
+
+    function openSidebar() {
+      document.querySelector(".sidebar").classList.toggle("left-[-300px]");
+    }
+
+    const sidebarItems = document.querySelectorAll(".sidebar-item");
+
+    sidebarItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        // Eliminar la clase active y el color de fondo de todos los items
+        sidebarItems.forEach((item) => {
+          item.classList.remove("active");
+          item.classList.remove("bg-blue-400");
+        });
+
+        // Agregar la clase active y el color de fondo al item cliqueado
+        item.classList.add("active");
+        item.classList.add("bg-blue-400");
+        openSidebar()
+      });
+    });
+  </script>
+  {% endblock %}
+</div>
