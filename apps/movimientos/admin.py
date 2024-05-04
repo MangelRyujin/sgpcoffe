@@ -16,6 +16,7 @@ class StockMovementsAdmin(admin.ModelAdmin):
         'stock',
         
     )
+    list_per_page = 100
     
     def has_change_permission(self, request, obj=None):
         return False

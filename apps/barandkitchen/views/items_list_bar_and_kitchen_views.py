@@ -4,6 +4,7 @@ from apps.cuentas.models import AddItem, Item, Order
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
 from apps.mesas.models import Table
+from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient
 
 
 @login_required(login_url='/admin/login/')
@@ -13,10 +14,11 @@ def items_list_bar_and_kitchen_view(request):
         try:
             item_id = int(request.POST['item'])
             item = Item.objects.get(id=item_id)
-            if item.state == "ordenado":
-                item.state = "finalizado"
-                item.save()
-            error = ""
+            error = validate_product_discount_ingredient(item)
+            if error =='':
+                if item.state == "ordenado":
+                    item.state = "finalizado"
+                    item.save()
         except Item.DoesNotExist:
             error = "Ítem no encontrado."
         except ValueError:

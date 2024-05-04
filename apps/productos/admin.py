@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = (
         'type',
     )
-    list_per_page = 20
+    list_per_page = 100
 
 
 # Admin relations
@@ -41,6 +41,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [IngredientsRelationsInline,
                AddRelationsInline,
                ]
+    list_per_page = 100
  
     
 
@@ -50,7 +51,7 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ['name','stock','disponible']
     search_fields = ['name','stock__name',]
     readonly_fields = ('disponible',)
-    list_per_page = 20
+    list_per_page = 100
     
     
 # Admin Add 
@@ -59,7 +60,7 @@ class AddAdmin(admin.ModelAdmin):
     list_display = ['name','price','stock','disponible']
     search_fields = ['name','stock__name',]
     readonly_fields = ('disponible',)
-    list_per_page = 20
+    list_per_page = 100
 
 # Admin Stock 
 @admin.register(Stock)
@@ -70,4 +71,4 @@ class StockAdmin(admin.ModelAdmin):
         'measure_unit',
     )
     readonly_fields = ('stock',)
-    list_per_page = 20
+    list_per_page = 100

@@ -5,7 +5,7 @@
 {% block contend %}
 
 <div class="content-wrapper" style="min-height: 520.438px">
-      <div class="container-fluid m-3">
+      <div class="container-fluid">
         <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
           <div class="row p-3">
             <ol class="breadcrumb">
@@ -71,6 +71,20 @@
                 
               </div>
               <div class="col-12">
+                  {% if pagination.has_next or pagination.has_previous%}
+                  <nav aria-label="Page navigation">
+                      <ul class="pagination  pb-3 overflow-auto"> 
+                          
+                            {% for page_number in pagination.paginator.page_range %}
+                                <li class=" page-item {% if page_number == pagination.number %}active{% endif %}">
+                                    <a class="pagination-item-order page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                </li>
+                            {% endfor %}
+
+                      </ul>
+                  </nav>
+                  {% endif %}
+
                 <div data-select2-id="select2-data-11-t58z">
                         <div class="row">
                           <div class="col-12">
@@ -136,8 +150,8 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    {% if orders %}
-                                      {% for order in orders %}
+                                    {% if pagination %}
+                                      {% for order in pagination %}
                                           <tr role="row" class="even">
                                             <th class="field-name text">
                                               <a href="{% url 'order_detail' pk=order.pk %}"

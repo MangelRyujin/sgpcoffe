@@ -1,0 +1,290 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block contend %}
+    <div class="flex">
+        <div class="flex">
+            <span class="absolute text-white text-4xl top-1 left-4 cursor-pointer">
+                <i class="fas fa-navicon p-2 bg-gray-900 rounded-md text-white text-xs" onclick="openSidebar()"></i>
+            </span>
+            <div class="flex z-20">
+                <div
+                    class="sidebar fixed top-0 bottom-0 left-[-300px] lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900">
+                    <div class="text-gray-100 text-xl">
+                        <div class="p-2.5 mt-1 flex items-center">
+                            <i class="fas fa-cutlery text-white px-2 py-1 "></i>
+                            <h1 class="font-bold text-gray-200 text-[15px] ml-3">Tailwind Restaurant</h1>
+                            <i class="fas fa-close lg:!hidden ml-20 cursor-pointer" onclick="openSidebar()"></i>
+                        </div>
+                        <hr class="my-2 text-gray-600">
+                    </div>
+                    <div
+                        class="p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 bg-gray-700 hover:bg-blue-400">
+                        <i class="fas fa-search text-sm cursor-pointer"></i>
+                        <input type="text" placeholder="Buscar"
+                            class="text-[15px] ml-4 w-full bg-transparent focus:outline-none">
+
+                    </div>
+
+                    <div
+                        class="p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer bg-gray-700 hover:bg-blue-400">
+                        <i class="fas fa-home text-sm"></i>
+                        <span class="text-[15px] ml-4 text-gray-200">Inicio</span>
+                    </div>
+
+                    <div
+                        class="p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer bg-gray-700 hover:bg-blue-400">
+                        <i class="fas fa-shopping-cart text-sm"></i>
+                        <span class="text-[15px] ml-4 text-gray-200">Pedidos</span>
+                    </div>
+
+                    <div
+                        class="p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer bg-gray-700 hover:bg-blue-400">
+                        <i class="fas fa-bell text-sm"></i>
+                        <span class="text-[15px] ml-4 text-gray-200">Notificaciones</span>
+                    </div>
+
+                    <hr class="my-3 text-gray-600">
+
+                    <div
+                        class="p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 cursor-pointer bg-gray-700 hover:bg-blue-400">
+                        <i class="fas fa-bar-chart text-sm"></i>
+                        <div class="flex justify-between w-full items-center" onclick="dropDown()">
+                            <span class="text-[15px] ml-4 text-gray-200">Reportes</span>
+                            <span class="text-sm rotate-0" id="arrow">
+                                <i class="fas fa-chevron-up"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-left text-sm font-thin mt-2 w-4/5 mx-auto text-gray-200" id="submenu">
+                        <div class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Barras</div>
+                        <div class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Pastel</div>
+                        <div class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Lineas</div>
+                    </div>
+
+                    <div
+                        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-400 text-white">
+                        <i class="fas fa-sign-out text-sm"></i>
+                        <span class="text-[15px] ml-4 text-gray-200">Cerrar sesión</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relleno para la barra lateral -->
+        <div class="ml-0 lg:ml-[300px]">
+        </div>
+
+        <div class="flex flex-col sm:mt-0 px-2 sm:px-7">
+            <div>
+                <h1 class="mx-auto mt-3 text-2xl text-white font-semibold text-center">Menú</h1>
+            </div>
+
+            <div
+                class="p-2.5 mt-3 flex text-white items-center rounded-md px-4 duration-300 bg-gray-700 hover:bg-gray-900">
+                <i class="fas fa-search text-sm cursor-pointer"></i>
+                <input type="text" placeholder="Buscar"
+                    class="text-[15px] ml-4 w-full bg-transparent focus:outline-none">
+            </div>
+
+            <div class="mt-8 sm:mt-2 flex flex-wrap items-center last:items-start">
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/choco-glaze-donut-peanut.png' %}"
+                        alt="choco-glaze-donut-peanut" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Choco peanut glaze donut </h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="col-2 mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/sandwich.png' %}" alt="sandwich" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Sandwich</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/cinnamon-roll.png' %}"
+                        alt="cinnamon-roll" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Cinanmon roll</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform  overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/coffee-latte.png' %}"
+                        alt="coffe-latte" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Coffee latte</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/sawarma.png' %}" alt="sawarma" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Sawarma</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/beef-burger.png' %}"  alt="beef-burger" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Beef burguer</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/choco-glaze-donut.png' %}" alt="choco-glaze-donut" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Choco glaze donut</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/croissant.png' %}" alt="croissant" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Croissant</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/ice-chocolate.png' %}" alt="ice-chocolate" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Ice chocolate</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/ice-tea.png' %}" alt="ice-tea" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Sawarma</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/matcha-latte.png' %}" alt="matcha-latte" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Matcha latte</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+                    <img class="h-48 w-full object-cover object-center" src="{% static 'prueba/img/red-glaze-donut.png' %}" alt="red-glaze" />
+                    <div class="p-4">
+                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">Red glaze donut</h2>
+                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700">Nice</p>
+                        <div class="flex items-center">
+                            <p class="mr-2 text-lg font-semibold text-gray-900 dark:text-white">$20.00</p>
+                            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
+                            <p class="ml-auto text-base font-medium text-green-500">20% de descuento</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <div class="flex flex-row mt-2">
+                <div class="w-1/2 border-r-2 px-[14px] border-r-white mx-[28px]">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, consectetur mollitia corrupti odio, assumenda nobis quos natus numquam ratione animi id harum eius asperiores quod sapiente perspiciatis illum molestiae dolores?</p>
+                </div>
+                <div class="w-1/2 mx-[28px]">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio, beatae non sequi animi
+                        accusamus voluptates numquam rem est ipsum eos ipsa eaque expedita maiores, mollitia ut sint
+                        repellendus delectus.</p>
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        function dropDown() {
+            document.querySelector('#submenu').classList.toggle('hidden')
+            document.querySelector('#arrow').classList.toggle('rotate-180')
+        }
+
+        function openSidebar() {
+            document.querySelector('.sidebar').classList.toggle('left-[-300px]')
+        }
+    </script>
+{% endblock %}
