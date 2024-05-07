@@ -59,7 +59,7 @@
         >
           <i class="fas fa-spoon text-sm"></i>
           <span
-            hx-get="/dependiente/mesas/"
+            hx-get="{% url 'mesas' %}"
             hx-swap="innerHTML"
             hx-target="#contenido"
             class="text-[15px] ml-4 text-gray-200"
@@ -72,7 +72,7 @@
         >
           <i class="fas fa-shopping-cart text-sm"></i>
           <span
-            hx-get="/dependiente/menu/"
+            hx-get="{% url 'menu' %}"
             hx-swap="innerHTML"
             hx-target="#contenido"
             class="text-[15px] ml-4 text-gray-200"
@@ -85,7 +85,7 @@
         >
           <i class="fas fa-bell text-sm"></i>
           <span
-            hx-get="/dependiente/notificaciones/"
+            hx-get="{% url 'notificaciones' %}"
             hx-swap="innerHTML"
             hx-target="#contenido"
             class="text-[15px] ml-4 text-gray-200"
@@ -145,6 +145,7 @@
   <div class="flex flex-col sm:mt-0 px-2 sm:px-7">
     <div>
       <h1 class="mx-auto mt-3 text-2xl text-white font-semibold text-center">
+        
         {% block subtitulo%} {% endblock %}
       </h1>
     </div>

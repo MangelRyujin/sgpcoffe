@@ -225,6 +225,9 @@
 
 .alert-error{
     border-radius: .25rem;
+    color: #fff !important;
+    background-color: #e74c3c !important;
+    border-color: #e43725 !important;
 }
 
 .alert-error .btn-close{

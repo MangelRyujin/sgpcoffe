@@ -5,40 +5,40 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
 from apps.mesas.models import Table
 from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient
+from django.db.models import Q
 
 
 @login_required(login_url='/admin/login/')
-def items_list_bar_and_kitchen_view(request):
-    error=''
-    if request.POST:
-        try:
-            item_id = int(request.POST['item'])
-            item = Item.objects.get(id=item_id)
-            error = validate_product_discount_ingredient(item)
-            if error =='':
-                if item.state == "ordenado":
-                    item.state = "finalizado"
-                    item.save()
-        except Item.DoesNotExist:
-            error = "Ítem no encontrado."
-        except ValueError:
-            error = "ID de ítem inválido."
-        
+def elaboration_items(request):
+    return render(request,'items_bar_and_kitchen.html')
+
+
+@login_required(login_url='/admin/login/')
+def items_list_bar_view(request):
+
     bar=[]
-    kitchen=[]
-    for item in Item.objects.filter(state="ordenado",product__place="bar"):
+    for item in Item.objects.filter(Q(state="ordenado") | Q(state="preparando"),product__place="bar"):
        bar.append({
            'bar':item,
            'add': AddItem.objects.filter(
                             item = item
                         )
        })
-    for item in Item.objects.filter(state="ordenado",product__place="cocina"):
+    context ={"bars":bar} 
+    return render(request,'items/items_bar.html',context)
+
+
+@login_required(login_url='/admin/login/')
+def items_list_kitchen_view(request):
+    
+    kitchen=[]
+    for item in Item.objects.filter(Q(state="ordenado") | Q(state="preparando"),product__place="cocina"):
        kitchen.append({
            'kitchen':item,
            'add': AddItem.objects.filter(
                             item = item
                         )
        })
-    context ={"bars":bar,"kitchens":kitchen,"error":error} 
-    return render(request,'items_bar_and_kitchen.html',context)
+    context ={"kitchens":kitchen} 
+    return render(request,'items/items_kitchen.html',context)
+

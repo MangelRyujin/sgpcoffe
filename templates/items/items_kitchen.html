@@ -1,0 +1,65 @@
+{% load static %}
+
+{% if kitchens %}
+        <div class="content">
+          <div class="container-fluid items-row">
+            <!-- Daily Feed Widget-->
+            {% for item in kitchens %}
+            <div class="card-item-order p-3 card mt-1 col-12">
+              <div class="card-item-order-header card-header">
+                <h3 class="mt-1 kitchen">{{item.kitchen.product.name}}</h3>
+                <span
+                  >Cantidad:
+                  <span class="kitchen">{{item.kitchen.cant}}</span></span
+                >
+                <p>
+                  Precio total:
+                  <span class="h5 kitchen">{{item.kitchen.total_price}}</span>
+                  CUP
+                </p>
+                <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
+                  <!-- Formulario oculto para enviar la petición POST -->
+                  {% if item.kitchen.state == "ordenado" %}
+                    <form id="terminadoForm_{{ item.bar.id }}" method="post" action="{% url 'items_change_kitchen' %}" >
+                        {% csrf_token %}
+                        <input type="hidden" name="item" value="{{ item.kitchen.id }}">
+                        <button type="submit" class="btn btn btn-primary float-right ">Preparando</button>
+                    </form>
+                    {% else %}
+                    <form id="terminadoForm_{{ item.bar.id }}" method="post" action="{% url 'items_finished_bar_and_kitchen' %}"  >
+                        {% csrf_token %}
+                        <input type="hidden" name="item" value="{{ item.kitchen.id }}">
+    
+                        
+                        <button type="submit" class="btn btn-primary float-right ">Terminado</button>
+                    </form>
+                {% endif %}
+                  
+                </div>
+                {% if item.add %}
+                <h2 class="h5 fw-normal mb-0">
+                  Agregados
+                </h2>
+                {% for add in item.add %}
+                  <div class="p-3 border-bottom border-gray-200">
+                    <div class="d-flex justify-content-between">
+                      <div class="ms-3">
+                        <h5 class="fw-normal">{{add.add.name}}</h5>
+                        <p class="mb-0 text-xs text-light lh-1">
+                          Cantidad: {{add.cant}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                
+              </div>
+              
+            </div>
+
+            {% endfor %}
+          </div>
+        </div>
+      
+      {% endif %}

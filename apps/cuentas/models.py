@@ -42,6 +42,7 @@ class Order(models.Model):
 class Item(models.Model):
     STATE_CHOICES = (
         ('ordenado', 'ordenado'),
+        ('preparando','preparando'),
         ('finalizado', 'finalizado'),
         ('entregado', 'entregado'),
         ('cancelado', 'cancelado'),
