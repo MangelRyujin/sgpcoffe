@@ -9,12 +9,13 @@ from django.core.paginator import Paginator
 
 @login_required(login_url='/admin/login/')
 def order_view(request):
+    get_copy = request.GET.copy()
+    parameters = get_copy.pop('page', True) and get_copy.urlencode()
     users = User.objects.filter(is_superuser=False)
     tables = Table.objects.all()
     orders = OrderFilter(request.GET, queryset=Order.objects.filter(is_paid="pagada").order_by('-pk'))
     paginator = Paginator(orders.qs, 3 ) 
-
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context ={"orders":orders.qs,"users":users,"tables":tables,"pagination":page_obj} 
+    context ={"orders":orders.qs,"users":users,"tables":tables,"pagination":page_obj,'parameters': parameters,} 
     return render(request,'order_list.html',context)

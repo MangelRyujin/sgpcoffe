@@ -77,7 +77,7 @@
                           
                             {% for page_number in pagination.paginator.page_range %}
                                 <li class=" page-item {% if page_number == pagination.number %}active{% endif %}">
-                                    <a class="pagination-item-order page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                    <a class="pagination-item-order page-link" href="?page={{ page_number }}&{{ parameters }}">{{ page_number }}</a>
                                 </li>
                             {% endfor %}
 

@@ -15,7 +15,7 @@ class Order(models.Model):
     )
     PAID_METHODS_CHOICES = (
         ('transferencia', 'transferencia'),
-        ('efectivo', 'cash'),
+        ('efectivo', 'efectivo'),
         ('ambos', 'ambos'),
     )
     is_paid = models.CharField('estado',max_length=9, choices=PAID_CHOICES, default='no pagada') 

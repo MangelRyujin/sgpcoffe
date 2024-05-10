@@ -5,6 +5,7 @@
 {% block contend %}
 <section class="container-fluid p-3">
     <div class="card-modul-container">
+        {% if user.is_superuser %}
         <div class="card-modul col-12 col-lg-4 col-md-5">
             <div class="card-modul-header">
                 <h5 class="m-0">Administración</h5>
@@ -19,6 +20,7 @@
                 
             </div>
         </div>
+        {% endif %}
         <div class="card-modul col-12 col-lg-4 col-md-5">
             <div class="card-modul-header">
                 <h5 class="m-0">Estadistica</h5>

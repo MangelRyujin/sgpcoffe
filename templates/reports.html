@@ -5,31 +5,17 @@
 <section>
   
     <div class="container-fluid p-3">
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
-    </button>
-    
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            ...
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+      <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+        <div class="row p-3">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item h1 "><a class="text-light" href="/">Módulos</a></li>
+            <li class="breadcrumb-item h1 active">Estadísticas</li>
+          </ol>
         </div>
-        </div>
-    </div>
+      </div>
+      <h1 class="breadcrumb-item h1 text-light">Estadísticas de ventas anual</h1>
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
           <div class="card-chart card ">
             <div class="card-chart card-header  border-bottom">
               <h4>Reporte representado en linea</h4>
@@ -39,7 +25,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
           <div class="card-chart card">
             <div class="card-chart card-header border-bottom">
               <h4>Reporte representado en barra</h4>
@@ -49,7 +35,42 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
+          <div class="card-chart card">
+            <div class="card-chart card-header border-bottom">
+              <h4>Reporte representado en pastel</h4>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="pieChartExample"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h1 class="breadcrumb-item h1 text-light">Estadísticas de ventas mensuales</h1>
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="card-chart card ">
+            <div class="card-chart card-header  border-bottom">
+              <h4>Reporte representado en linea</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="lineChartExample"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <div class="card-chart card">
+            <div class="card-chart card-header border-bottom">
+              <h4>Reporte representado en barra</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="barChartExample"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
           <div class="card-chart card">
             <div class="card-chart card-header border-bottom">
               <h4>Reporte representado en pastel</h4>
