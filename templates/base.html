@@ -27,6 +27,13 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <link rel="stylesheet" href="{% static 'prueba/css/styles.css' %}" />
     <link rel="stylesheet" href="{% static 'prueba/css/fontawesome/css/all.min.css' %}">
+
+    <!--Reports-->
+    <script src="{% static './reports/chart.umd.min.js' %}" ></script>  
+    <script src="{% static './reports/jquery-3.6.4.min.js' %}" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-v4-grid-only@1.0.0/dist/bootstrap-grid.min.css">
+
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-v4-grid-only@1.0.0/dist/bootstrap-grid.min.css"> {% endcomment %}
   </head>
 {% block body %}
 <body>
@@ -103,7 +110,7 @@
       <script src="{% static './sales/vendor/overlayscrollbars/js/OverlayScrollbars.min.js' %}"></script>
       <script src="{% static './sales/js/charts.js' %}"></script>
       <script src="{% static './prueba/js/htmx.min.js' %}"></script>
-      
+           
     </body>
 {% endblock %}
 </html>

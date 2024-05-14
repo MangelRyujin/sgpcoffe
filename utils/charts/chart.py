@@ -3,8 +3,20 @@ months = [
     "Mayo", "Junio", "Julio", "Agosto",
     "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ]
+
+
 colorPalette = ["#55efc4", "#81ecec", "#a29bfe", "#ffeaa7", "#fab1a0", "#ff7675", "#fd79a8"]
 colorPrimary, colorSuccess, colorDanger = "#79aec8", colorPalette[0], colorPalette[5]
+days = []
+days_of_week = {
+    'Monday': 'Lunes',
+    'Tuesday': 'Martes',
+    'Wednesday': 'Miércoles',
+    'Thursday': 'Jueves',
+    'Friday': 'Viernes',
+    'Saturday': 'Sábado',
+    'Sunday': 'Domingo',
+}
 
 
 def get_year_dict():
@@ -27,3 +39,12 @@ def generate_color_palette(amount):
             i = 0
 
     return palette
+
+
+def get_month_dict():
+    day_dict = dict()
+
+    for day in days:
+        day_dict[day] = 0
+
+    return day_dict

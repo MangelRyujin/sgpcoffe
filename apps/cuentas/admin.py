@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.cuentas.models import Order,Item,AddItem
+from apps.cuentas.models import Order,Item,AddItem,Shift
 # Register your models here.
 
 # # Admin add items
@@ -17,11 +17,17 @@ from apps.cuentas.models import Order,Item,AddItem
 #     list_display = ('product','order')
 #     inlines = [AddItemInline,
 #                ]
+
+@admin.register(Shift)
+class ShiftAdmin(admin.ModelAdmin):
+    list_display = ['id','in_date','in_time','out_date','out_time']
+    search_fields = ['in_date']
+    list_per_page = 100
     
 # Admin Order 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['table','user','is_paid','paid_method','total_paid','created_date','created_time']
+    list_display = ['table','user','is_paid','paid_method','shift','total_paid','created_date','created_time']
     search_fields = ['user__name','table','is_paid','paid_method','created_date']
     list_filter = (
         'user__username',
@@ -30,6 +36,7 @@ class OrderAdmin(admin.ModelAdmin):
         'paid_method',
         'created_date',
     )
+    list_per_page = 100
  
 
     

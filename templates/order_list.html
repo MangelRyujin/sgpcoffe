@@ -59,10 +59,10 @@
                     </select>
                   </div>
                   <div class="col-2 form-group min-select mt-3">
-                    <input type="date" class="input-date col-12 form-group " name="created_date_after" placeholder="Desde">
+                    <input type="date" class="input-date col-12 form-group " name="shift__in_date_after" placeholder="Desde">
                   </div>
                   <div class="col-2 form-group min-select mt-3">
-                    <input type="date" class="input-date col-12 form-group " name="created_date_before" placeholder="Hasta">
+                    <input type="date" class="input-date col-12 form-group " name="shift__in_date_before" placeholder="Hasta">
                   </div>      
                   <div class="col-12 form-group min-select mt-3" id="search_group">
                     <button type="submit" class="btn btn-primary">Buscar</button>
@@ -136,6 +136,16 @@
                                           <a href="#">Método de pago</a>
                                         </div>
                                       </th>
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Turno</a>
+                                        </div>
+                                      </th>
     
                                       <th
                                         class="sorting"
@@ -161,6 +171,7 @@
                                             <td class="field-place">{{order.user}}</td>
                                             <td class="field-place">{{order.table}}</td>
                                             <td class="field-price">{{order.paid_method}}</td>
+                                            <td class="field-price">{{order.shift.in_date}}</td>
                                             <td class="field-price">{{order.total_paid}}</td>
                                           </tr>
                                       
@@ -173,6 +184,7 @@
                                           </th>
                                           <td class="field-place">-</td>
                                           <td class="field-place">-</td>
+                                          <td class="field-price">-</td>
                                           <td class="field-price">-</td>
                                           <td class="field-price">-</td>
                                         </tr>

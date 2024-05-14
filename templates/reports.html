@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block contend %}
+
 <section>
   
     <div class="container-fluid p-3">
@@ -13,42 +14,11 @@
           </ol>
         </div>
       </div>
-      <h1 class="breadcrumb-item h1 text-light">Estadísticas de ventas anual</h1>
-      <div class="row">
-        <div class="col-lg-6 col-md-6">
-          <div class="card-chart card ">
-            <div class="card-chart card-header  border-bottom">
-              <h4>Reporte representado en linea</h4>
-            </div>
-            <div class="card-body">
-              <canvas id="lineChartExample"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6">
-          <div class="card-chart card">
-            <div class="card-chart card-header border-bottom">
-              <h4>Reporte representado en barra</h4>
-            </div>
-            <div class="card-body">
-              <canvas id="barChartExample"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6">
-          <div class="card-chart card">
-            <div class="card-chart card-header border-bottom">
-              <h4>Reporte representado en pastel</h4>
-            </div>
-            <div class="card-body">
-              <div class="chart-container">
-                <canvas id="pieChartExample"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h1 class="breadcrumb-item h1 text-light">Estadísticas de ventas mensuales</h1>
+      <form id="filterForm">
+        <label class="breadcrumb-item h1 text-light" for="year">Estadísticas de ventas anual:</label>
+        <select name="year" id="year"></select>
+        <input type="submit" value="Load" name="_load">
+      </form>
       <div class="row">
         <div class="col-lg-6 col-md-6">
           <div class="card-chart card ">
@@ -87,6 +57,11 @@
   </section>
 
   <script>
+    
+
+
+
+
     document.addEventListener("DOMContentLoaded", function () {
         var brandTotal = "rgba(0, 0, 0,.5)";
         var brandTotalActive = "rgba(255, 255, 255,1)";
@@ -215,20 +190,7 @@
         var barChartExample = new Chart(BARCHARTEXMPLE, {
             type: "bar",
             data: {
-                labels: [
-                  "Enero",
-                  "Febrero",
-                  "Marzo",
-                  "Abril",
-                  "Mayo",
-                  "Junio",
-                  "Julio",
-                  "Agosto",
-                  "Septiembre",
-                  "octubre",
-                  "Noviembre",
-                  "Diciembre"
-                ],
+                labels: [],
                 datasets: [
                   {
                     label: "total",
@@ -261,80 +223,15 @@
                       brandTotalActive,
                     ],
                     borderWidth: 1,
-                    data: [111, 234, 300, 212, 123, 160, 90,332, 230, 110, 347, 188],
+                    data: [],
                 },
-                    {
-                        label: "cocina",
-                        backgroundColor: [
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                          brandPrimary,
-                        ],
-                        borderColor: [
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                          brandPrimaryActive,
-                        ],
-                        borderWidth: 1,
-                        data: [35, 40, 60, 47, 88, 27, 30,35, 40, 60, 47, 88],
-                    },
-                    {
-                        label: "bar",
-                        backgroundColor: [
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                          brandSecundary,
-                        ],
-                        borderColor: [
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                          brandSecundaryActive,
-                        ],
-                        borderWidth: 1,
-                        data: [35, 40, 60, 47, 88, 27, 30,35, 40, 60, 47, 88],
-                    },
                     
                 ],
             },
         });
     });
-    
   </script>
+  <script src="{% static './reports/anual_select.js' %}"></script>
+  
   
 {% endblock %}
