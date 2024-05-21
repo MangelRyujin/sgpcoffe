@@ -121,6 +121,32 @@ class Add(models.Model):
         return f'{self.stock.stock} {self.stock.measure_unit}'
 
 
+# UtilProduct  model
+class UtilProduct(models.Model):
+    """Model definition for UtilProduct."""
+    name = models.CharField('nombre', max_length=255, blank=False , null=False)
+    price = models.DecimalField('precio', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
+    categories = models.ManyToManyField(Category,blank=True,verbose_name=_('categorias') )
+    stock = models.ForeignKey(Stock,on_delete=models.CASCADE,blank=False,verbose_name=_('almacenamiento stock') )
+    
+    
+    # Define fields here
+
+    class Meta:
+        """Meta definition for UtilProduct."""
+
+        verbose_name = 'Útil'
+        verbose_name_plural = 'Útiles'
+
+    def __str__(self):
+        """Unicode representation of UtilProduct."""
+        return f'{self.name}'
+
+    @property
+    def disponible(self):
+        return f'{self.stock.stock} {self.stock.measure_unit}'
+
+
 
     
 # Product  model
@@ -136,7 +162,7 @@ class Product(models.Model):
     price = models.DecimalField('precio', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
     discount = models.FloatField('descuento en %',default=0.0)
     active = models.BooleanField("activo",default=True)
-    image = models.ImageField('imagen', upload_to='product_image/', blank=True, null=True)
+    # image = models.ImageField('imagen', upload_to='product_image/', blank=True, null=True)
     categories = models.ManyToManyField(Category,blank=True ,verbose_name=_('categorias'))
     ingredients = models.ManyToManyField(Ingredient, through='ProductIngredientRelation',through_fields=('product','ingredient'), blank=True)
     added = models.ManyToManyField(Add, through='ProductAddRelation',through_fields=('product','add'), blank=True)

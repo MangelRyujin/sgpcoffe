@@ -1,0 +1,239 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+
+{% block contend %}
+<div class="modal  fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dark">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="changelist-search" action=" {% url 'unpaid_orders_list' %}" class="form-group" method="POST">{% csrf_token %}
+        <div class="modal-body">
+          
+          <select class="form-control search-filter  select2-hidden-accessible" name="table">
+            {% if tables_form %}
+              {% for table in tables_form %}
+                <option value="{{table.id}}">{{table.name}}</option>
+              {% endfor %}
+            {% else %}
+            <option value="">no existen mesas</option>
+            {% endif %}
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+          {% if tables_form %}
+            <button type="submit" class="btn btn-success-create">Crear</button>
+          {% else %}
+            <button type="submit" class="btn btn-success-create disabled">Crear</button>
+          {% endif %}
+         
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="content-wrapper" style="min-height: 520.438px">
+      <div class="container-fluid">
+        <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+          <div class="row p-3">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item h1 "><a class="text-light" href="/">Módulos</a></li>
+              <li class="breadcrumb-item h1 active">Gestionar cuentas</li>
+            </ol>
+          </div>
+        </div>
+        <div class="col-12 col-md-auto d-flex justify-content-end align-items-center">
+          <button type="button" class="btn btn-success-create" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <i class="fa fa-plus-circle mr-2"></i>Crear cuenta
+          </button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="">
+          <section
+          id="content"
+          class="content"
+          data-select2-id="select2-data-content"
+          >
+          
+            <div class="container-fluid">
+              
+              <div class="col-12 pb-4" id="change-list-filters">
+                
+                <form id="changelist-search" class="form-group" method="GET">
+                  <div class="col-2 form-group min-select mt-3">
+                    <select class="form-control search-filter select2-hidden-accessible" name="user">
+                      <option value="">usuario</option>
+                      {% if users %}
+                        {% for user in users %}
+                          <option value="{{user.id}}">{{user.username}}</option>
+                        {% endfor %}
+                      {% else %}
+                      <option value="">no existen usuarios</option>
+                      {% endif %}
+                      </select>
+                  </div>
+                  <div class="col-2 form-group min-select mt-3">
+                    <select class="form-control search-filter select2-hidden-accessible" name="table">
+                      <option value="">mesa</option>
+                      {% if tables %}
+                        {% for table in tables %}
+                          <option value="{{table.id}}">{{table.name}}</option>
+                        {% endfor %}
+                      {% else %}
+                      <option value="">no existen mesas</option>
+                      {% endif %}
+                    </select>
+                  </div>   
+                  <div class="col-12 form-group min-select mt-3" id="search_group">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                  </div>
+                </form>
+                
+              </div>
+              <div class="col-12">
+                  {% if pagination.has_next or pagination.has_previous%}
+                  <nav aria-label="Page navigation">
+                      <ul class="pagination  pb-3 overflow-auto"> 
+                          
+                            {% for page_number in pagination.paginator.page_range %}
+                                <li class=" page-item {% if page_number == pagination.number %}active{% endif %}">
+                                    <a class="pagination-item-order page-link" href="?page={{ page_number }}&{{ parameters }}">{{ page_number }}</a>
+                                </li>
+                            {% endfor %}
+
+                      </ul>
+                  </nav>
+                  {% endif %}
+
+                <div data-select2-id="select2-data-11-t58z">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="card">
+                              <div class="card-body table-responsive p-0">
+                                <table id="result_list" class="table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Cuenta</a>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Usuario</a>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Mesa</a>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Método de pago</a>
+                                        </div>
+                                      </th>
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Turno</a>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Total cobrado</a>
+                                        </div>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% if pagination %}
+                                      {% for order in pagination %}
+                                          <tr role="row" class="even">
+                                            <th class="field-name text">
+                                              <a href="{% url 'order_detail' pk=order.pk %}"
+                                                >Cuenta {{order.id}}</a
+                                              >
+                                            </th>
+                                            <td class="field-place">{{order.user}}</td>
+                                            <td class="field-place">{{order.table}}</td>
+                                            <td class="field-price">{{order.paid_method}}</td>
+                                            <td class="field-price">{{order.shift.in_date}}</td>
+                                            <td class="field-price">{{order.total_paid}}</td>
+                                          </tr>
+                                      
+                                      {% endfor %}
+                                      {% else %}
+                                        
+                                        <tr role="row" class="">
+                                          <th class="field-name text">
+                                            -
+                                          </th>
+                                          <td class="field-place">-</td>
+                                          <td class="field-place">-</td>
+                                          <td class="field-price">-</td>
+                                          <td class="field-price">-</td>
+                                          <td class="field-price">-</td>
+                                        </tr>
+                                    {% endif %}
+                                    
+                                     
+                                  </tbody>
+                                </table>
+                              </div>
+                        </div> 
+                       </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          
+          </section>
+        </div>
+      </div>
+</div>
+
+  
+ 
+{% endblock %}
+
+
+

@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from apps.mesas.models import Table
-from apps.productos.models import Add, Product
+from apps.productos.models import Add, Product, UtilProduct
 User = get_user_model()
 
 
@@ -14,6 +14,7 @@ class Shift(models.Model):
     in_time = models.TimeField('Hora de inicio de turno')
     out_date = models.DateField('Fecha de fin de turno')
     out_time = models.TimeField('Hora de fin de turno')
+    active = models.BooleanField("activo",default=True)
     
     
     
@@ -96,3 +97,17 @@ class AddItem(models.Model):
 
     def __str__(self) -> str:
         return f'Agregado {self.add.name}'
+
+
+# Order UtilsItem model.
+class UtilsItem(models.Model):
+    cant = models.PositiveIntegerField("Cant",default=1,null=False,blank=False)
+    util = models.ForeignKey(UtilProduct,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('útil'))
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, blank=True,verbose_name=_('pedido'))
+    
+    class Meta:   
+        verbose_name = 'Útil de pedido'
+        verbose_name_plural = 'Útiles de pedidos'
+
+    def __str__(self) -> str:
+        return f'Agregado {self.util.name}'

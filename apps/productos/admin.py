@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.productos.models import Add, Category, Ingredient, Product, ProductAddRelation, ProductIngredientRelation, Stock, StockCategory
+from apps.productos.models import Add, Category, Ingredient, Product, ProductAddRelation, ProductIngredientRelation, Stock, StockCategory, UtilProduct
 
 # Register your models here.
 
@@ -19,13 +19,13 @@ class CategoryAdmin(admin.ModelAdmin):
 class IngredientsRelationsInline(admin.TabularInline):    
     model = ProductIngredientRelation    
     raw_id_fields = ('ingredient',)
-    list_display = ('ingredient')
+    extra = 0
     
 # Admin relations
 class AddRelationsInline(admin.TabularInline):    
     model = ProductAddRelation    
-    raw_id_fields = ('product','add',)
-    list_display = ('add')
+    raw_id_fields = ('add',)
+    extra = 0
     
 
 
@@ -54,10 +54,20 @@ class IngredientAdmin(admin.ModelAdmin):
     list_per_page = 100
     
     
+    
+    
 # Admin Add 
 @admin.register(Add)
 class AddAdmin(admin.ModelAdmin):
     list_display = ['name','price','stock','disponible']
+    search_fields = ['name','stock__name',]
+    readonly_fields = ('disponible',)
+    list_per_page = 100
+    
+# Admin UtilsProducts 
+@admin.register(UtilProduct)
+class UtilProductAdmin(admin.ModelAdmin):
+    list_display = ['name','stock','disponible']
     search_fields = ['name','stock__name',]
     readonly_fields = ('disponible',)
     list_per_page = 100

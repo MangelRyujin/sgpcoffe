@@ -1,28 +1,37 @@
 from django.contrib import admin
-
-from apps.cuentas.models import Order,Item,AddItem,Shift
+from django.contrib.admin import site
+from apps.cuentas.models import Order,Item,AddItem,Shift, UtilsItem
 # Register your models here.
 
 # # Admin add items
 # class AddItemInline(admin.TabularInline):    
 #     model = AddItem    
-#     raw_id_fields = ('add','item')
-#     list_display = ('add','item')
+#     raw_id_fields = ('add',)
+#     list_display = ('add',)
+#     extra = 0
 
 
-# # Admin add items
+# # # Admin add items
 # class ItemInline(admin.TabularInline):    
 #     model = Item    
-#     raw_id_fields = ('product','order')
-#     list_display = ('product','order')
-#     inlines = [AddItemInline,
-#                ]
+#     raw_id_fields = ('product','order',)
+#     list_display = ('product','order',)
+#     inlines = [AddItemInline]
+#     extra = 0
+    
 
 @admin.register(Shift)
 class ShiftAdmin(admin.ModelAdmin):
-    list_display = ['id','in_date','in_time','out_date','out_time']
+    list_display = ['id','active','in_date','in_time','out_date','out_time']
     search_fields = ['in_date']
     list_per_page = 100
+    
+    def has_add_permission(self, request):
+        if request.user.is_authenticated:
+            active_shift = Shift.objects.filter(active=True).exists()
+            if active_shift:
+                return False
+        return super().has_add_permission(request)
     
 # Admin Order 
 @admin.register(Order)
@@ -37,6 +46,7 @@ class OrderAdmin(admin.ModelAdmin):
         'created_date',
     )
     list_per_page = 100
+    # inlines = [ItemInline,]
  
 
     
@@ -54,6 +64,7 @@ class OrderAdmin(admin.ModelAdmin):
 #                ]
  
     
-admin.site.register(Item)
-admin.site.register(AddItem)
+# admin.site.register(Item)
+# admin.site.register(AddItem)
+# admin.site.register(UtilsItem)
 

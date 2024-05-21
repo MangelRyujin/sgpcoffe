@@ -4,12 +4,14 @@ from apps.cuentas.views.charts.charts_data_views import get_filter_options,get_s
 from apps.cuentas.views.charts.charts_month_data_views import get_day_sales_chart, get_month_filter_options, spend_month_per_customer_chart,payment_month_success_chart
 from apps.cuentas.views.detail_order_views import order_detail_view
 from apps.cuentas.views.list_order_views import order_view
+from apps.cuentas.views.unpaid_order.list_unpaid_order_views import unpaid_order_view
 
 
 
 urlpatterns = [
     path('cuentas/',order_view,name='orders_list'),
     path('cuenta/<int:pk>',order_detail_view,name='order_detail'),
+    path('gestionar/cuentas/',unpaid_order_view,name='unpaid_orders_list'),
     path('estadisticas/',statistics_view,name='statistics_orders'),
     path("chart/filter-options/", get_filter_options, name="chart-filter-options"),
     path("chart/sales/<int:year>/", get_sales_chart, name="chart-sales"),
