@@ -66,7 +66,12 @@ class Item(models.Model):
         ('entregado', 'entregado'),
         ('cancelado', 'cancelado'),
     )
+    TYPE_CHOICES = (
+        ('llevar', 'llevar'),
+        ('local','local'),
+    )
     state = models.CharField(max_length=10, choices=STATE_CHOICES, default='ordenado') 
+    type = models.CharField(max_length=7, choices=TYPE_CHOICES, default='local') 
     cant = models.PositiveIntegerField("Cant",default=1,null=False,blank=False)
     total_price = models.DecimalField('Total price', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     product = models.ForeignKey(Product,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('producto'))

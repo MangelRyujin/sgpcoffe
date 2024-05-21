@@ -1,0 +1,569 @@
+{% extends 'base.html' %} {% load static %} {% block contend %}
+
+<div class="containe-fluid p-3">
+  <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center p-3">
+    <div class="row">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item h1">
+          <a class="text-light" href="/">Módulos</a>
+        </li>
+        <li class="breadcrumb-item h1 active">Estadísticas de productos</li>
+      </ol>
+    </div>
+  </div>
+  {% if message %}
+
+  <div
+    class="alert alert-error alert-danger alert-dismissible fade show"
+    role="alert"
+  >
+    {{message}}
+    <button
+      type="button"
+      class="fa fa-times btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  {% endif %}
+  <div class="pb-4" id="change-list-filters">
+    <form id="changelist-search" class="form-group" method="POST">
+      {% csrf_token %}
+      <div class="min-select mt-3">
+        <input
+          type="date"
+          class="input-date col-12 form-group"
+          name="shift__in_date_after"
+          placeholder="Desde"
+        />
+      </div>
+      <div class="form-group min-select mt-3">
+        <input
+          type="date"
+          class="input-date col-12 form-group"
+          name="shift__in_date_before"
+          placeholder="Hasta"
+        />
+      </div>
+      <div class="form-group min-select mt-3" id="search_group">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
+    </form>
+  </div>
+  <div data-select2-id="select2-data-11-t58z">
+    <h2 class="text-light">
+      Suma total hasta la fecha:
+      <span class="h2"
+        >{% if total_price %}{{total_price}} CUP {% else %} 00.00 CUP{% endif %}
+      </span>
+    </h2>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body table-responsive p-0">
+            <table id="result_list" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Producto</a>
+                    </div>
+                  </th>
+
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Cantidad vendida</a>
+                    </div>
+                  </th>
+
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Precio total</a>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if products %} {% for product in products %}
+                <tr role="row" class="even">
+                  <td class="field-place">{{product.product__name}}</td>
+                  <td class="field-place">{{product.total_count}} unidades</td>
+                  <td class="field-price">{{product.total_price}} CUP</td>
+                </tr>
+
+                {% endfor %} {% else %}
+
+                <tr role="row" class="">
+                  <th class="field-name text">-</th>
+                  <td class="field-place">-</td>
+                  <td class="field-place">-</td>
+                  <td class="field-price">-</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="filterForm">
+    <div>
+      <label class="h1 text-light" for="year">Escoja el año:</label>
+      <select name="year" id="year"></select>
+    </div>
+    <div>
+      <label class="h1 text-light" for="product">Escoja el producto 1:</label>
+      <select name="product" id="product"></select>
+    </div>
+    <div>
+      <label class="h1 text-light" for="product2">Escoja el producto 2:</label>
+      <select name="product2" id="product2"></select>
+    </div>
+    <div>
+      <label class="h1 text-light" for="product3">Escoja el producto 3:</label>
+      <select name="product3" id="product3"></select>
+    </div>
+    <input
+      class="btn btn-primary"
+      type="submit"
+      value="Cargar datos"
+      name="_load"
+    />
+  </form>
+  <div class="row p-3">
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="salesChart"></canvas>
+    </div>
+    <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="paymentSuccessChart"></canvas>
+    </div>
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="spendPerCustomerChart"></canvas>
+    </div>
+    
+  </div>
+  <div class="row p-3">
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="salesChartPrice"></canvas>
+    </div>
+    <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="paymentSuccessChartPrice"></canvas>
+    </div>
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="spendPerCustomerChartPrice"></canvas>
+    </div>
+    
+  </div>
+
+   <form id="monthFilterForm">
+    <label class="h1 text-light" for="month">Escoja el año y mes:</label>
+    <select name="month" id="month"></select>
+    <select class="" id="monthYear" name="monthYear">
+      <option value="01">Enero</option>
+      <option value="02">Febrero</option>
+      <option value="03">Marzo</option>
+      <option value="04">Abril</option>
+      <option value="05">Mayo</option>
+      <option value="06">Junio</option>
+      <option value="07">Julio</option>
+      <option value="08">Agosto</option>
+      <option value="09">Septiembre</option>
+      <option value="10">Octubre</option>
+      <option value="11">Noviembre</option>
+      <option value="12">Diciembre</option>
+    </select>
+    <div>
+      <label class="h1 text-light" for="monthproduct">Escoja el producto 1:</label>
+      <select name="monthproduct" id="monthproduct"></select>
+    </div>
+    <div>
+      <label class="h1 text-light" for="monthproduct2">Escoja el producto 2:</label>
+      <select name="monthproduct2" id="monthproduct2"></select>
+    </div>
+    <div>
+      <label class="h1 text-light" for="monthproduct3">Escoja el producto 3:</label>
+      <select name="monthproduct3" id="monthproduct3"></select>
+    </div>
+    <input
+      class="btn btn-primary"
+      type="submit"
+      value="Cargar datos"
+      name="_loadMonth"
+    />
+  </form>
+  <div class="row p-3">
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="monthSalesChart"></canvas>
+    </div>
+    <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="monthPaymentSuccessChart"></canvas>
+    </div>
+
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="monthSpendPerCustomerChart"></canvas>
+    </div>
+  </div>
+  <div class="row p-3">
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="monthSalesChartPrice"></canvas>
+    </div>
+    <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="monthPaymentSuccessChartPrice"></canvas>
+    </div>
+
+    <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+      <canvas id="monthSpendPerCustomerChartPrice"></canvas>
+    </div>
+  </div>  
+  
+  <script src="{% static './reports/product_anual_select.js' %}"></script>
+  <script src="{% static './reports/product_month_select.js' %}"></script>
+  <script>
+    let salesCtx = document.getElementById("salesChart").getContext("2d");
+    let salesChart = new Chart(salesCtx, {
+      type: "bar",
+      options: {
+        responsive: true,
+        title: {
+          display: false,
+          text: "",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let spendPerCustomerCtx = document
+      .getElementById("spendPerCustomerChart")
+      .getContext("2d");
+    let spendPerCustomerChart = new Chart(spendPerCustomerCtx, {
+      type: "line",
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "white",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let paymentSuccessCtx = document
+      .getElementById("paymentSuccessChart")
+      .getContext("2d");
+    let paymentSuccessChart = new Chart(paymentSuccessCtx, {
+      type: "pie",
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            labels: {
+              color: "white", // Cambia el color del texto de la leyenda a blanco
+            },
+          },
+        },
+        title: {
+          display: false,
+          text: "",
+        },
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 25,
+          },
+        },
+      },
+    });
+
+    // Price
+    let salesPriceCtx = document.getElementById("salesChartPrice").getContext("2d");
+    let salesChartPrice = new Chart(salesPriceCtx, {
+      type: "bar",
+      options: {
+        responsive: true,
+        title: {
+          display: false,
+          text: "",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let spendPerCustomerPriceCtx = document
+      .getElementById("spendPerCustomerChartPrice")
+      .getContext("2d");
+    let spendPerCustomerChartPrice = new Chart(spendPerCustomerPriceCtx, {
+      type: "line",
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "white",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let paymentSuccessPriceCtx = document
+      .getElementById("paymentSuccessChartPrice")
+      .getContext("2d");
+    let paymentSuccessChartPrice = new Chart(paymentSuccessPriceCtx, {
+      type: "pie",
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            labels: {
+              color: "white", // Cambia el color del texto de la leyenda a blanco
+            },
+          },
+        },
+        title: {
+          display: false,
+          text: "",
+        },
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 25,
+          },
+        },
+      },
+    });
+
+    // Cant month
+
+    let monthSalesCtx = document
+      .getElementById("monthSalesChart")
+      .getContext("2d");
+    let monthSalesChart = new Chart(monthSalesCtx, {
+      type: "bar",
+      options: {
+        responsive: true,
+        title: {
+          display: false,
+          text: "",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let monthSpendPerCustomerCtx = document
+      .getElementById("monthSpendPerCustomerChart")
+      .getContext("2d");
+    let monthSpendPerCustomerChart = new Chart(monthSpendPerCustomerCtx, {
+      type: "line",
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "white",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let monthPaymentSuccessCtx = document
+      .getElementById("monthPaymentSuccessChart")
+      .getContext("2d");
+    let monthPaymentSuccessChart = new Chart(monthPaymentSuccessCtx, {
+      type: "pie",
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            labels: {
+              color: "white", // Cambia el color del texto de la leyenda a blanco
+            },
+          },
+        },
+        title: {
+          display: false,
+          text: "",
+        },
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 25,
+          },
+        },
+      },
+    });
+
+// Price month
+    let monthSalesPriceCtx = document
+      .getElementById("monthSalesChartPrice")
+      .getContext("2d");
+    let monthSalesChartPrice = new Chart(monthSalesPriceCtx, {
+      type: "bar",
+      options: {
+        responsive: true,
+        title: {
+          display: false,
+          text: "",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let monthSpendPerCustomerPriceCtx = document
+      .getElementById("monthSpendPerCustomerChartPrice")
+      .getContext("2d");
+    let monthSpendPerCustomerChartPrice = new Chart(monthSpendPerCustomerPriceCtx, {
+      type: "line",
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "white",
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje X a blanco
+              beginAtZero: true,
+            },
+          },
+          y: {
+            ticks: {
+              color: "white", // Cambia el color del texto del eje Y a blanco
+              beginAtZero: true,
+            },
+          },
+        },
+      },
+    });
+    let monthPaymentSuccessPriceCtx = document
+      .getElementById("monthPaymentSuccessChartPrice")
+      .getContext("2d");
+    let monthPaymentSuccessChartPrice = new Chart(monthPaymentSuccessPriceCtx, {
+      type: "pie",
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            labels: {
+              color: "white", // Cambia el color del texto de la leyenda a blanco
+            },
+          },
+        },
+        title: {
+          display: false,
+          text: "",
+        },
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 25,
+          },
+        },
+      },
+    });
+    
+  </script>
+</div>
+
+
+{% endblock %}

@@ -23,7 +23,7 @@
         {% endif %}
         <div class="card-modul col-12 col-lg-4 col-md-5">
             <div class="card-modul-header">
-                <h5 class="m-0">Estadistica</h5>
+                <h5 class="m-0">Estadistica de ventas</h5>
             </div>
             <div class="card-modul-body">
                 <div class="card-modul-body text-center">
@@ -35,6 +35,21 @@
                 <a href="{% url 'statistics_orders' %}" class="btn  btn-info btn-modul-view">Acceder</a>
             </div>
         </div>
+        <div class="card-modul col-12 col-lg-4 col-md-5">
+            <div class="card-modul-header">
+                <h5 class="m-0">Estadistica de productos</h5>
+            </div>
+            <div class="card-modul-body">
+                <div class="card-modul-body text-center">
+                    
+                    <span class="text-light">Resumen estadístico de las ventas realizadas.</span>
+                    
+                </div>
+                {% comment %} btn-success {% endcomment %}
+                <a href="{% url 'product_statistics_orders' %}" class="btn  btn-info btn-modul-view">Acceder</a>
+            </div>
+        </div>
+        
         <div class="card-modul col-12 col-lg-4 col-md-5">
             <div class="card-modul-header">
                 <h5 class="m-0">Ventas</h5>

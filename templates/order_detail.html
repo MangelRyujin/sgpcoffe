@@ -65,8 +65,14 @@
                           </tr>
                           <tr role="row" class="even">
                             <td class="field-place text">
+                              <a href="#">Turno: </a> Turno {{order.shift.id}}
+                              del {{order.shift.in_date}} a las {{order.shift.in_time}} horas
+                            </td>
+                          </tr>
+                          <tr role="row" class="even">
+                            <td class="field-place text">
                               <a href="#">Creada el: </a> {{order.created_date}}
-                              a las {{order.created_time}}
+                              a las {{order.created_time}} horas
                             </td>
                           </tr>
                           <tr role="row" class="even">
@@ -215,14 +221,12 @@
                   <span class="cancel">{{item.cancel.cant}}</span></span
                 >
                 <p>
-                  Precio total:
+                  Precio total estimado:
                   <span class="h5 cancel">{{item.cancel.total_price}}</span> CUP
                 </p>
                 <h3 class="mt-1 cancel">Motivo</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Labore, aspernatur illum quas necessitatibus eligendi beatae
-                  aliquam expedita eveniet autem accusamus.
+                  Se cancelo por mal estado del queso
                 </p>
               </div>
               {% if item.add %}

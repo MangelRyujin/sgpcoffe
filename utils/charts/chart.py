@@ -1,3 +1,5 @@
+import calendar
+
 months = [
     "Enero", "Febrero", "Marzo", "Abril",
     "Mayo", "Junio", "Julio", "Agosto",
@@ -43,8 +45,21 @@ def generate_color_palette(amount):
 
 def get_month_dict():
     day_dict = dict()
-
+    
     for day in days:
+        day_dict[day] = 0
+
+    return day_dict
+
+def get_product_month_dict(year,month):
+    day_dict = dict()
+    day_month=[]
+    num_day = calendar.monthrange(year, month)[1]
+    for day_m in range(1, num_day + 1):
+        if day_m < 10:
+            day_month.append(f'0{day_m}')
+        else: day_month.append(f'{day_m}')
+    for day in day_month:
         day_dict[day] = 0
 
     return day_dict

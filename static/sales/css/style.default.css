@@ -5394,7 +5394,7 @@ textarea.form-control-lg {
 }
 
 .card-modul:hover{
-  transform: scale(1);
+  /* transform: scale(1); */
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(0, 0, 0, .125), 0 13px 22px rgba(0, 0, 0, .2) !important;
 }

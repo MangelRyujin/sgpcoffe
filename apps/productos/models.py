@@ -6,7 +6,16 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
-
+# StockCategory model
+class StockCategory(models.Model):
+    name = models.CharField('nombre', max_length=255, blank=False , null=False)
+    
+    class Meta:
+        verbose_name = "Categoría de almacenamiento"
+        verbose_name_plural = "Categorías de almacenamiento"
+    
+    def __str__(self):
+        return f'{self.name}'
 
 # Stock  model
 class Stock(models.Model):
@@ -20,6 +29,9 @@ class Stock(models.Model):
     stock=models.DecimalField('almacenamiento en stock', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
     measure_unit = models.CharField("unidad de medida",max_length=13, choices=MEASURE_UNIT_CHOICES, default='unidades') 
     expiration_date = models.DateField('Próximo a vencer',blank=True,null=True)
+    unit_price = models.DecimalField('precio por unidad', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
+    storage_threshold = models.PositiveIntegerField('umbral de stock',default=100,blank= False, null= False)
+    stock_category = models.ForeignKey(StockCategory,on_delete=models.CASCADE,blank=True,null=True,verbose_name='Categoría de almacenamiento' )
     
     class Meta:
         verbose_name = "Almacenamiento"
