@@ -7,12 +7,13 @@
   <div class="modal-dialog">
     <div class="modal-content modal-dark">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear cuenta</h1>
         <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="changelist-search" action=" {% url 'unpaid_orders_list' %}" class="form-group" method="POST">{% csrf_token %}
+      
         <div class="modal-body">
-          
+          <form id="changelist-search" action=" {% url 'unpaid_orders_list' %}" class="form-group" method="POST">{% csrf_token %}
+            <label for="table">Mesas disponibles</label>
           <select class="form-control search-filter  select2-hidden-accessible" name="table">
             {% if tables_form %}
               {% for table in tables_form %}
@@ -22,17 +23,19 @@
             <option value="">no existen mesas</option>
             {% endif %}
           </select>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            {% if tables_form %}
+              <button type="submit" class="btn btn-success-create">Crear</button>
+            {% else %}
+              <button type="submit" class="btn btn-success-create disabled">Crear</button>
+            {% endif %}
+           
+          </div>
+        </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-          {% if tables_form %}
-            <button type="submit" class="btn btn-success-create">Crear</button>
-          {% else %}
-            <button type="submit" class="btn btn-success-create disabled">Crear</button>
-          {% endif %}
-         
-        </div>
-      </form>
+        
+      
     </div>
   </div>
 </div>
@@ -151,16 +154,7 @@
                                         </div>
                                       </th>
     
-                                      <th
-                                        class="sorting"
-                                        tabindex="0"
-                                        rowspan="1"
-                                        colspan="1"
-                                      >
-                                        <div class="text">
-                                          <a href="#">Método de pago</a>
-                                        </div>
-                                      </th>
+                                      
                                       <th
                                         class="sorting"
                                         tabindex="0"
@@ -179,7 +173,7 @@
                                         colspan="1"
                                       >
                                         <div class="text">
-                                          <a href="#">Total cobrado</a>
+                                          <a href="#">Monto a cobrar</a>
                                         </div>
                                       </th>
                                     </tr>
@@ -189,13 +183,13 @@
                                       {% for order in pagination %}
                                           <tr role="row" class="even">
                                             <th class="field-name text">
-                                              <a href="{% url 'order_detail' pk=order.pk %}"
+                                              <a href="{% url 'unpaid_order_detail' pk=order.pk %}"
                                                 >Cuenta {{order.id}}</a
                                               >
                                             </th>
                                             <td class="field-place">{{order.user}}</td>
                                             <td class="field-place">{{order.table}}</td>
-                                            <td class="field-price">{{order.paid_method}}</td>
+                                            
                                             <td class="field-price">{{order.shift.in_date}}</td>
                                             <td class="field-price">{{order.total_paid}}</td>
                                           </tr>
@@ -209,7 +203,7 @@
                                           </th>
                                           <td class="field-place">-</td>
                                           <td class="field-place">-</td>
-                                          <td class="field-price">-</td>
+                                          
                                           <td class="field-price">-</td>
                                           <td class="field-price">-</td>
                                         </tr>

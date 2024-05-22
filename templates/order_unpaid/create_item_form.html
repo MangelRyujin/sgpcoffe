@@ -1,0 +1,75 @@
+{% load static %}
+
+<div  class="container-fluid">
+    
+    {% if product %}
+        <h1 >Producto {{product.name}}</h1>
+    {% endif %}
+    
+    
+    <form  class="form-group " method="post">
+        {% csrf_token %}
+        <table class="table  form-table  table-sm mt-2">
+            <thead class="form-group">
+                <tr>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                </tr>
+                </thead>
+                <tbody class="center">
+                    {% for field in form %}
+                        
+                            <td class="form-group">{{ field }}</td>
+                   
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+    
+    <table class="table form-table  table-sm mt-2">
+        <thead class="form-group">
+            <tr>
+                <th>Cantidad</th>
+                <th>Agregado</th>
+                <th>Remover</th>
+            </tr>
+            </thead>
+            <tbody >
+            {% for form_data in formset %}
+                <tr class="item">
+                    <td>
+                        {{ form_data.cant }}
+                    </td>
+                    <td>
+                        {{ form_data.add }}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm remove-form-row w-100"
+                                id="{{ formset.prefix }}">
+                          
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="9"
+                    style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
+                    <button type="button" class="btn btn-success-create add-form-row w-100"
+                            id="{{ formset.prefix }}">
+                       Añadir
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        {{ formset.management_form }}
+    </form>
+    
+    {% comment %} <form method="post">
+        {% csrf_token %}
+        {{formAdd.as_p}}
+    
+    </form> {% endcomment %}
+    <script src="{% static 'sales/js/formset.js' %}"></script>
+  </div>

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from utils.validates.validates import validate_letters_numbers_and_spaces
 from django.core.validators import MinLengthValidator
@@ -180,6 +181,9 @@ class Product(models.Model):
         """Unicode representation of Product."""
         return f'{self.name}'
 
+    @property
+    def discount_price(self):
+        return self.price - ((self.price*Decimal(self.discount))/100)
 
 
 # Product add relation ManyToMany

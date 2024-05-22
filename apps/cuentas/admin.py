@@ -64,7 +64,7 @@ class OrderAdmin(admin.ModelAdmin):
 #                ]
  
     
-# admin.site.register(Item)
-# admin.site.register(AddItem)
-# admin.site.register(UtilsItem)
+admin.site.register(Item)
+admin.site.register(AddItem)
+admin.site.register(UtilsItem)
 

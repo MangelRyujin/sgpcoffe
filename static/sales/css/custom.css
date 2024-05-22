@@ -267,6 +267,7 @@
 
 .modal-dark .btn-danger{
     background: #dc3545 !important;
+    border:  none !important;
     border-radius: .25rem !important;
     transition: .3s all;
 }
@@ -275,9 +276,14 @@
 .modal-dark .btn-danger:active,
 .modal-dark .btn-danger:focus{
     background: #dc354690 !important;
+    border-color:none !important;
     
 }
 
 
-
-      
+.modal-dark input,
+.modal-dark select{
+    color:#000 !important;
+    border: 2px solid #000 !important;
+    border-radius: .25rem !important;
+}
