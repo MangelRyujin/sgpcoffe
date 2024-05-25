@@ -7,7 +7,7 @@
     {% endif %}
     
     
-    <form  class="form-group " method="post">
+    <form  class="form-group " method="POST">
         {% csrf_token %}
         <table class="table  form-table  table-sm mt-2">
             <thead class="form-group">
@@ -64,6 +64,10 @@
             </tbody>
         </table>
         {{ formset.management_form }}
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success-create">Crear</button>
+          </div>    
     </form>
     
     {% comment %} <form method="post">

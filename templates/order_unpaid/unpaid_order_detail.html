@@ -43,10 +43,10 @@
           <div  id="CreateFormItem"></div>
           
         </div>
-        <div class="modal-footer">
+        {% comment %} <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" class="btn btn-success-create">Crear</button>
-        </div>
+        </div> {% endcomment %}
       
     </div>
   </div>
@@ -268,6 +268,6 @@
     </div>
   </div>
 </div>
-<script src="{% static 'sales/sales/js/print.js' %}"></script>
+<script src="{% static 'sales/js/print.js' %}"></script>
   {% endif %} {% endblock %}
 
