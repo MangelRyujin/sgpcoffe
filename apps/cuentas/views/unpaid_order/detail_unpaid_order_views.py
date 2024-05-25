@@ -30,7 +30,8 @@ def form_item_create_view(request, pk):
     AddItemFormset = modelformset_factory(AddItem, form=AddItemForm)
     # Validar los formularios 
     
-    # if request.method == "POST":
+    if request.method == "POST":
+        print("hola")
     #     form = ItemForm(request.POST)
     #     if form.is_valid():
     #         item = form.save(commit=False)  # Guarda el objeto pero no lo guarda en la base de datos aún
