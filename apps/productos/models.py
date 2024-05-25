@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
-# StockCategory model
+# StockCategory model --
 class StockCategory(models.Model):
     name = models.CharField('nombre', max_length=255, blank=False , null=False)
     
