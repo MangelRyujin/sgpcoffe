@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.admin import site
-from apps.cuentas.models import Order,Item,AddItem,Shift, UtilsItem
+from django.contrib.admin import DateFieldListFilter
+
+from apps.cuentas.models import Order, Item, AddItem, Shift, UtilsItem, CashOperation
 # Register your models here.
 
 # # Admin add items
@@ -48,7 +50,24 @@ class OrderAdmin(admin.ModelAdmin):
     list_per_page = 100
     # inlines = [ItemInline,]
  
-
+@admin.register(CashOperation)
+class CashOperationAdmin(admin.ModelAdmin):
+    list_display = ('operation_type', 'shift', 'payment_type','description', 'user' , 'created_date')
+    list_select_related = ["shift", "user"]
+    search_fields = ('operation_type', 'user__username', 'payment_type', 'description', 'created_date')
+    list_filter = (
+        'operation_type',
+        'shift',
+        'payment_type',
+        'description',
+        'user',
+        ('created_date', DateFieldListFilter),
+    )
+        
+    list_per_page = 100
+    
+    def has_change_permission(self, request, obj=None):
+        return False
     
 
 

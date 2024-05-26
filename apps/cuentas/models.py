@@ -16,8 +16,8 @@ class Shift(models.Model):
     out_time = models.TimeField('Hora de fin de turno')
     active = models.BooleanField("activo",default=True)
     
-    
-    
+    # Recaudación total
+    # y desglosada en efectivo y transferencia
     
     class Meta:   
         verbose_name = 'Turno'
@@ -25,6 +25,44 @@ class Shift(models.Model):
 
     def __str__(self) -> str:
         return f'Turno {self.pk}'
+
+
+# Modelo de gastos/ingresos en el turno (movimiento de dinero)
+'''
+No edición en el admin
+turno
+usuario
+tipo (ingreso o gasto)
+descripcion null
+monto (decimal)
+metodo de pago (tranf o efectivo)
+fecha y hora
+'''
+class CashOperation(models.Model):
+    MOVEMENT_TYPES_CHOICES = (
+        ('ingreso', 'Ingreso'),
+        ('gasto', 'Gasto'),
+    )
+    PAYMENT_METHODS_CHOICES = (
+        ('transferencia', 'Transferencia'),
+        ('efectivo', 'Efectivo'),
+    )
+    shift = models.ForeignKey(Shift,on_delete=models.CASCADE,null=True,blank=True,verbose_name=_('Turno'), related_name='movimientos') 
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('Usuario'), related_name='movimientos')
+    operation_type = models.CharField('Tipo de movimiento',max_length=13, choices=MOVEMENT_TYPES_CHOICES, default='ingreso')
+    payment_type = models.CharField('Método de pago',max_length=13, choices=PAYMENT_METHODS_CHOICES, default='efectivo')
+    amount = models.DecimalField('Monto', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
+    description = models.TextField('Descripción',null=True,blank=True)
+    created_date = models.DateField('Día de registro',auto_now_add=True,null=True)
+    
+    def __str__(self) -> str:
+        return f'Turno {self.shift.pk}. Movimiento: {self.operation_type}, en {self.payment_type}, en un monto de {self.amount}'
+    
+    class Meta:
+        verbose_name = 'Movimiento de caja'
+        verbose_name_plural = 'Movimientos de caja'
+    
+    
     
 # Order model.
 class Order(models.Model):
@@ -38,7 +76,7 @@ class Order(models.Model):
         ('ambos', 'ambos'),
     )
     is_paid = models.CharField('estado',max_length=9, choices=PAID_CHOICES, default='no pagada') 
-    paid_method = models.CharField('mótodo de pago',max_length=13, choices=PAID_METHODS_CHOICES, default='efectivo') 
+    paid_method = models.CharField('método de pago',max_length=13, choices=PAID_METHODS_CHOICES, default='efectivo') 
     transfer = models.DecimalField('Pagado por transferencia', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     cash = models.DecimalField('Pagado por efectivo', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     shift = models.ForeignKey(Shift,on_delete=models.CASCADE,null=True,blank=True,verbose_name=_('turno')) 

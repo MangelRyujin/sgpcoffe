@@ -132,7 +132,9 @@ JAZZMIN_SETTINGS = {
         "mesas.table":"fa fa-square",
         "cuentas.order":"fa fa-credit-card",
         "cuentas.pedidos":"fa fa-square",
+        "cuentas.cashoperation":"fa fa-cash-register",
         "productos.utilproduct":"fa fa-database",
+        
         
     },
     
