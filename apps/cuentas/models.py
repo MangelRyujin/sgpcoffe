@@ -140,7 +140,7 @@ class AddItem(models.Model):
         verbose_name_plural = 'Agregados de pedidos'
 
     def __str__(self) -> str:
-        return f'Agregado {self.add.name}'
+        return f'Item agregado {self.add.name}'
 
 
 # Order UtilsItem model.

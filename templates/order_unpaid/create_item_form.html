@@ -7,7 +7,7 @@
     {% endif %}
     
     
-    <form  class="form-group " method="POST">
+    <form action="{% url 'create_item_form' order=order pk=product.id%}"  class="form-group " method="POST">
         {% csrf_token %}
         <table class="table  form-table  table-sm mt-2">
             <thead class="form-group">
@@ -70,10 +70,6 @@
           </div>    
     </form>
     
-    {% comment %} <form method="post">
-        {% csrf_token %}
-        {{formAdd.as_p}}
-    
-    </form> {% endcomment %}
+
     <script src="{% static 'sales/js/formset.js' %}"></script>
   </div>

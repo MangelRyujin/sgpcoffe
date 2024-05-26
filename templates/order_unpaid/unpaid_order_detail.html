@@ -72,13 +72,13 @@
         <div  class="d-flex overflow-auto pb-3">
                 {% for category in categories %}
                     {% comment %} <a action="post" href="#"  style="width: 18rem;" class="btn btn-success-create m-3">{{category.name}}</a> {% endcomment %}
-                    <form id="terminadoForm_{{category.id}}" class="m-2" method="post" hx-post="{% url 'product_sell_list' %}"hx-target="#contenido" >
+                    <form id="terminadoForm_{{category.id}}" class="m-2" method="post" hx-post="{% url 'product_sell_list' order=order.id %}"hx-target="#contenido" >
                         {% csrf_token %}
                         <input type="hidden" name="category" value="{{ category.id }}">
                         <button type="submit" class="btn btn btn-primary float-right ">{{category.name}}</button>
                     </form>
                 {% endfor %}
-                <div hx-get="{% url 'product_sell_list' %}" hx-target="#contenido" hx-trigger="load"></div>
+                <div hx-get="{% url 'product_sell_list' order=order.id %}" hx-target="#contenido" hx-trigger="load"></div>
               </div>
         {% endif %}
         <div id="contenido"></div>

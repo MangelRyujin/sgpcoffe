@@ -4,7 +4,7 @@
             {% for product in products %}
                 <div class="card-moduls m-2" style="width: 18rem; min-width:18rem">
                     <div class="card-body p-3">
-                    <h5 class="card-title text-light mb-2">{{product.name}}</h5>
+                    <h5 class="card-title text-light mb-2">{{product.name}} order {{order}}</h5>
                     {% if product.discount %}
                         <p class="card-text text-light mb-2">{{product.discount_price}} CUP</p>
                     {% else %}
@@ -16,7 +16,7 @@
                         class="btn btn-success-create" 
                         data-bs-toggle="modal" 
                         data-bs-target="#staticBackdropAdd"
-                        hx-get="{% url 'create_item_form' pk=product.id%}"
+                        hx-get="{% url 'create_item_form' order=order pk=product.id%}"
                         hx-swap="innerHTML"
                         hx-target="#CreateFormItem">
                     <i class="fa fa-plus-circle mr-2"></i>Añadir
