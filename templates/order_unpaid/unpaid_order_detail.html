@@ -205,7 +205,8 @@
       {% for item in items_delivered %}
             <div class="card-item-order p-3 card mt-1 col-12">
               <div class="card-item-order-header card-header">
-                <h3 class="mt-1 delivered">{{item.delivered.product.name}}</h3>
+                <h1 class="h1 mt-1 delivered">{{item.delivered.product.name}}</h1>
+                <h3 class="mt-1 delivered">{{item.delivered.state}}</h3>
                 <span
                   >Cantidad:
                   <span class="delivered">{{item.delivered.cant}}</span></span
@@ -227,24 +228,11 @@
               {% if item.add %}
               <div class="card-item-order-header card-header border-bottom">
                 <h2 class="h5 fw-normal mb-0">
-                  <a
-                    class="card-collapse-link d-block text-light"
-                    data-bs-toggle="collapse"
-                    href="#{{ item.delivered.id }}"
-                    aria-expanded="true"
-                    >agregados
-                    <div class="badge position-absolute end-0 me-4 text-base">
-                      {{item.add|length}}
-                    </div></a
-                  >
+                    Agregados
                 </h2>
               </div>
               <div class="card-body-0">
-                <div
-                  class="collapse"
-                  id="{{ item.delivered.id }}"
-                  role="tabpanel"
-                >
+               
                   <!-- Item-->
                   {% for add in item.add %}
                     <div class="p-3 border-bottom border-gray-200">
@@ -258,7 +246,7 @@
                       </div>
                     </div>
                   {% endfor %}
-              </div>
+              
               </div>
               {% endif %}
             </div>

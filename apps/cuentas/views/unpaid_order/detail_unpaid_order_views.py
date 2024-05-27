@@ -28,32 +28,32 @@ def unpaid_order_detail_view(request, pk):
 def form_item_create_view(request,pk,order):
     product = Product.objects.get(pk=pk)
     AddItemFormset = modelformset_factory(AddItem, form=AddItemForm)
+    form = ItemForm()
+    formset = AddItemFormset(request.POST or None, queryset= AddItem.objects.none(), prefix='addItem')
     # Validar los formularios 
     order_instance = Order.objects.get(pk=order)
     
     if request.method == "POST":
         print("hola")
         form = ItemForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and formset.is_valid():
             item = form.save(commit=False)  # Guarda el objeto pero no lo guarda en la base de datos aún
             item.product = product  # Asigna el producto al que pertenece el ítem
             item.order = order_instance
-            # item.save()
+            item.save()
     #         item.save()  # Guarda el objeto en la base de datos
             # Procesamiento del formset
-            formset = AddItemFormset(request.POST, queryset=AddItem.objects.none(), prefix='addItem')
-            if formset.is_valid():
-                for form_data in formset:
-                    if form_data.is_valid():
-                        form_data.instance.item=item
-                        print(form_data.instance)
-            else:
-                print(formset.errors)
+            # formset = AddItemFormset(request.POST, queryset=AddItem.objects.none(), prefix='addItem')
+            for form_data in formset:
+                    form_data.instance.item=item
+                    form_data.instance.save()
+                    print(form_data.instance)
+        else:
+            print(formset.errors)
     #                     form_data.instance.product = product  # Asigna el producto al que pertenece el ítem
     #                     form_data.save()  # Guarda el objeto en la base de datos
         return redirect(f'/ventas/gestionar/cuenta/{order}')
-    form = ItemForm()
-    formset = AddItemFormset(request.POST or None, queryset= AddItem.objects.none(), prefix='addItem')	
+    
     context = {"product": product, "form": form, "formset": formset ,"order":order}
 
     return render(request, 'order_unpaid/create_item_form.html',context)
