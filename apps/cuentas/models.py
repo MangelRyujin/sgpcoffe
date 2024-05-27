@@ -4,9 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from apps.mesas.models import Table
 from apps.productos.models import Add, Product, UtilProduct
+from django.contrib import admin
+from django.db.models import Sum
+from decimal import Decimal 
+
+
+
 User = get_user_model()
-
-
 
 # Shift model.
 class Shift(models.Model):
@@ -16,8 +20,44 @@ class Shift(models.Model):
     out_time = models.TimeField('Hora de fin de turno')
     active = models.BooleanField("activo",default=True)
     
-    # Recaudación total
-    # y desglosada en efectivo y transferencia
+    # Balance de efectivo del turno por movimientos de caja y ventas
+    @property
+    @admin.display(
+        description="Saldo en efectivo",
+        boolean=True,
+    )
+    def efectivo(self):
+        total_ventas_efectivo = self.orders.all().aggregate(Sum('cash'))['cash__sum'] or Decimal(0.0)
+        total_efectivo_ingreso = self.movimientos.filter(payment_type='efectivo').filter(operation_type='ingreso').aggregate(Sum('amount'))['amount__sum'] or Decimal(0.0)
+        total_efectivo_gasto = self.movimientos.filter(payment_type='efectivo').filter(operation_type='gasto').aggregate(Sum('amount'))['amount__sum'] or Decimal(0.0)
+        return Decimal(total_ventas_efectivo + total_efectivo_ingreso - total_efectivo_gasto).quantize(Decimal('.01'))
+    
+    # Balance de transferencias del turno por movimientos de caja y ventas
+    @property
+    @admin.display(
+        description="Saldo en transferencias",
+        boolean=True,
+    )
+    def transferencia(self):
+        total_ventas_transferencia = self.orders.all().aggregate(Sum('transfer'))['transfer__sum'] or Decimal(0.0)
+        total_transferencia_ingreso = self.movimientos.filter(payment_type='transferencia').filter(operation_type='ingreso').aggregate(Sum('amount'))['amount__sum'] or 0
+        total_transferencia_gasto = self.movimientos.filter(payment_type='transferencia').filter(operation_type='gasto').aggregate(Sum('amount'))['amount__sum'] or 0
+        return Decimal(total_ventas_transferencia + total_transferencia_ingreso - total_transferencia_gasto).quantize(Decimal('.01'))
+    
+    # Balance de la caja en el turno por movimientos de caja y ventas
+    @property
+    @admin.display(
+        description="Recaudación total en el turno",
+        boolean=True,
+    )
+    def balance(self):
+        total_ventas_efectivo = self.orders.all().aggregate(Sum('cash'))['cash__sum'] or Decimal(0.0)
+        total_ventas_transferencia = self.orders.all().aggregate(Sum('transfer'))['transfer__sum'] or Decimal(0.0)
+        total_ingresos_movimientos = self.movimientos.filter(operation_type='ingreso').aggregate(Sum('amount'))['amount__sum'] or 0
+        total_gastos_movimientos = self.movimientos.filter(operation_type='gasto').aggregate(Sum('amount'))['amount__sum'] or 0
+        total = total_ventas_efectivo + total_ventas_transferencia + total_ingresos_movimientos - total_gastos_movimientos
+        return Decimal(total).quantize(Decimal('.01'))
+    
     
     class Meta:   
         verbose_name = 'Turno'
@@ -79,7 +119,7 @@ class Order(models.Model):
     paid_method = models.CharField('método de pago',max_length=13, choices=PAID_METHODS_CHOICES, default='efectivo') 
     transfer = models.DecimalField('Pagado por transferencia', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     cash = models.DecimalField('Pagado por efectivo', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
-    shift = models.ForeignKey(Shift,on_delete=models.CASCADE,null=True,blank=True,verbose_name=_('turno')) 
+    shift = models.ForeignKey(Shift,on_delete=models.CASCADE,null=True,blank=True,verbose_name=_('turno'), related_name='orders') 
     created_date = models.DateField('dia de apertura',auto_now_add=True,null=True)
     created_time = models.TimeField('hora de apertura',auto_now_add=True,null=True)
     table = models.ForeignKey(Table,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('mesa')) 

@@ -24,7 +24,7 @@ from apps.cuentas.models import Order, Item, AddItem, Shift, UtilsItem, CashOper
 
 @admin.register(Shift)
 class ShiftAdmin(admin.ModelAdmin):
-    list_display = ['id','active','in_date','in_time','out_date','out_time']
+    list_display = ['id','active','in_date','in_time','out_date','out_time', 'efectivo', 'transferencia', 'balance']
     search_fields = ['in_date']
     list_per_page = 100
     
@@ -52,7 +52,7 @@ class OrderAdmin(admin.ModelAdmin):
  
 @admin.register(CashOperation)
 class CashOperationAdmin(admin.ModelAdmin):
-    list_display = ('operation_type', 'shift', 'payment_type','description', 'user' , 'created_date')
+    list_display = ('operation_type', 'shift', 'payment_type', 'amount', 'description', 'user' , 'created_date')
     list_select_related = ["shift", "user"]
     search_fields = ('operation_type', 'user__username', 'payment_type', 'description', 'created_date')
     list_filter = (
