@@ -25,44 +25,46 @@
                 </tbody>
             </table>
         
-    
-    <table class="table form-table  table-sm mt-2">
-        <thead class="form-group">
-            <tr>
-                <th>Cantidad</th>
-                <th>Agregado</th>
-                <th>Remover</th>
-            </tr>
-            </thead>
-            <tbody >
-            {% for form_data in formset %}
-                <tr class="item">
-                    <td>
-                        {{ form_data.cant }}
-                    </td>
-                    <td>
-                        {{ form_data.add }}
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm remove-form-row w-100"
+    {% if formset %}
+        <table class="table form-table  table-sm mt-2">
+            <thead class="form-group">
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Agregado</th>
+                    <th>Remover</th>
+                </tr>
+                </thead>
+                <tbody >
+                {% for form_data in formset %}
+                    <tr class="item">
+                        <td>
+                            {{ form_data.cant }}
+                        </td>
+                        <td>
+                            {{ form_data.add }}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm remove-form-row w-100"
+                                    id="{{ formset.prefix }}">
+                            
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="9"
+                        style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
+                        <button type="button" class="btn btn-success-create add-form-row w-100"
                                 id="{{ formset.prefix }}">
-                          
-                            Delete
+                        Añadir
                         </button>
                     </td>
                 </tr>
-            {% endfor %}
-            <tr>
-                <td colspan="9"
-                    style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
-                    <button type="button" class="btn btn-success-create add-form-row w-100"
-                            id="{{ formset.prefix }}">
-                       Añadir
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+    {% endif %}
+    
         {{ formset.management_form }}
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

@@ -100,7 +100,6 @@ class Ingredient(models.Model):
 class Add(models.Model):
     """Model definition for Add."""
     name = models.CharField('nombre', max_length=255, blank=False , null=False)
-    price = models.DecimalField('precio', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
     categories = models.ManyToManyField(Category,blank=True,verbose_name=_('categorias') )
     stock = models.ForeignKey(Stock,on_delete=models.CASCADE,blank=False,verbose_name=_('almacenamiento stock') )
     

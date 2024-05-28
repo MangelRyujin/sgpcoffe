@@ -27,11 +27,17 @@ def unpaid_order_detail_view(request, pk):
 @login_required(login_url='/admin/login/')
 def form_item_create_view(request,pk,order):
     product = Product.objects.get(pk=pk)
-    AddItemFormset = modelformset_factory(AddItem, form=AddItemForm)
+    form_item_add=AddItemForm(request.POST or None,product.id)
+    print(form_item_add)
+    AddItemFormset = modelformset_factory(AddItem, form=form_item_add)
     form = ItemForm()
-    formset = AddItemFormset(request.POST or None, queryset= AddItem.objects.none(), prefix='addItem')
+    
     # Validar los formularios 
     order_instance = Order.objects.get(pk=order)
+    formset=[]
+    if product.add_relations.all():
+        formset = AddItemFormset(request.POST or None, queryset= AddItem.objects.none(), prefix='addItem')
+        
     
     if request.method == "POST":
         print("hola")

@@ -59,7 +59,7 @@ class IngredientAdmin(admin.ModelAdmin):
 # Admin Add 
 @admin.register(Add)
 class AddAdmin(admin.ModelAdmin):
-    list_display = ['name','price','stock','disponible']
+    list_display = ['name','stock','disponible']
     search_fields = ['name','stock__name',]
     readonly_fields = ('disponible',)
     list_per_page = 100
