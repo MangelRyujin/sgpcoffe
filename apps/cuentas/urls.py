@@ -5,6 +5,7 @@ from apps.cuentas.views.charts.charts_month_data_views import get_day_sales_char
 from apps.cuentas.views.detail_order_views import order_detail_view
 from apps.cuentas.views.list_order_views import order_view
 from apps.cuentas.views.unpaid_order.detail_unpaid_order_views import form_item_create_view, product_sell_view, unpaid_order_detail_view
+from apps.cuentas.views.unpaid_order.items_views import form_item_delete_view,form_create_add_item_view
 from apps.cuentas.views.unpaid_order.list_unpaid_order_views import unpaid_order_view
 
 
@@ -12,6 +13,9 @@ from apps.cuentas.views.unpaid_order.list_unpaid_order_views import unpaid_order
 urlpatterns = [
     path('cuentas/',order_view,name='orders_list'),
     path('cuenta/<int:pk>',order_detail_view,name='order_detail'),
+    path('cuenta/<int:order>/item/<int:pk>',form_item_delete_view,name='delete_item_form'),
+    path('cuenta/<int:order>/item/<int:pk>/cancel',form_item_delete_view,name='cancel_item_form'),
+    path('cuenta/<int:order>/item/<int:pk>/add/create',form_create_add_item_view,name='create_add_item_form'),
     path('gestionar/cuentas/',unpaid_order_view,name='unpaid_orders_list'),
     path('gestionar/cuenta/<int:pk>',unpaid_order_detail_view,name='unpaid_order_detail'),
     path('gestionar/cuenta/<int:order>/product/<int:pk>',form_item_create_view,name='create_item_form'),

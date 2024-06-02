@@ -152,28 +152,18 @@
                   >
                   CUP
                 </p>
+                {% if item.add %}
+                  <h2 class="h5 pt-3 fw-normal delivered mb-0">
+                    Agregados
+                  </h2>
+                {% endif %}
               </div>
               {% if item.add %}
-              <div class="card-item-order-header card-header border-bottom">
-                <h2 class="h5 fw-normal mb-0">
-                  <a
-                    class="card-collapse-link d-block text-light"
-                    data-bs-toggle="collapse"
-                    href="#{{ item.delivered.id }}"
-                    aria-expanded="true"
-                    >agregados
-                    <div class="badge position-absolute end-0 me-4 text-base">
-                      {{item.add|length}}
-                    </div></a
-                  >
-                </h2>
-              </div>
+              
+                
+
               <div class="card-body-0">
-                <div
-                  class="collapse"
-                  id="{{ item.delivered.id }}"
-                  role="tabpanel"
-                >
+                
                   <!-- Item-->
                   {% for add in item.add %}
                     <div class="p-3 border-bottom border-gray-200">
@@ -187,7 +177,7 @@
                       </div>
                     </div>
                   {% endfor %}
-              </div>
+              
               </div>
               {% endif %}
             </div>
@@ -228,24 +218,18 @@
                 <p>
                   Se cancelo por mal estado del queso
                 </p>
+                {% if item.add %}
+                <h2 class="h5 pt-3 fw-normal cancel mb-0">
+                  Agregados
+                </h2>
+                {% endif %}
               </div>
               {% if item.add %}
-              <div class="card-item-order-header card-header border-bottom">
-                <h2 class="h5 fw-normal mb-0">
-                  <a
-                    class="card-collapse-link d-block text-light"
-                    data-bs-toggle="collapse"
-                    href="#{{ item.cancel.id }}"
-                    aria-expanded="true"
-                    >agregados
-                    <div class="badge position-absolute end-0 me-4 text-base">
-                      {{item.add|length}}
-                    </div></a
-                  >
-                </h2>
-              </div>
+             
+                
+             
               <div class="card-body-0">
-                <div class="collapse" id="{{ item.cancel.id }}" role="tabpanel">
+               
                   <!-- Item-->
                   {% for add in item.add %}
                     <div class="p-3 border-bottom border-gray-200">
@@ -259,7 +243,7 @@
                       </div>
                     </div>
                   {% endfor %}
-                </div>
+          
                 </div>
                 {% endif %}
               </div>

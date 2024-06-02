@@ -12,12 +12,15 @@ class ItemForm(forms.ModelForm):
 		}
         
 class AddItemForm(forms.ModelForm):
+    
     class Meta:
         model = AddItem
         fields = ['cant', 'add']
         
     def __init__(self, *args, product_id=None, **kwargs):
         super().__init__(*args, **kwargs)
+        print("id del producto")
+        print(product_id)
         if product_id:
             # Obtener todas las relaciones ProductAddRelation para el producto dado
             relations = ProductAddRelation.objects.filter(product=product_id)

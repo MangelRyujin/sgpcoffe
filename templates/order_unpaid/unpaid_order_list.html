@@ -50,9 +50,16 @@
           </div>
         </div>
         <div class="col-12 col-md-auto d-flex justify-content-end align-items-center">
-          <button type="button" class="btn btn-success-create" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            <i class="fa fa-plus-circle mr-2"></i>Crear cuenta
-          </button>
+          {% if shift %}
+            <button type="button" class="btn btn-success-create " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <i class="fa fa-plus-circle mr-2"></i>Crear cuenta
+            </button>
+          {% else %}
+            <button type="button" class="btn btn-success-create disabled" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <i class="fa fa-plus-circle mr-2"></i>Crear cuenta
+            </button>
+          {% endif %}
+          
         </div>
       </div>
       <div class="content">

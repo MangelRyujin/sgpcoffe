@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block contend %} {% if order %}
 
-{% comment %} Modal Print {% endcomment %}
+<!-- Modal print-->
 <div class="modal  fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content modal-dark">
@@ -29,8 +29,8 @@
 </div>
 
 
-{% comment %} Modal add {% endcomment %}
 
+<!-- Modal create item-->
 <div class="modal  fade" id="staticBackdropAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content modal-dark">
@@ -51,6 +51,42 @@
     </div>
   </div>
 </div>
+
+<!-- Modal delete item-->
+<div class="modal  fade" id="staticBackdropDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dark">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminar pedido</h1>
+        <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+        <div  class="modal-body">
+          <div  id="DeleteFormItem"></div>
+          
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal create add item-->
+<div class="modal  fade" id="staticBackdropAddItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dark">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir agregado</h1>
+        <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+        <div  class="modal-body">
+          <div  id="AddItemFormItem"></div>
+          
+        </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div class="content-wrapper" style="min-height: 520.438px">
   <div class="container-fluid p-3">
@@ -113,7 +149,7 @@
                               colspan="1"
                             >
                               <div class="text">
-                                <a href="{% url 'order_detail' pk=order.pk %}"
+                                <a href="#"
                                   >{{order}}</a
                                 >
                               </div>
@@ -174,38 +210,30 @@
     </div>
   </div>
   <div class="container-fluid p-3">
-    
-      {% comment %} <div class="col-12 col-md-auto d-flex justify-content-end align-items-center">
-        <button 
-            type="button" 
-            class="btn btn-success-create" 
-            data-bs-toggle="modal" 
-            data-bs-target="#staticBackdropAdd"
-            hx-get="{% url 'create_item_form' pk=1%}"
-            hx-swap="innerHTML"
-            hx-target="#CreateFormItem">
-          <i class="fa fa-plus-circle mr-2"></i>Crear pedido
-        </button>
-      </div> {% endcomment %}
-      {% comment %} <div class="col-12">
-        <form method="post">
-          {% csrf_token %}
-          {% for field in form %}
-              <div class="fieldWrapper">
-                  {{ field.errors }}
-                  {{ field.label_tag }} {{ field }}
-              </div>
-          {% endfor %}    
-        </div>
-          <button class="btn btn-success-create" type="submit">Enviar</button>
-        </form>
-      </div> {% endcomment %}
-     
-      <div class="container-fluid ">
+      <div class="row  p-3">
       {% for item in items_delivered %}
-            <div class="card-item-order p-3 card mt-1 col-12">
+            <div class="col-12 col-md-6">
+              <div class="card-item-order p-3 card col-12">
+
               <div class="card-item-order-header card-header">
-                <h1 class="h1 mt-1 delivered">{{item.delivered.product.name}}</h1>
+                <div class="col-12 col-md-auto d-flex justify-content-between align-items-center">
+                  <h1 class="h2 delivered">{{item.delivered.product.name}}</h1>
+                  {% if item.delivered.state != "cancelado" %}
+                    <button 
+                    type="button" 
+                    class="fa fa-times  btn btn-danger"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#staticBackdropDelete"
+                    hx-get="{% url 'delete_item_form' order=order.id pk=item.delivered.id %}"
+                    hx-swap="innerHTML"
+                    hx-target="#DeleteFormItem"></button>
+                  {% else %}
+                    <button 
+                    type="button" 
+                    class="fa fa-times disabled btn btn-danger"
+                    ></button>
+                  {% endif %}
+                </div>
                 <h3 class="mt-1 delivered">{{item.delivered.state}}</h3>
                 <span
                   >Cantidad:
@@ -219,18 +247,39 @@
                   CUP
                 </p>
                 <div class="col-12 col-md-auto d-flex justify-content-end align-items-center">
-                  <button type="button" class="btn btn-success-create" data-bs-toggle="modal" data-bs-target="#staticBackdropAdd">
-                    <i class="fa fa-plus-circle mr-2"></i>Agregados
-                  </button>
+                  {% if item.delivered.state != "finalizado" %}
+                    <button type="button" class="btn btn-primary disabled  float-right">
+                      Entregar
+                    </button>
+                  {% else %}
+                    <button type="button" class="btn btn-primary float-right">
+                      Entregar
+                    </button>
+                  {% endif %}
+                  
+                </div>
+                
+                <div class="col-12 col-md-auto d-flex justify-content-between align-items-center pt-3">
+                  
+                  <h2 class="h5 fw-normal mb-0">
+                    Agregados
+                </h2>
+                {% if item.delivered.state == "ordenado" %}
+                  <button type="button" 
+                          class="btn btn-success-create" 
+                          data-bs-toggle="modal" 
+                          data-bs-target="#staticBackdropAddItem"
+                          hx-get="{% url 'create_add_item_form' order=order.id pk=item.delivered.id%}"
+                          hx-swap="innerHTML"
+                          hx-target="#AddItemFormItem">
+                      <i class="fa fa-plus-circle mr-2"></i>Añadir
+                    </button>
+                  {% endif %}
+                  
                 </div>
               </div>
 
               {% if item.add %}
-              <div class="card-item-order-header card-header border-bottom">
-                <h2 class="h5 fw-normal mb-0">
-                    Agregados
-                </h2>
-              </div>
               <div class="card-body-0">
                
                   <!-- Item-->
@@ -250,7 +299,7 @@
               </div>
               {% endif %}
             </div>
-
+          </div>
             {% endfor %}
           </div>
     </div>

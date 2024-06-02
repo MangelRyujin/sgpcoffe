@@ -9,8 +9,7 @@ from apps.productos.models import Category, Product
 
 @login_required(login_url='/admin/login/')
 def unpaid_order_detail_view(request, pk):
-    order = Order.objects.filter(pk=pk).first()
-    products= Product.objects.filter(active=True)
+    order = Order.objects.get(pk=pk)
     categories= Category.objects.filter(type="vendible")
     items_delivered = []
     for item in Item.objects.filter(order=order):
@@ -27,40 +26,19 @@ def unpaid_order_detail_view(request, pk):
 @login_required(login_url='/admin/login/')
 def form_item_create_view(request,pk,order):
     product = Product.objects.get(pk=pk)
-    form_item_add=AddItemForm(request.POST or None,product.id)
-    print(form_item_add)
-    AddItemFormset = modelformset_factory(AddItem, form=form_item_add)
-    form = ItemForm()
-    
-    # Validar los formularios 
+    form = ItemForm() 
     order_instance = Order.objects.get(pk=order)
-    formset=[]
-    if product.add_relations.all():
-        formset = AddItemFormset(request.POST or None, queryset= AddItem.objects.none(), prefix='addItem')
-        
-    
     if request.method == "POST":
         print("hola")
         form = ItemForm(request.POST)
-        if form.is_valid() and formset.is_valid():
-            item = form.save(commit=False)  # Guarda el objeto pero no lo guarda en la base de datos aún
-            item.product = product  # Asigna el producto al que pertenece el ítem
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.product = product
             item.order = order_instance
             item.save()
-    #         item.save()  # Guarda el objeto en la base de datos
-            # Procesamiento del formset
-            # formset = AddItemFormset(request.POST, queryset=AddItem.objects.none(), prefix='addItem')
-            for form_data in formset:
-                    form_data.instance.item=item
-                    form_data.instance.save()
-                    print(form_data.instance)
-        else:
-            print(formset.errors)
-    #                     form_data.instance.product = product  # Asigna el producto al que pertenece el ítem
-    #                     form_data.save()  # Guarda el objeto en la base de datos
         return redirect(f'/ventas/gestionar/cuenta/{order}')
     
-    context = {"product": product, "form": form, "formset": formset ,"order":order}
+    context = {"product": product, "form": form,"order":order}
 
     return render(request, 'order_unpaid/create_item_form.html',context)
 

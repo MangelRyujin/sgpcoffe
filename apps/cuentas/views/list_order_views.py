@@ -12,7 +12,7 @@ def order_view(request):
     get_copy = request.GET.copy()
     parameters = get_copy.pop('page', True) and get_copy.urlencode()
     users = User.objects.filter(is_superuser=False)
-    tables = Table.objects.all()
+    tables = Table.objects.filter(active=True)
     orders = OrderFilter(request.GET, queryset=Order.objects.filter(is_paid="pagada").order_by('-pk'))
     paginator = Paginator(orders.qs, 100 ) 
     page_number = request.GET.get("page")

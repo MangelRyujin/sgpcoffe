@@ -130,7 +130,7 @@ class Order(models.Model):
         verbose_name_plural = 'Cuentas'
 
     def __str__(self) -> str:
-        return f'Turno {self.shift.pk}. Cuenta {self.pk} de la mesa {self.table.name}'
+        return f'Cuenta {self.pk}'
 
     @property
     def total_paid(self):
