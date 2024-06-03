@@ -12,14 +12,14 @@
         
     
     
-    <form action="{% url 'create_add_item_form' order=order pk=item.id%}"  class="form-group " method="POST">
+    <form action="{% url 'create_util_item_form' order=order pk=item.id%}"  class="form-group " method="POST">
         {% csrf_token %}
         {% if form %}
             <table class="table  form-table  table-sm mt-2">
                 <thead class="form-group">
                     <tr>
                         <th>Cantidad</th>
-                        <th>Agregado</th>
+                        <th>Útil</th>
                     </tr>
                     </thead>
                     <tbody class="center">

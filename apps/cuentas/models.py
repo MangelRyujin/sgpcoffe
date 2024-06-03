@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from apps.mesas.models import Table
-from apps.productos.models import Add, Product, UtilProduct
+from apps.productos.models import Add, Product, ProductAddRelation, UtilProduct
 from django.contrib import admin
 from django.db.models import Sum
 from decimal import Decimal 
@@ -169,6 +169,22 @@ class Item(models.Model):
     def __str__(self) -> str:
         return f'Pedido de {self.product}'
     
+    @property
+    def estimate_price(self):
+        product_price=self.product.discount_price * self.cant 
+        total_add_cost = Decimal(0)
+        total_util_cost = Decimal(0)
+        for add_item in AddItem.objects.filter(item=self):
+            product_add_relation = ProductAddRelation.objects.get(
+                    product=self.product,
+                    add=add_item.add
+                )
+            total_add_cost+=product_add_relation.price*add_item.cant
+        for util_item in UtilsItem.objects.filter(item=self):
+            total_util_cost+=util_item.util.price*util_item.cant
+        return product_price + total_add_cost + total_util_cost
+    
+    
 # Order add item model.
 class AddItem(models.Model):
     cant = models.PositiveIntegerField("Cant",default=1,null=False,blank=False)
@@ -194,4 +210,20 @@ class UtilsItem(models.Model):
         verbose_name_plural = 'Útiles de pedidos'
 
     def __str__(self) -> str:
-        return f'Agregado {self.util.name}'
+        return f'Útil {self.util.name}'
+    
+    
+    
+# ItemMotiveCancelMessage model.
+class ItemMotiveCancelMessage(models.Model):
+    motive = models.TextField("Motivo",default="",null=True,blank=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, blank=True,verbose_name=_('pedido'))
+    
+    class Meta:   
+        verbose_name = 'Motivo'
+        verbose_name_plural = 'Motivos'
+
+    def __str__(self) -> str:
+        return f'Motive by item {self.item}'
+    
+    

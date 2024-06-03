@@ -16,9 +16,30 @@
     
     <form action="{% url 'delete_item_form' order=order pk=item.id%}"  class="form-group " method="POST">
         {% csrf_token %}
+        {% if item.state != 'ordenado' %}
+        <table class="table  form-table  table-sm mt-2">
+            <thead class="form-group">
+                <tr>
+                    <th>Motivo</th>
+                </tr>
+                </thead>
+                <tbody class="center">
+                    {% for field in form %}
+                        
+                            <td class="form-group">{{ field }}</td>
+                
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        {% if item.state == 'ordenado' %}
             <button type="submit" class="btn btn-success-create">Eliminar</button>
+        {% else %}
+            <button type="submit" class="btn btn-success-create">Cancelar</button>
+        {% endif %}
+            
         </div>    
     </form>
   </div>

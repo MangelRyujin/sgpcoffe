@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import site
 from django.contrib.admin import DateFieldListFilter
 
-from apps.cuentas.models import Order, Item, AddItem, Shift, UtilsItem, CashOperation
+from apps.cuentas.models import ItemMotiveCancelMessage, Order, Item, AddItem, Shift, UtilsItem, CashOperation
 # Register your models here.
 
 # # Admin add items
@@ -89,4 +89,5 @@ class CashOperationAdmin(admin.ModelAdmin):
 admin.site.register(Item)
 admin.site.register(AddItem)
 admin.site.register(UtilsItem)
+admin.site.register(ItemMotiveCancelMessage)
 

@@ -287,3 +287,12 @@
     border: 2px solid #000 !important;
     border-radius: .25rem !important;
 }
+
+.modal-dark textarea {
+    border-color: #000 !important;
+    width: 100% !important;
+    border: 2px solid #000 !important;
+    color: #000 !important;
+    min-height: 81px!important;
+    max-height: 200px !important;
+}

@@ -214,10 +214,19 @@
                   Precio total estimado:
                   <span class="h5 cancel">{{item.cancel.total_price}}</span> CUP
                 </p>
-                <h3 class="mt-1 cancel">Motivo</h3>
-                <p>
-                  Se cancelo por mal estado del queso
-                </p>
+                {% if item.motive %}
+                  <h3 class="mt-1 cancel">Motivo</h3>
+                  {% if item.motive.motive %}
+                  <p>
+                    {{item.motive.motive}}
+                  </p>
+                  {% else %}
+                  <p class="text-gray-600">
+                    No se hizo una descripción
+                  </p>
+                  {% endif %}
+                {% endif %}
+                
                 {% if item.add %}
                 <h2 class="h5 pt-3 fw-normal cancel mb-0">
                   Agregados

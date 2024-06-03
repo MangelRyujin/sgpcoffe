@@ -1,6 +1,6 @@
 from django import forms
-from apps.cuentas.models import Item, AddItem
-from apps.productos.models import Add, ProductAddRelation
+from apps.cuentas.models import Item, AddItem, ItemMotiveCancelMessage, UtilsItem
+from apps.productos.models import Add, ProductAddRelation, UtilProduct
 
 class ItemForm(forms.ModelForm):
     class Meta:
@@ -19,12 +19,26 @@ class AddItemForm(forms.ModelForm):
         
     def __init__(self, *args, product_id=None, **kwargs):
         super().__init__(*args, **kwargs)
-        print("id del producto")
-        print(product_id)
         if product_id:
             # Obtener todas las relaciones ProductAddRelation para el producto dado
             relations = ProductAddRelation.objects.filter(product=product_id)
             # Extraer los IDs de los objetos Add asociados
             add_ids = [relation.add_id for relation in relations]
             # Filtrar el queryset del campo 'add' basado en los IDs obtenidos
-            self.fields['add'].queryset = Add.objects.filter(id__in=add_ids)
+            self.fields['add'].queryset = Add.objects.filter(id__in=add_ids,stock__stock__gte=1)
+            
+class UtilItemForm(forms.ModelForm):
+    
+    class Meta:
+        model = UtilsItem
+        fields = ['cant', 'util']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['util'].queryset = UtilProduct.objects.filter(stock__stock__gte=1)
+ 
+class ItemMotiveCancelMessageForm(forms.ModelForm):
+    
+    class Meta:
+        model = ItemMotiveCancelMessage
+        fields = ['motive']       
