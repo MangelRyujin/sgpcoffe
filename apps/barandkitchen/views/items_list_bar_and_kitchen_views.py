@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from apps.cuentas.order_filter import OrderFilter 
-from apps.cuentas.models import AddItem, Item, Order
+from apps.cuentas.models import AddItem, Item, Order, UtilsItem
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
 from apps.mesas.models import Table
@@ -22,6 +22,9 @@ def items_list_bar_view(request):
            'bar':item,
            'add': AddItem.objects.filter(
                             item = item
+                        ),
+           'util': UtilsItem.objects.filter(
+                            item = item
                         )
        })
     context ={"bars":bar} 
@@ -36,6 +39,9 @@ def items_list_kitchen_view(request):
        kitchen.append({
            'kitchen':item,
            'add': AddItem.objects.filter(
+                            item = item
+                        ),
+           'util': UtilsItem.objects.filter(
                             item = item
                         )
        })

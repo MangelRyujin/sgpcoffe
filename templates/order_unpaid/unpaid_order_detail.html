@@ -103,6 +103,57 @@
   </div>
 </div>
 
+<!-- Modal Paid order-->
+<div class="modal  fade" id="staticBackdropPaid" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dark">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Realizar pago</h1>
+        <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+        <div  class="modal-body">
+          <div  id="PaidFormOrder"></div>
+          
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal change table order-->
+<div class="modal  fade" id="staticBackdropChangeTable" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dark">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cambiar la mesa</h1>
+        <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+        <div  class="modal-body">
+          <div  id="ChangeTableFormOrder"></div>
+          
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal delibered item-->
+<div class="modal  fade" id="staticBackdropDeliberedItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dark">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cambiar la mesa</h1>
+        <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+        <div  class="modal-body">
+          <div  id="DeliberedItemFormOrder"></div>
+          
+        </div>
+    </div>
+  </div>
+</div>
 
 
 <div class="content-wrapper" style="min-height: 520.438px">
@@ -136,7 +187,25 @@
         {% endif %}
         <div id="contenido"></div>
     </div>
+      {% if request.GET.error %}
+      <div class="container-fluid">
+        <div class="alert alert-error alert-danger alert-dismissible fade show" role="alert">
+          {{request.GET.error}}
+          <button type="button" class="fa fa-times btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    {% endif %}
     <div class="col-12 col-md-auto d-flex justify-content-end align-items-center">
+      <button 
+                        type="button" 
+                        class="btn btn-primary mr-2" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#staticBackdropPaid"
+                        hx-get="{% url 'paid_order_detail' pk=order.id%}"
+                        hx-swap="innerHTML"
+                        hx-target="#PaidFormOrder">
+        <i class="fa fa-dollar mr-2"></i>Pagar
+      </button>
       <button type="button" class="btn btn-success-create" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         <i class="fa fa-print mr-2"></i>Imprimir
       </button>
@@ -182,7 +251,23 @@
                           </tr>
                           <tr role="row" class="even">
                             <td class="field-place text">
-                              <a href="#">Mesa: </a> {{order.table.name}}
+                              <div class="col-12 col-md-auto d-flex justify-content-between align-items-center">
+                                <div>
+                                  <a href="#">Mesa: </a> {{order.table.name}}
+                                </div>
+                               
+                                <img 
+                                style="width:1.5rem;cursor:pointer" 
+                                src="/static/admin/img/icon-changelink.svg" 
+                                alt="Modificar mesa" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#staticBackdropChangeTable"
+                                hx-get="{% url 'change_table_order_detail' pk=order.id %}"
+                                hx-swap="innerHTML"
+                                hx-target="#ChangeTableFormOrder">
+                                
+                              
+                              </div>
                             </td>
                           </tr>
                           <tr role="row" class="even">
@@ -284,7 +369,14 @@
                       Entregar
                     </button>
                   {% else %}
-                    <button type="button" class="btn btn-primary float-right">
+                    <button 
+                        type="button" 
+                        class="btn btn-primary float-right"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#staticBackdropDeliberedItem"
+                        hx-get="{% url 'delibered_item_form' order=order.id pk=item.delivered.id%}"
+                        hx-swap="innerHTML"
+                        hx-target="#DeliberedItemFormOrder">
                       Entregar
                     </button>
                   {% endif %}
@@ -333,38 +425,59 @@
                 
               </div>
 
-              {% if item.add %}
+              
               <div class="card-body-0">
-               
+                {% if item.add %}
                   <!-- Item-->
                   {% for add in item.add %}
-                    <div class="p-3 border-bottom border-gray-200">
-                      <div class="d-flex justify-content-between">
-                        <div class="ms-3">
-                          <h5 class="fw-normal">{{add.add.name}}</h5>
-                          <p class="mb-0 text-xs text-light lh-1">
-                            Cantidad: {{add.cant}}
-                          </p>
-                        </div>
+                  <div class="p-3 border-bottom border-gray-200">
+                    <div class="col-12 col-md-auto d-flex justify-content-between align-items-center">
+                      <div class="ms-3">
+                        <h5 class="fw-normal">{{add.add.name}}</h5>
+                        <p class="mb-0 text-xs text-light lh-1">
+                          Cantidad: {{add.cant}}
+                        </p>
                       </div>
+                      {% if add.item.state == "ordenado" %}
+                      <form action="{% url 'delete_add_item_form' order=order.id pk=add.id %}"  class="form-group " method="POST">
+                        {% csrf_token %}
+                        <button 
+                        type="submit" 
+                        class="fa fa-times  btn btn-danger"
+                        ></button>
+                      </form>
+                      {% endif %}
                     </div>
+                  </div>
                   {% endfor %}
+                  {% endif %}
+                  {% if item.util %}
                   {% for util in item.util %}
                     <div class="p-3 border-bottom border-gray-200">
-                      <div class="d-flex justify-content-between">
+                      <div class="col-12 col-md-auto d-flex justify-content-between align-items-center">
                         <div class="ms-3">
                           <h5 class="fw-normal">{{util.util.name}}</h5>
                           <p class="mb-0 text-xs text-light lh-1">
                             Cantidad: {{util.cant}}
                           </p>
                         </div>
+                        {% if util.item.state == "ordenado" %}
+                        <form action="{% url 'delete_util_item_form' order=order.id pk=util.id %}"  class="form-group " method="POST">
+                          {% csrf_token %}
+                          <button 
+                          type="submit" 
+                          class="fa fa-times  btn btn-danger"
+                          ></button>
+                        </form>
+                        {% endif %}
                       </div>
                     </div>
                   {% endfor %}
+                  {% endif %}
                   
               
               </div>
-              {% endif %}
+              
               
             </div>
           </div>

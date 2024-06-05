@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from apps.cuentas.forms.item_form import AddItemForm, ItemMotiveCancelMessageForm, UtilItemForm
-from apps.cuentas.models import Item, ItemMotiveCancelMessage
+from apps.cuentas.models import AddItem, Item, ItemMotiveCancelMessage, UtilsItem
 from django.contrib.auth.decorators import login_required 
 
 
@@ -18,11 +18,28 @@ def form_item_delete_view(request,pk,order):
             )
             item.state="cancelado"
             item.save()
-            return redirect(f'/ventas/gestionar/cuenta/{order}')
+        return redirect(f'/ventas/gestionar/cuenta/{order}')
     
     context = {"item": item,"order":order,"form":form}
 
     return render(request, 'order_unpaid/delete_item_form.html',context)
+
+
+
+@login_required(login_url='/admin/login/')
+def form_util_delete_view(request,pk,order):
+    if request.method == "POST":
+        util = UtilsItem.objects.get(pk=pk)
+        util.delete()
+        return redirect(f'/ventas/gestionar/cuenta/{order}')
+    
+@login_required(login_url='/admin/login/')
+def form_add_delete_view(request,pk,order):
+    if request.method == "POST":
+        add = AddItem.objects.get(pk=pk)
+        add.delete()
+        return redirect(f'/ventas/gestionar/cuenta/{order}')
+
 
 
 @login_required(login_url='/admin/login/')
@@ -71,3 +88,14 @@ def form_create_util_item_view(request,pk,order):
     context = {"item": item,"order":order,"form":form,"error":error}
 
     return render(request, 'order_unpaid/create_util_item_form.html',context)
+
+
+@login_required(login_url='/admin/login/')
+def form_delibered_item_view(request,pk,order):
+    item = Item.objects.get(pk=pk)
+    if request.method == "POST":
+        item.state="entregado"
+        item.save()
+        return redirect(f'/ventas/gestionar/cuenta/{order}')
+    context = {"item": item,"order":order}
+    return render(request, 'order_unpaid/paid_item_form.html',context)

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from apps.cuentas.models import AddItem, Item, ItemMotiveCancelMessage, Order
+from apps.cuentas.models import AddItem, Item, ItemMotiveCancelMessage, Order, UtilsItem
 from django.contrib.auth.decorators import login_required 
 
 
@@ -13,7 +13,8 @@ def order_detail_view(request,pk):
            'delivered':item,
            'add': AddItem.objects.filter(
                             item = item
-                        )
+                        ),
+           'util': UtilsItem.objects.filter(item=item),
        })
     for item in Item.objects.filter(order=order,state="cancelado"):
        items_cancel.append({
@@ -21,6 +22,7 @@ def order_detail_view(request,pk):
            'add': AddItem.objects.filter(
                             item = item
                         ),
+           'util': UtilsItem.objects.filter(item=item),
            "motive": ItemMotiveCancelMessage.objects.filter(item=item).first()
        })
     context ={"order":order,"items_delivered":items_delivered,"items_cancel":items_cancel}

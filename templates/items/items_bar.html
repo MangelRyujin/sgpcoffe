@@ -13,7 +13,7 @@
                 >
                 <p>
                   Precio total:
-                  <span class="h5 delivered">{{item.bar.total_price}}</span>
+                  <span class="h5 delivered">{{item.bar.estimate_price}}</span>
                   CUP
                 </p>
                 <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
@@ -32,9 +32,9 @@
                     </form> 
                 {% endif %}
                 </div>
-                {% if item.add %}
+                
                 <h2 class="h5 fw-normal mb-0">
-                  Agregados
+                  Agregados y Útiles
                 </h2>
                 {% for add in item.add %}
                   <div class="p-3 border-bottom border-gray-200">
@@ -48,7 +48,19 @@
                     </div>
                   </div>
                   {% endfor %}
-                  {% endif %}
+                  {% for util in item.util %}
+                  <div class="p-3 border-bottom border-gray-200">
+                    <div class="d-flex justify-content-between">
+                      <div class="ms-3">
+                        <h5 class="fw-normal">{{util.util.name}}</h5>
+                        <p class="mb-0 text-xs text-light lh-1">
+                          Cantidad: {{util.cant}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  
                 
               </div>
             </div>

@@ -2,24 +2,21 @@
 
 <div  class="container-fluid">
     
-    {% if item %}
-        <h1 class="h4">Pedido {{item.id}}: Producto {{item.product.name}}</h1>
+    {% if order %}
+        <h1 class="h3">Cuenta {{order.id}}</h1>
     {% endif %}
     
     {% if error %}
             <h1 class="text-danger">{{error}}</h1>
     {% endif %}
         
-    
-    
-    <form action="{% url 'create_util_item_form' order=order pk=item.id %}"  class="form-group " method="POST">
+    <form action="{% url 'change_table_order_detail' pk=order.id%}"  class="form-group " method="POST">
         {% csrf_token %}
         {% if form %}
             <table class="table  form-table  table-sm mt-2">
                 <thead class="form-group">
                     <tr>
-                        <th>Cantidad</th>
-                        <th>Útil</th>
+                        <th>Mesas disponibles</th>
                     </tr>
                     </thead>
                     <tbody class="center">
@@ -42,4 +39,6 @@
         {% endif %}
         
     </form>
+    
+    
   </div>

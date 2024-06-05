@@ -2,44 +2,43 @@
 
 <div  class="container-fluid">
     
-    {% if item %}
-        <h1 class="h4">Pedido {{item.id}}: Producto {{item.product.name}}</h1>
+    {% if order %}
+        <h1 class="h3">Cuenta {{order.id}}</h1>
+        <h1 class="">Estimado: <span class="h4">{{order.total_price}} CUP</span></h1>
     {% endif %}
     
     {% if error %}
             <h1 class="text-danger">{{error}}</h1>
     {% endif %}
         
-    
-    
-    <form action="{% url 'create_util_item_form' order=order pk=item.id %}"  class="form-group " method="POST">
+    <form action="{% url 'paid_order_detail' pk=order.id%}"  class="form-group " method="POST">
         {% csrf_token %}
         {% if form %}
             <table class="table  form-table  table-sm mt-2">
                 <thead class="form-group">
-                    <tr>
-                        <th>Cantidad</th>
-                        <th>Útil</th>
-                    </tr>
+                    
                     </thead>
                     <tbody class="center">
                         {% for field in form %}
-                            
-                                <td class="form-group">{{ field }}</td>
-                    
+                            <div>
+                                <label>{{ field.label }}</label>
+                                <tr class="form-group">{{ field }}</tr>
+                            </div>
                         {% endfor %}
                     </tbody>
                 </table>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 {% if error %}
-                    <button type="submit" class="btn btn-success-create disabled">Añadir</button>
+                    <button type="submit" class="btn btn-success-create disabled">Pagar</button>
                 {% else %}
-                    <button type="submit" class="btn btn-success-create">Añadir</button>
+                    <button type="submit" class="btn btn-success-create">Pagar</button>
                 {% endif %}
             </div>     
         
         {% endif %}
         
     </form>
+    
+    
   </div>

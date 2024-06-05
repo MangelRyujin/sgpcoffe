@@ -38,7 +38,7 @@ class ShiftAdmin(admin.ModelAdmin):
 # Admin Order 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['table','user','is_paid','paid_method','shift','total_paid','created_date','created_time']
+    list_display = ['id','table','user','is_paid','paid_method','shift','total_paid','created_date','created_time']
     search_fields = ['user__name','table','is_paid','paid_method','created_date']
     list_filter = (
         'user__username',

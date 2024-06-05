@@ -1,0 +1,29 @@
+{% load static %}
+
+<div  class="container-fluid">
+    
+    {% if order %}
+        {% if items %}
+            <h1 class="h4">Cuenta {{order.id}}</h1>
+            <h1 class="text-danger">Lo sentimos contiene pedidos en proceso</h1>
+        {% else %}
+            <h1 class="h4">Cuenta {{order.id}}</h1>
+            <h1 class="text-danger">La cuenta será eliminada completamente, está seguro de seguir con la acción?</h1>
+        {% endif %}
+        
+    {% endif %}
+    
+    
+    <form action="{% url 'delete_orders_list' pk=order.id%}"  class="form-group " method="POST">
+        {% csrf_token %}
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        {% if items %}
+            <button type="submit" class="btn btn-success-create disabled">Eliminar</button>
+        {% else %}
+            <button type="submit" class="btn btn-success-create ">Eliminar</button>
+        {% endif %}
+            
+        </div>    
+    </form>
+  </div>

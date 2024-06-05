@@ -1,0 +1,21 @@
+{% load static %}
+
+<div  class="container-fluid">
+    
+    {% if item %}
+        <h1 class="h4">Producto {{item.product.name}}</h1>
+    {% endif %}
+    
+    
+    <form action="{% url 'delibered_item_form' order=order pk=item.id%}"  class="form-group " method="POST">
+        {% csrf_token %}
+        <h1>¿Desea entregar el pedido?</h1>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success-create">Aceptar</button>
+          </div>    
+    </form>
+    
+
+    <script type="text/javascript" src="{% static 'sales/js/formset.js' %}"></script>
+  </div>

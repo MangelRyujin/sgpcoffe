@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from apps.cuentas.order_filter import OrderFilter 
-from apps.cuentas.models import Order, Shift
+from apps.cuentas.models import Item, Order, Shift
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
 from apps.mesas.models import Table
@@ -36,3 +36,19 @@ def unpaid_order_view(request):
     page_obj = paginator.get_page(page_number)
     context ={"orders":orders.qs,"users":users,"tables":tables,"pagination":page_obj,'parameters': parameters,"tables_form":tables_form,"shift":shift} 
     return render(request,'order_unpaid/unpaid_order_list.html',context)
+
+@login_required(login_url='/admin/login/')
+def form_delete_order_view(request,pk):
+    order = Order.objects.get(pk=pk)
+    print(order)
+    item=Item.objects.filter(order=order)
+    if request.method == "POST":
+        if item.exists():
+            pass
+        else:
+            order.table.state="libre"
+            order.table.save()
+            order.delete()
+        return redirect(f'/ventas/gestionar/cuentas/')
+    context = {"order":order,"items":item}
+    return render(request, 'order_unpaid/delete_order_form.html',context)

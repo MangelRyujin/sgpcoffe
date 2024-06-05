@@ -138,8 +138,10 @@ class Order(models.Model):
     
     @property
     def total_price(self):
-        return 100.00
-    
+        total = Decimal(0)
+        for item in Item.objects.filter(order=self,state="entregado"):
+            total+=item.total_price
+        return total
     
     
 # Order item model.

@@ -11,6 +11,7 @@ def items_change_kitchen_view(request):
         try:
             item_id = int(request.POST['item'])
             item = Item.objects.get(id=item_id)
+            item.total_price=item.estimate_price
             error = validate_product_discount_ingredient(item)
             if error =='':
                 if item.state == "ordenado":
@@ -34,6 +35,7 @@ def items_change_bar_view(request):
         try:
             item_id = int(request.POST['item'])
             item = Item.objects.get(id=item_id)
+            item.total_price=item.estimate_price
             error = validate_product_discount_ingredient(item)
             if error =='':
                 if item.state == "ordenado":

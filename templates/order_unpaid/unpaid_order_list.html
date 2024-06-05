@@ -3,6 +3,26 @@
 
 
 {% block contend %}
+
+<!-- Modal delete order-->
+<div class="modal  fade" id="staticBackdropOrderDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dark">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminar cuenta</h1>
+        <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+        <div  class="modal-body">
+          <div  id="DeleteFormOrder"></div>
+          
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="modal  fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content modal-dark">
@@ -172,7 +192,8 @@
                                           <a href="#">Turno</a>
                                         </div>
                                       </th>
-    
+                                     
+                                    </form>
                                       <th
                                         class="sorting"
                                         tabindex="0"
@@ -181,6 +202,16 @@
                                       >
                                         <div class="text">
                                           <a href="#">Monto a cobrar</a>
+                                        </div>
+                                      </th>
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <a href="#">Eliminar</a>
                                         </div>
                                       </th>
                                     </tr>
@@ -199,6 +230,17 @@
                                             
                                             <td class="field-price">{{order.shift.in_date}}</td>
                                             <td class="field-price">{{order.total_paid}}</td>
+                                            <td class="field-price">
+                                              <button 
+                                              type="submit" 
+                                              class="fa fa-times  btn btn-danger"
+                                              data-bs-toggle="modal" 
+                                              data-bs-target="#staticBackdropOrderDelete"
+                                              hx-get="{% url 'delete_orders_list' pk=order.id%}"
+                                              hx-swap="innerHTML"
+                                              hx-target="#DeleteFormOrder"
+                                              ></button>
+                                            </td>
                                           </tr>
                                       
                                       {% endfor %}
@@ -210,7 +252,7 @@
                                           </th>
                                           <td class="field-place">-</td>
                                           <td class="field-place">-</td>
-                                          
+                                          <td class="field-price">-</td>
                                           <td class="field-price">-</td>
                                           <td class="field-price">-</td>
                                         </tr>
