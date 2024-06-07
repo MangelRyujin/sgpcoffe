@@ -5,19 +5,53 @@
   <div class="modal-dialog">
     <div class="modal-content modal-dark">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Print</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Imprimir venta</h1>
         <button type="button" class="fa fa-times btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       
         <div  class="modal-body">
           
-          Hola mundo
-          <h1>Pedro</h1>
-          <h1>Pedro</h1>
-          <h1>Pedro</h1>
-          <h1>Pe</h1>
-          <h1>dro</h1>
-          <h1>P</h1>
+          <table class="table table-dark  ">
+            <thead class="form-group">
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+                </thead>
+                <tbody class="center">
+                    {% if items_delivered %}
+                      {% for item in items_delivered %}
+                        {% if item.delivered.state == "entregado" %}
+                          <tr role="row" class="even">
+                            <td class="table-dark field-place">{{item.delivered.product.name}}</td>
+                            <td class="table-dark field-place">{{item.delivered.cant}}</td>
+                            <td class="table-dark field-place">{{item.delivered.total_price}}</td>
+                          </tr>
+                        {% endif %}
+                      
+                      {% endfor %}
+                    {%else%}
+                      <td class="table-dark form-group">-</td>
+                      <td class="table-dark form-group">-</td>
+                      <td class="table-dark form-group">-</td>
+                    {% endif %}
+                    <thead class="form-group">
+                    <tr>
+                      <th>Cuenta</th>
+                      <th>Total a pagar</th>
+                      <th>Cambio en usd</th>
+                    </tr>
+                    <tr role="row" class="even">
+                      <td class="table-dark field-place">#{{order.id}}</td>
+                      <td class="table-dark field-place">{{order.total_price}} CUP</td>
+                      <td class="table-dark field-place">{{3.40}} USD</td>
+                    </tr>
+                  </thead>
+                  
+                </tbody>
+                
+            </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
