@@ -32,7 +32,6 @@ def form_item_create_view(request,pk,order):
     form = ItemForm() 
     order_instance = Order.objects.get(pk=order)
     if request.method == "POST":
-        print("hola")
         form = ItemForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)
