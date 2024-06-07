@@ -28,8 +28,8 @@ class Shift(models.Model):
     )
     def efectivo(self):
         total_ventas_efectivo = self.orders.all().aggregate(Sum('cash'))['cash__sum'] or Decimal(0.0)
-        total_efectivo_ingreso = self.movimientos.filter(payment_type='efectivo').filter(operation_type='ingreso').aggregate(Sum('amount'))['amount__sum'] or Decimal(0.0)
-        total_efectivo_gasto = self.movimientos.filter(payment_type='efectivo').filter(operation_type='gasto').aggregate(Sum('amount'))['amount__sum'] or Decimal(0.0)
+        total_efectivo_ingreso = self.movimientos.filter(payment_type='efectivo',operation_type='ingreso').aggregate(Sum('amount'))['amount__sum'] or Decimal(0.0)
+        total_efectivo_gasto = self.movimientos.filter(payment_type='efectivo',operation_type='gasto').aggregate(Sum('amount'))['amount__sum'] or Decimal(0.0)
         return Decimal(total_ventas_efectivo + total_efectivo_ingreso - total_efectivo_gasto).quantize(Decimal('.01'))
     
     # Balance de transferencias del turno por movimientos de caja y ventas
@@ -40,8 +40,8 @@ class Shift(models.Model):
     )
     def transferencia(self):
         total_ventas_transferencia = self.orders.all().aggregate(Sum('transfer'))['transfer__sum'] or Decimal(0.0)
-        total_transferencia_ingreso = self.movimientos.filter(payment_type='transferencia').filter(operation_type='ingreso').aggregate(Sum('amount'))['amount__sum'] or 0
-        total_transferencia_gasto = self.movimientos.filter(payment_type='transferencia').filter(operation_type='gasto').aggregate(Sum('amount'))['amount__sum'] or 0
+        total_transferencia_ingreso = self.movimientos.filter(payment_type='transferencia',operation_type='ingreso').aggregate(Sum('amount'))['amount__sum'] or 0
+        total_transferencia_gasto = self.movimientos.filter(payment_type='transferencia',operation_type='gasto').aggregate(Sum('amount'))['amount__sum'] or 0
         return Decimal(total_ventas_transferencia + total_transferencia_ingreso - total_transferencia_gasto).quantize(Decimal('.01'))
     
     # Balance de la caja en el turno por movimientos de caja y ventas
@@ -58,6 +58,22 @@ class Shift(models.Model):
         total = total_ventas_efectivo + total_ventas_transferencia + total_ingresos_movimientos - total_gastos_movimientos
         return Decimal(total).quantize(Decimal('.01'))
     
+    
+    @property
+    def shift_transfer_operations(self):
+        total_income_operations = self.movimientos.filter(operation_type='ingreso',payment_type="transferencia").aggregate(Sum('amount'))['amount__sum'] or 0
+        total_spent_operations = self.movimientos.filter(operation_type='gasto',payment_type="transferencia").aggregate(Sum('amount'))['amount__sum'] or 0
+        return total_income_operations - total_spent_operations
+    
+    @property
+    def shift_cash_operations(self):
+        total_income_operations = self.movimientos.filter(operation_type='ingreso',payment_type="efectivo").aggregate(Sum('amount'))['amount__sum'] or 0
+        total_spent_operations = self.movimientos.filter(operation_type='gasto',payment_type="efectivo").aggregate(Sum('amount'))['amount__sum'] or 0
+        return total_income_operations - total_spent_operations
+    
+    @property
+    def shift_total_operations(self):
+        return self.shift_transfer_operations + self.shift_cash_operations 
     
     class Meta:   
         verbose_name = 'Turno'
