@@ -1,0 +1,179 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block contend %}
+    
+    <div class="containe-fluid p-3">
+      <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center p-3">
+        <div class="row ">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item h1 "><a class="text-light" href="/">Módulos</a></li>
+            <li class="breadcrumb-item h1 active">Ganancias</li>
+          </ol>
+        </div>
+      </div>
+      
+      
+      <form id="filterForm">
+        <label class="h1 text-light" for="year">Escoja el año:</label>
+        <select name="year" id="year"></select>
+        <input class="btn btn-primary" type="submit" value="Cargar datos" name="_load">
+      </form>
+      <div class="row p-3">
+        <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+          <canvas id="salesChart"></canvas>
+        </div>
+        <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+            
+          </div>
+         {% comment %} <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+          <canvas id="paymentSuccessChart"></canvas>
+        </div> {% endcomment %}
+        <div class="card-body col-lg-6 col-12  mt-3 mb-3 p-2">
+          <canvas id="spendPerCustomerChart"></canvas>
+        </div>
+      </div> 
+
+      <form id="monthFilterForm">
+        <label class="h1 text-light" for="month">Escoja el año y mes:</label>
+        <select name="month" id="month"></select>
+        <select class="" id="monthYear" name="monthYear">
+          <option value="01">Enero</option>
+          <option value="02">Febrero</option>
+          <option value="03">Marzo</option>
+          <option value="04">Abril</option>
+          <option value="05">Mayo</option>
+          <option value="06">Junio</option>
+          <option value="07">Julio</option>
+          <option value="08">Agosto</option>
+          <option value="09">Septiembre</option>
+          <option value="10">Octubre</option>
+          <option value="11">Noviembre</option>
+          <option value="12">Diciembre</option>
+      </select>
+        <input class="btn btn-primary" type="submit" value="Cargar datos" name="_loadMonth">
+      </form>
+      <div class="row p-3">
+        <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
+          <canvas id="monthSalesChart"></canvas>
+        </div>
+        <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+            
+        </div>
+       {% comment %} <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+          <canvas id="monthPaymentSuccessChart"></canvas>
+        </div> 
+             {% endcomment %}
+        <div class="card-body  col-12  mt-3 mb-3 p-2">
+          <canvas id="monthSpendPerCustomerChart"></canvas>
+        </div> 
+      </div>
+      <script src="{% static './reports/revenue_anual_select.js' %}" ></script> 
+      <script src="{% static './reports/revenue_month_select.js' %}" ></script> 
+      <script>
+        let salesCtx = document.getElementById("salesChart").getContext("2d");
+        let salesChart = new Chart(salesCtx, {
+          type: "bar",
+          options: {
+            responsive: true,
+            title: {
+              display: false,
+              text: ""
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje X a blanco
+                  beginAtZero: true
+                }
+              },
+              y: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje Y a blanco
+                  beginAtZero: true
+                }
+              }
+            }
+          }
+        });
+        let spendPerCustomerCtx = document.getElementById("spendPerCustomerChart").getContext("2d");
+        let spendPerCustomerChart = new Chart(spendPerCustomerCtx, {
+          type: "line",
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: "white"
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje X a blanco
+                  beginAtZero: true
+                }
+              },
+              y: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje Y a blanco
+                  beginAtZero: true
+                }
+              }
+            }
+          }
+        });
+        let monthSalesCtx = document.getElementById("monthSalesChart").getContext("2d");
+        let monthSalesChart = new Chart(monthSalesCtx, {
+          type: "bar",
+          options: {
+            responsive: true,
+            title: {
+              display: false,
+              text: ""
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje X a blanco
+                  beginAtZero: true
+                }
+              },
+              y: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje Y a blanco
+                  beginAtZero: true
+                }
+              }
+            }
+          }
+        });
+        let monthSpendPerCustomerCtx = document.getElementById("monthSpendPerCustomerChart").getContext("2d");
+        let monthSpendPerCustomerChart = new Chart(monthSpendPerCustomerCtx, {
+          type: "line",
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: "white"
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje X a blanco
+                  beginAtZero: true
+                }
+              },
+              y: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje Y a blanco
+                  beginAtZero: true
+                }
+              }
+            }
+          }
+        });
+        
+      </script>
+    </div>
+      
+{% endblock %}

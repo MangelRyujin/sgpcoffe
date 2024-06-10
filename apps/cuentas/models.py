@@ -19,6 +19,7 @@ class Shift(models.Model):
     out_date = models.DateField('Fecha de fin de turno')
     out_time = models.TimeField('Hora de fin de turno')
     active = models.BooleanField("activo",default=True)
+    revenue = models.DecimalField('Ganancia', max_digits=10, default=0, decimal_places=2,editable=False, blank= True, null= True)
     
     # Balance de efectivo del turno por movimientos de caja y ventas
     @property
@@ -81,6 +82,10 @@ class Shift(models.Model):
 
     def __str__(self) -> str:
         return f'Turno {self.pk}'
+    
+    def add_revenue(self,revenue):
+        self.revenue+= revenue
+        self.save()
 
 
 # Modelo de gastos/ingresos en el turno (movimiento de dinero)
@@ -177,6 +182,7 @@ class Item(models.Model):
     type = models.CharField(max_length=7, choices=TYPE_CHOICES, default='local') 
     cant = models.PositiveIntegerField("Cant",default=1,null=False,blank=False)
     total_price = models.DecimalField('Total price', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
+    revenue_price = models.DecimalField('Revenue price', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     product = models.ForeignKey(Product,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('producto'))
     order = models.ForeignKey(Order,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('cuenta'))
     
@@ -201,6 +207,24 @@ class Item(models.Model):
         for util_item in UtilsItem.objects.filter(item=self):
             total_util_cost+=util_item.util.price*util_item.cant
         return product_price + total_add_cost + total_util_cost
+    
+    @property
+    def inversion_cost(self):
+        revenue = Decimal(0)
+        for ingredient in self.product.ingredient_relations.all():
+            revenue+=ingredient.ingredient.stock.unit_price*ingredient.measure_unit_qty
+        for add in AddItem.objects.filter(item = self):
+            add_item = add.add.add_relations.filter(add=add.add.id,product=self.product.id).first()
+            revenue+= (add_item.add.stock.unit_price*add_item.measure_unit_qty)*add.cant
+        for util in UtilsItem.objects.filter(item = self):
+            revenue+= util.util.stock.unit_price*util.cant
+        revenue= revenue*self.cant
+        return round(revenue,2)
+    
+    
+    @property
+    def revenue(self):
+        return self.estimate_price - self.inversion_cost
     
     
 # Order add item model.

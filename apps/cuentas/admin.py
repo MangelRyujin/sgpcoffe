@@ -24,7 +24,7 @@ from apps.cuentas.models import ItemMotiveCancelMessage, Order, Item, AddItem, S
 
 @admin.register(Shift)
 class ShiftAdmin(admin.ModelAdmin):
-    list_display = ['id','active','in_date','in_time','out_date','out_time', 'efectivo', 'transferencia', 'balance']
+    list_display = ['id','active','in_date','in_time','out_date','out_time', 'efectivo', 'transferencia', 'balance','revenue']
     search_fields = ['in_date']
     list_per_page = 100
     
@@ -85,9 +85,18 @@ class CashOperationAdmin(admin.ModelAdmin):
 #     inlines = [AddItemInline,
 #                ]
  
-    
+ 
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('id','order' ,'product', 'state', 'type', 'cant', 'total_price' , 'estimate_price','inversion_cost','revenue')
+    search_fields = ('product_name', 'type', 'state', 'description', 'created_date')
+    list_filter = (
+        'order',
+        'product',
+        'state',
+        'type',
+    )   
 # admin.site.register(Item)
 # admin.site.register(AddItem)
 # admin.site.register(UtilsItem)
 # admin.site.register(ItemMotiveCancelMessage)
-

@@ -73,6 +73,8 @@ def form_order_paid_view(request,pk):
             order.table.state="libre"
             order.save()
             order.table.save()
+            for item in Item.objects.filter(order=order,state="entregado"):
+                order.shift.add_revenue(item.revenue_price)
             return redirect(f'/ventas/gestionar/cuentas/')
         else:
             error="Verifique que los montos sean válidos y que tenga todas los pedidos estén ya entregados o cancelados"

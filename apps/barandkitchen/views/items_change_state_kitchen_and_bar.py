@@ -16,6 +16,7 @@ def items_change_kitchen_view(request):
             if error =='':
                 if item.state == "ordenado":
                     item.state = "preparando"
+                    item.revenue_price=item.revenue
                     item.save()
                 elif item.state == "preparando":
                     item.state = "finalizado"
@@ -40,6 +41,7 @@ def items_change_bar_view(request):
             if error =='':
                 if item.state == "ordenado":
                     item.state = "preparando"
+                    item.revenue_price=item.revenue
                     item.save()
                 elif item.state == "preparando":
                     item.state = "finalizado"

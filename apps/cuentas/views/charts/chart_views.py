@@ -4,3 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 @staff_member_required
 def statistics_view(request):
     return render(request, "charts/statistics.html", {})
+
+@staff_member_required
+def statistics_revenue_view(request):
+    return render(request, "revenue.html", {})
