@@ -6,7 +6,10 @@
             {% for item in bars %}
             <div class="card-item-order p-3 card mt-1 col-12">
               <div class="card-item-order-header card-header">
-                <h3 class="mt-1 delivered">{{item.bar.product.name}}</h3>
+                <h3 class="mt-1 h2 delivered">{{item.bar.product.name}}</h3>
+                {% if item.bar.type == "llevar" %}
+                  <h3 class="mt-1 delivered">Prioridad alta</h3>
+                {% endif %}
                 <span
                   >Cantidad:
                   <span class="delivered">{{item.bar.cant}}</span></span

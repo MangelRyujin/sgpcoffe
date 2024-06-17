@@ -17,7 +17,7 @@ def elaboration_items(request):
 def items_list_bar_view(request):
 
     bar=[]
-    for item in Item.objects.filter(Q(state="ordenado") | Q(state="preparando"),product__place="bar"):
+    for item in Item.objects.filter(Q(state="ordenado") | Q(state="preparando"),product__place="bar").order_by('type'):
        bar.append({
            'bar':item,
            'add': AddItem.objects.filter(
@@ -35,7 +35,7 @@ def items_list_bar_view(request):
 def items_list_kitchen_view(request):
     
     kitchen=[]
-    for item in Item.objects.filter(Q(state="ordenado") | Q(state="preparando"),product__place="cocina"):
+    for item in Item.objects.filter(Q(state="ordenado") | Q(state="preparando"),product__place="cocina").order_by('type'):
        kitchen.append({
            'kitchen':item,
            'add': AddItem.objects.filter(

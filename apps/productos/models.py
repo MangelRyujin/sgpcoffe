@@ -184,6 +184,9 @@ class Product(models.Model):
     def discount_price(self):
         return self.price - ((self.price*Decimal(self.discount))/100)
 
+    def discount_ingredients(self,cant):
+        for ingredient in self.ingredient_relations.all():
+            ingredient.discount_ingredient(cant)
 
 # Product add relation ManyToMany
 class ProductIngredientRelation(models.Model):
@@ -200,8 +203,9 @@ class ProductIngredientRelation(models.Model):
         """Unicode representation of ProductIngredient."""
         return f'Ingrediente {self.ingredient.name} asignado al producto {self.product.name} con {self.measure_unit_qty}'
     
-
-
+    def discount_ingredient(self,cant):
+        self.ingredient.stock.stock-= cant*self.measure_unit_qty
+        self.ingredient.stock.save()
 
 # Product add relation ManyToMany
 class ProductAddRelation(models.Model):
@@ -218,3 +222,7 @@ class ProductAddRelation(models.Model):
     def __str__(self):
         """Unicode representation of ProductAdd."""
         return f'Relación de {self.product.name} con  {self.add.name}'
+
+    def discount_add(self,cant,cant_add):
+        self.add.stock.stock-= cant*(self.measure_unit_qty*cant_add)
+        self.add.stock.save()

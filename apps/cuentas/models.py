@@ -203,7 +203,7 @@ class Item(models.Model):
                     product=self.product,
                     add=add_item.add
                 )
-            total_add_cost+=product_add_relation.price*add_item.cant
+            total_add_cost+=(product_add_relation.price*add_item.cant)*self.cant
         for util_item in UtilsItem.objects.filter(item=self):
             total_util_cost+=util_item.util.price*util_item.cant
         return product_price + total_add_cost + total_util_cost
@@ -254,6 +254,9 @@ class UtilsItem(models.Model):
     def __str__(self) -> str:
         return f'Útil {self.util.name}'
     
+    def discount_util(self):
+        self.util.stock.stock-=self.cant
+        self.util.stock.save()
     
     
 # ItemMotiveCancelMessage model.

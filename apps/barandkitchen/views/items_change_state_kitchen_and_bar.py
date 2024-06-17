@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
-from apps.cuentas.models import  Item
+from apps.cuentas.models import  AddItem, Item,UtilsItem
 from django.contrib.auth.decorators import login_required 
+from apps.productos.models import Add, ProductAddRelation
 from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient
 
 
@@ -17,6 +18,12 @@ def items_change_kitchen_view(request):
                 if item.state == "ordenado":
                     item.state = "preparando"
                     item.revenue_price=item.revenue
+                    item.product.discount_ingredients(item.cant)
+                    for add in AddItem.objects.filter(item=item):
+                        product_add = ProductAddRelation.objects.get(add=add.add.id,product=item.product.id)
+                        product_add.discount_add(item.cant,add.cant)
+                    for util in UtilsItem.objects.filter(item=item):
+                        util.discount_util()
                     item.save()
                 elif item.state == "preparando":
                     item.state = "finalizado"
@@ -42,6 +49,12 @@ def items_change_bar_view(request):
                 if item.state == "ordenado":
                     item.state = "preparando"
                     item.revenue_price=item.revenue
+                    item.product.discount_ingredients(item.cant)
+                    for add in AddItem.objects.filter(item=item):
+                        product_add = ProductAddRelation.objects.get(add=add.add.id,product=item.product.id)
+                        product_add.discount_add(item.cant,add.cant)
+                    for util in UtilsItem.objects.filter(item=item):
+                        util.discount_util()
                     item.save()
                 elif item.state == "preparando":
                     item.state = "finalizado"
