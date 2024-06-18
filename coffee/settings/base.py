@@ -51,6 +51,7 @@ LOCAL_APPS = [
     'apps.reportes',
     'apps.barandkitchen',
     'apps.waiter',
+    'apps.coins',
 ]
 
 THIRD_APPS = [
@@ -134,6 +135,7 @@ JAZZMIN_SETTINGS = {
         "cuentas.pedidos":"fa fa-square",
         "cuentas.cashoperation":"fa fa-cash-register",
         "productos.utilproduct":"fa fa-database",
+        "coins.coin": "fa fa-credit-card",
         
         
     },
