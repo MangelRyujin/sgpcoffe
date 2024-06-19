@@ -2,6 +2,7 @@ from django.db import models
 from decimal import Decimal
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from apps.coins.models import Coin
 from apps.mesas.models import Table
 from apps.productos.models import Add, Product, ProductAddRelation, UtilProduct
 from django.contrib import admin
@@ -163,6 +164,14 @@ class Order(models.Model):
         for item in Item.objects.filter(order=self,state="entregado"):
             total+=item.total_price
         return total
+    
+    @property
+    def rate(self):
+        rate = Coin.objects.first()
+        if rate:
+            return round(self.total_price/rate.rate,2) if rate.active else 0.0
+        return 0.0
+            
     
     
 # Order item model.
