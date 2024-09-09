@@ -52,6 +52,9 @@ function loadChart(chart, endpoint) {
 
 function loadAllCharts(year) {
   loadChart(salesChart, `/ventas/chart/revenue/sales/${year}/`);
+  loadChart(salesTotalChart, `/ventas/chart/revenue/total/${year}/`);
+  
   loadChart(spendPerCustomerChart, `/ventas/chart/revenue/spend-per-customer/${year}/`);
+  loadChart(spendPerCustomerTotalChart, `/ventas/chart/revenue/spend-per-customer-total/${year}/`);
   // loadChart(paymentSuccessChart, `/ventas/chart/revenue/payment-success/${year}/`);
 }

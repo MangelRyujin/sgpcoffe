@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import site
 from django.contrib.admin import DateFieldListFilter
 
-from apps.cuentas.models import ItemMotiveCancelMessage, Order, Item, AddItem, Shift, UtilsItem, CashOperation
+from apps.cuentas.models import ItemMotiveCancelMessage, Operation, Order, Item, AddItem, Shift, UtilsItem, CashOperation
 # Register your models here.
 
 # # Admin add items
@@ -86,17 +86,33 @@ class CashOperationAdmin(admin.ModelAdmin):
 #                ]
  
  
-@admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id','order' ,'product', 'state', 'type', 'cant', 'total_price' , 'estimate_price','inversion_cost','revenue')
-    search_fields = ('product_name', 'type', 'state', 'description', 'created_date')
-    list_filter = (
-        'order',
-        'product',
-        'state',
-        'type',
-    )   
+# @admin.register(Item)
+# class ItemAdmin(admin.ModelAdmin):
+#     list_display = ('id','order' ,'product', 'state', 'type', 'cant', 'total_price' , 'estimate_price','inversion_cost','revenue')
+#     search_fields = ('product_name', 'type', 'state', 'description', 'created_date')
+#     list_filter = (
+#         'order',
+#         'product',
+#         'state',
+#         'type',
+#     )   
 # admin.site.register(Item)
 # admin.site.register(AddItem)
 # admin.site.register(UtilsItem)
 # admin.site.register(ItemMotiveCancelMessage)
+
+@admin.register(Operation)
+class OperationAdmin(admin.ModelAdmin):
+    list_display = ('id' ,'operation_type', 'payment_type', 'amount', 'user' , 'created_date','operation_date')
+    list_select_related = [ "user"]
+    search_fields = ('operation_type', 'user__username', 'payment_type', 'description','operation_date')
+    list_filter = (
+        'operation_type',
+        'payment_type',
+        'description',
+        'user',
+        # ('created_date', DateFieldListFilter),
+        # ('operation_date', DateFieldListFilter),
+    )
+        
+    list_per_page = 100

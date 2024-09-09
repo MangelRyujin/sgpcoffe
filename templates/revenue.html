@@ -4,9 +4,9 @@
 
 {% block contend %}
     
-    <div class="containe-fluid p-3">
+    <div class="container-fluid p-3 ">
       <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center p-3">
-        <div class="row ">
+        <div class="d-flex ">
           <ol class="breadcrumb">
             <li class="breadcrumb-item h1 "><a class="text-light" href="/">Módulos</a></li>
             <li class="breadcrumb-item h1 active">Ganancias</li>
@@ -20,20 +20,54 @@
         <select name="year" id="year"></select>
         <input class="btn btn-primary" type="submit" value="Cargar datos" name="_load">
       </form>
-      <div class="row p-3">
-        <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
-          <canvas id="salesChart"></canvas>
-        </div>
-        <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+      
+        <div class="row p-3">
+          <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+            <h2 class="text-white mb-2">Ganancia de ventas</h2>
+            <div class="card ">
+              <div class="card-body">
+                <canvas id="salesChart" height="200"></canvas>
+              </div>
+              
+            </div>
             
           </div>
-         {% comment %} <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
-          <canvas id="paymentSuccessChart"></canvas>
-        </div> {% endcomment %}
-        <div class="card-body col-lg-6 col-12  mt-3 mb-3 p-2">
-          <canvas id="spendPerCustomerChart"></canvas>
-        </div>
-      </div> 
+          <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+            <h2 class="text-white mb-2">Ganancia total</h2>
+            <div class="card ">
+              <div class="card-body">
+                <canvas id="salesTotalChart" height="200"></canvas>
+              </div>
+              
+            </div>
+            
+            </div>
+           {% comment %} <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+            <canvas id="paymentSuccessChart" height="200"></canvas>
+          </div> {% endcomment %}
+          <div class=" col-lg-6 col-12  mt-3 mb-3 p-2">
+            <h2 class="text-white mb-2">Ganancia de venta</h2>
+            <div class="card ">
+              <div class="card-body">
+                <canvas id="spendPerCustomerChart" height="200"></canvas>
+              </div>
+              
+            </div>
+          </div>
+          <div class=" col-lg-6 col-12  mt-3 mb-3 p-2">
+            <h2 class="text-white mb-2">Ganancia total</h2>
+            <div class="card ">
+              <div class="card-body">
+                <canvas id="spendPerCustomerTotalChart" height="200"></canvas>
+                
+              </div>
+              
+            </div>
+           
+          </div>
+        </div> 
+
+      
 
       <form id="monthFilterForm">
         <label class="h1 text-light" for="month">Escoja el año y mes:</label>
@@ -55,8 +89,15 @@
         <input class="btn btn-primary" type="submit" value="Cargar datos" name="_loadMonth">
       </form>
       <div class="row p-3">
-        <div class="card-body col-lg-6 col-12 mt-3 mb-3 p-2">
-          <canvas id="monthSalesChart"></canvas>
+        <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
+          <h2 class="text-white mb-2">Ganancia de ventas</h2>
+          <div class="card ">
+            <div class="card-body">
+              <canvas id="monthSalesChart"></canvas>
+            </div>
+            
+          </div>
+          
         </div>
         <div class="col-lg-6 col-12 mt-3 mb-3 p-2">
             
@@ -65,13 +106,49 @@
           <canvas id="monthPaymentSuccessChart"></canvas>
         </div> 
              {% endcomment %}
-        <div class="card-body  col-12  mt-3 mb-3 p-2">
-          <canvas id="monthSpendPerCustomerChart"></canvas>
+        <div class="col-12  mt-3 mb-3 p-2">
+          <div class="card ">
+            <div class="card-body">
+              <canvas id="monthSpendPerCustomerChart"></canvas>
+            </div>
+            
+          </div>
+          
         </div> 
       </div>
+
+      
+
+
       <script src="{% static './reports/revenue_anual_select.js' %}" ></script> 
       <script src="{% static './reports/revenue_month_select.js' %}" ></script> 
       <script>
+        
+        let salesTotalCtx = document.getElementById("salesTotalChart").getContext("2d");
+        let salesTotalChart = new Chart(salesTotalCtx, {
+          type: "bar",
+          options: {
+            responsive: true,
+            title: {
+              display: false,
+              text: ""
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje X a blanco
+                  beginAtZero: true
+                }
+              },
+              y: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje Y a blanco
+                  beginAtZero: true
+                }
+              }
+            }
+          }
+        });
         let salesCtx = document.getElementById("salesChart").getContext("2d");
         let salesChart = new Chart(salesCtx, {
           type: "bar",
@@ -80,6 +157,31 @@
             title: {
               display: false,
               text: ""
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje X a blanco
+                  beginAtZero: true
+                }
+              },
+              y: {
+                ticks: {
+                  color: 'white', // Cambia el color del texto del eje Y a blanco
+                  beginAtZero: true
+                }
+              }
+            }
+          }
+        });
+        let spendPerCustomerTotalCtx = document.getElementById("spendPerCustomerTotalChart").getContext("2d");
+        let spendPerCustomerTotalChart = new Chart(spendPerCustomerTotalCtx, {
+          type: "line",
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: "white"
             },
             scales: {
               x: {

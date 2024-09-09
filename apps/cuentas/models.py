@@ -13,6 +13,32 @@ from decimal import Decimal
 
 User = get_user_model()
 
+    
+class Operation(models.Model):
+    MOVEMENT_TYPES_CHOICES = (
+        ('ingreso', 'Ingreso'),
+        ('gasto', 'Gasto'),
+    )
+    PAYMENT_METHODS_CHOICES = (
+        ('transferencia', 'Transferencia'),
+        ('efectivo', 'Efectivo'),
+    )
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('Usuario'), related_name='user_operation')
+    operation_type = models.CharField('Tipo de movimiento',max_length=13, choices=MOVEMENT_TYPES_CHOICES, default='ingreso')
+    payment_type = models.CharField('Método de pago',max_length=13, choices=PAYMENT_METHODS_CHOICES, default='efectivo')
+    amount = models.DecimalField('Monto', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
+    description = models.TextField('Descripción',null=True,blank=True)
+    created_date = models.DateField('Día de registro',auto_now_add=True,null=True)
+    operation_date = models.DateField('Fecha de operación',auto_now_add=False,null=True)
+    
+    def __str__(self) -> str:
+        return f'Movimiento: {self.operation_type}, en {self.payment_type}, en un monto de {self.amount}'
+    
+    class Meta:
+        verbose_name = 'Operacione'
+        verbose_name_plural = 'Operaciones'
+    
+
 # Shift model.
 class Shift(models.Model):
     in_date = models.DateField('Fecha de inicio de turno')
@@ -280,4 +306,5 @@ class ItemMotiveCancelMessage(models.Model):
     def __str__(self) -> str:
         return f'Motive by item {self.item}'
     
+
     

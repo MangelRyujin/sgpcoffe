@@ -19,3 +19,4 @@ def order_view(request):
     page_obj = paginator.get_page(page_number)
     context ={"orders":orders.qs,"users":users,"tables":tables,"pagination":page_obj,'parameters': parameters,} 
     return render(request,'order_list.html',context)
+

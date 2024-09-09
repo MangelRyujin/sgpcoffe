@@ -55,5 +55,5 @@ function loadChartMonth(chart, endpoint) {
 function loadAllChartsMonth(month,monthYear) {
   loadChartMonth(monthSalesChart, `/ventas/chart/revenue/day/sales/${month}/${monthYear}/`);
   loadChartMonth(monthSpendPerCustomerChart, `/ventas/chart/revenue/month/spend-per-customer/${month}/${monthYear}/`);
-  loadChartMonth(monthPaymentSuccessChart, `/ventas/chart/month/payment-success/${month}/${monthYear}/`);
+  // loadChartMonth(monthPaymentSuccessChart, `/ventas/chart/month/payment-success/${month}/${monthYear}/`);
 }
