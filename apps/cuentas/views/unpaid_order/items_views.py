@@ -94,7 +94,12 @@ def form_create_util_item_view(request,pk,order):
 def form_delibered_item_view(request,pk,order):
     item = Item.objects.get(pk=pk)
     if request.method == "POST":
-        item.state="entregado"
+        print("Post")
+        if item.is_active:
+            item.state="entregado"        
+        else:
+            print("segunda posicion")
+            item.is_active=True
         item.save()
         return redirect(f'/ventas/gestionar/cuenta/{order}')
     context = {"item": item,"order":order}

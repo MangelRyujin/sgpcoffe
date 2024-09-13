@@ -1,10 +1,10 @@
 {% load static %}
-    <div  class="d-flex overflow-auto">
+    <div  class="d-flex overflow-auto mb-2">
         {% if products %}
             {% for product in products %}
-                <div class="card-moduls m-2" style="width: 13rem; min-width:13rem">
+                <div class="card-moduls shadow-sm m-2" style="width: 13rem; min-width:13rem">
                     <div class="card-body p-3">
-                    <h5 class=" card-title text-light mb-2">{{product.name}}</h5>
+                    <h5 class=" card-title text-light mb-2">{{product.name}} </h5>
                     
                     <button 
                         type="button" 

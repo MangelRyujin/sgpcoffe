@@ -230,6 +230,14 @@
       </div>
     {% endif %}
     <div class="col-12 col-md-auto d-flex justify-content-end align-items-center">
+      {% if unpaid_items %}
+      <button 
+                        type="button" 
+                        class="btn btn-primary disabled mr-2" 
+                        >
+        <i class="fa fa-dollar mr-2"></i>Pagar
+      </button>
+      {% else %}
       <button 
                         type="button" 
                         class="btn btn-primary mr-2" 
@@ -240,14 +248,15 @@
                         hx-target="#PaidFormOrder">
         <i class="fa fa-dollar mr-2"></i>Pagar
       </button>
+      {% endif %}
+      
       <button type="button" class="btn btn-success-create" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         <i class="fa fa-print mr-2"></i>Imprimir
       </button>
     </div>
   </div>
-  <div class="content">
-    <div class="">
-      <section
+  <div class="container-fluid">
+      <div
         id="content"
         class="content"
         data-select2-id="select2-data-content"
@@ -342,8 +351,8 @@
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    
   </div>
   <div class="container-fluid p-3">
       <div class="row  p-3">
@@ -397,15 +406,23 @@
                   </p>
                   {% endif %}
                 {% endif %}
-                <div class="col-12 col-md-auto d-flex justify-content-end align-items-center">
+                <div class="col-12 col-md-auto d-flex justify-content-between align-items-center">
+                  {% if item.delivered.state != "finalizado" and item.delivered.is_active != True %}
+                  <form action="{% url 'delibered_item_form' order=order.id pk=item.delivered.id%}"  class="form-group " method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary  border-0 float-right">
+                      Listo
+                    </button>
+                  </form>
+                  {% endif %}
                   {% if item.delivered.state != "finalizado" %}
-                    <button type="button" class="btn btn-primary disabled  float-right">
+                    <button type="button" class="btn btn-primary disabled border-0 float-right">
                       Entregar
                     </button>
                   {% else %}
                     <button 
                         type="button" 
-                        class="btn btn-primary float-right"
+                        class="btn btn-primary float-right border-0"
                         data-bs-toggle="modal" 
                         data-bs-target="#staticBackdropDeliberedItem"
                         hx-get="{% url 'delibered_item_form' order=order.id pk=item.delivered.id%}"
@@ -443,7 +460,7 @@
                   </h2>
                   {% if item.delivered.state == "ordenado" %}
                     <button type="button" 
-                            class="btn btn-success-create" 
+                            class="btn btn-success-create btn-outline-success" 
                             data-bs-toggle="modal" 
                             data-bs-target="#staticBackdropUtilsItem"
                             hx-get="{% url 'create_util_item_form' order=order.id pk=item.delivered.id%}"

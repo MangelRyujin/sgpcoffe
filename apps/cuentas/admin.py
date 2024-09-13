@@ -36,18 +36,18 @@ class ShiftAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
     
 # Admin Order 
-# @admin.register(Order)
-# class OrderAdmin(admin.ModelAdmin):
-#     list_display = ['id','table','user','is_paid','paid_method','shift','total_paid','created_date','created_time']
-#     search_fields = ['user__name','table','is_paid','paid_method','created_date']
-#     list_filter = (
-#         'user__username',
-#         'table__name',
-#         'is_paid',
-#         'paid_method',
-#         'created_date',
-#     )
-#     list_per_page = 100
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id','table','user','is_paid','paid_method','shift','total_paid','created_date','created_time']
+    search_fields = ['user__name','table','is_paid','paid_method','created_date']
+    list_filter = (
+        'user__username',
+        'table__name',
+        'is_paid',
+        'paid_method',
+        'created_date',
+    )
+    list_per_page = 100
     # inlines = [ItemInline,]
  
 @admin.register(CashOperation)
@@ -86,16 +86,16 @@ class CashOperationAdmin(admin.ModelAdmin):
 #                ]
  
  
-# @admin.register(Item)
-# class ItemAdmin(admin.ModelAdmin):
-#     list_display = ('id','order' ,'product', 'state', 'type', 'cant', 'total_price' , 'estimate_price','inversion_cost','revenue')
-#     search_fields = ('product_name', 'type', 'state', 'description', 'created_date')
-#     list_filter = (
-#         'order',
-#         'product',
-#         'state',
-#         'type',
-#     )   
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('id','order' ,'product', 'state', 'type', 'cant', 'total_price' , 'estimate_price','inversion_cost','revenue')
+    search_fields = ('product_name', 'type', 'state', 'description', 'created_date')
+    list_filter = (
+        'order',
+        'product',
+        'state',
+        'type',
+    )   
 # admin.site.register(Item)
 # admin.site.register(AddItem)
 # admin.site.register(UtilsItem)

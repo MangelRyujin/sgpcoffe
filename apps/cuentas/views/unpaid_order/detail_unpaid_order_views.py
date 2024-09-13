@@ -13,6 +13,7 @@ def unpaid_order_detail_view(request, pk):
     order = Order.objects.get(pk=pk)
     categories= Category.objects.filter(type="vendible")
     items_delivered = []
+    unpaid_items= Item.objects.filter(order=order,state__in=['ordenado','preparando','finalizado']).first()
     for item in Item.objects.filter(order=order).order_by("-id"):
         items_delivered.append({
             'delivered': item,
@@ -21,7 +22,7 @@ def unpaid_order_detail_view(request, pk):
             'motive':ItemMotiveCancelMessage.objects.filter(item=item).first()
         })
 
-    context = {"order": order,"categories":categories, "items_delivered": items_delivered}
+    context = {"order": order,"categories":categories, "items_delivered": items_delivered,"unpaid_items":unpaid_items}
 
     return render(request, 'order_unpaid/unpaid_order_detail.html', context)
 
@@ -65,7 +66,7 @@ def form_order_paid_view(request,pk):
     error=''
     form = PaidOrderForm(request.POST or None)
     if request.method == "POST":
-        if float(request.POST.get("cash")) >= 0 and float(request.POST.get("transfer")) >= 0:
+        if float(request.POST.get("cash")) >= 0 and float(request.POST.get("transfer")) >= 0 and float(request.POST.get("cash"))+float(request.POST.get("transfer")) == order.total_price:
             order.paid_method= request.POST.get("paid_method")
             order.is_paid="pagada"
             order.cash = request.POST.get("cash")
@@ -77,7 +78,7 @@ def form_order_paid_view(request,pk):
                 order.shift.add_revenue(item.revenue_price)
             return redirect(f'/ventas/gestionar/cuentas/')
         else:
-            error="Verifique que los montos sean válidos y que tenga todas los pedidos estén ya entregados o cancelados"
+            error="Verifique que los montos sean válidos al parecer no estas introduciendo la cantidad correcta"
             return redirect(f'/ventas/gestionar/cuenta/{order.id}?error={error}')
     context = {"order":order,"error":error,"form":form}
 

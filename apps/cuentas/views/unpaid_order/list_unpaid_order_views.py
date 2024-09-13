@@ -40,7 +40,6 @@ def unpaid_order_view(request):
 @login_required(login_url='/admin/login/')
 def form_delete_order_view(request,pk):
     order = Order.objects.get(pk=pk)
-    print(order)
     item=Item.objects.filter(order=order)
     if request.method == "POST":
         if item.exists():

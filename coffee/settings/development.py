@@ -4,7 +4,7 @@ from .base import *
 DEBUG =  config("DEBUG", default=True, cast=bool)
 
 # Allowed Hosts Config
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Data Base config
 

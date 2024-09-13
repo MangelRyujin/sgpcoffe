@@ -58,7 +58,7 @@
         <div
         hx-get="{% url 'items_list_bar' %}"
         hx-swap="innerHTML"
-        hx-trigger="load, every 20s"
+        hx-trigger="load, every 10s"
         hx-scheduler="true"
         >
       </div>
@@ -77,7 +77,7 @@
           <div
           hx-get="{% url 'items_list_kitchen' %}"
           hx-swap="innerHTML"
-          hx-trigger="load, every 20s"
+          hx-trigger="load, every 10s"
           hx-scheduler="true"
           id="kitchensContainer"
           >
