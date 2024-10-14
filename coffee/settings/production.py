@@ -1,10 +1,10 @@
 from .base import *
 
 # Debug Config
-DEBUG =  config("DEBUG", default=True, cast=bool)
+DEBUG =  config("DEBUG", default=False, cast=bool)
 
 # Allowed Hosts Config
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Data Base config
 DATABASES = {
@@ -18,8 +18,18 @@ DATABASES = {
     }
 }
 
+ROOT_URLCONF = 'coffee.urls'
+
 # Static media file config
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+if DEBUG:
+    STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

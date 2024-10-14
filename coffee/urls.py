@@ -22,24 +22,14 @@ from django.conf.urls.static import static
 
 from coffee.views.home_view import home_view
 
-# Registrar la vista en urls.py
-urlpatterns = [
-    
-]
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view,name='home'),
     path('ventas/',include("apps.cuentas.urls")),
     path('reportes/',include("apps.reportes.urls")),
     path('bar-launch/',include("apps.barandkitchen.urls")),
-    path('dependiente/',include("apps.waiter.urls"))
+    path('dependiente/',include("apps.waiter.urls")),
+    re_path(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),
     
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-urlpatterns+=[
-    re_path(r'^media/(?P<path>.*)$',serve, {
-        'document_root': settings.MEDIA_ROOT,
-    })
 ]
-

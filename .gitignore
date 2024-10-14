@@ -5,3 +5,7 @@ __pycache__
 env
 tailwind*
 *sqlite3
+dist
+build
+run_project.py
+run_project.spec
