@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.productos.models import Add, Category, Ingredient, Product, ProductAddRelation, ProductIngredientRelation, Stock, StockCategory, UtilProduct
+from apps.productos.models import AFT, Add, Category, Ingredient, Product, ProductAddRelation, ProductIngredientRelation, Stock, StockCategory, UtilProduct
 
 # Register your models here.
 
@@ -71,7 +71,14 @@ class UtilProductAdmin(admin.ModelAdmin):
     search_fields = ['name','stock__name',]
     readonly_fields = ('disponible',)
     list_per_page = 100
-
+    
+    
+# Admin AFT 
+@admin.register(AFT)
+class AFTAdmin(admin.ModelAdmin):
+    list_display = ['name','price','cant']
+    search_fields = ['name']
+    list_per_page = 100
 
 # Admin Stock 
 @admin.register(StockCategory)

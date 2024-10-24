@@ -22,7 +22,7 @@ class OrderTableForm(forms.ModelForm):
         
     def __init__(self, *args, product_id=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['table'].queryset = Table.objects.filter(active=True,state="libre")  
+        self.fields['table'].queryset = Table.objects.filter(active=True,state="libre").order_by('id')
 
 
 class PaidOrderForm(forms.ModelForm):

@@ -146,8 +146,25 @@ class UtilProduct(models.Model):
     def disponible(self):
         return f'{self.stock.stock} {self.stock.measure_unit}'
 
+# AFT  model
+class AFT(models.Model):
+    """Model definition for AFT."""
+    name = models.CharField('nombre', max_length=255, blank=False , null=False)
+    price = models.DecimalField('precio', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
+    cant = models.PositiveIntegerField("cantidad",default=0)
+    
+    
+    # Define fields here
 
+    class Meta:
+        """Meta definition for AFT."""
 
+        verbose_name = 'AFT'
+        verbose_name_plural = 'AFT'
+
+    def __str__(self):
+        """Unicode representation of AFT."""
+        return f'{self.name}'
     
 # Product  model
 class Product(models.Model):
@@ -179,6 +196,19 @@ class Product(models.Model):
     def __str__(self):
         """Unicode representation of Product."""
         return f'{self.name}'
+    
+    @property
+    def available_discount_ingredients(self):
+        for ingredient in self.ingredient_relations.all():
+            if ingredient.cant_discount_ingredient(1) == False:
+                return False
+        return True
+    
+    def cant_discount_ingredients(self,cant):
+        for ingredient in self.ingredient_relations.all():
+            if ingredient.cant_discount_ingredient(cant) == False:
+                return False
+        return True
 
     @property
     def discount_price(self):
@@ -202,6 +232,11 @@ class ProductIngredientRelation(models.Model):
     def __str__(self):
         """Unicode representation of ProductIngredient."""
         return f'Ingrediente {self.ingredient.name} asignado al producto {self.product.name} con {self.measure_unit_qty}'
+    
+    def cant_discount_ingredient(self,cant):
+        if self.ingredient.stock.stock - Decimal(cant)*self.measure_unit_qty < 0:
+            return False
+        return True
     
     def discount_ingredient(self,cant):
         self.ingredient.stock.stock-= cant*self.measure_unit_qty

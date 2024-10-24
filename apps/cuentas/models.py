@@ -181,6 +181,21 @@ class Order(models.Model):
         return f'Cuenta {self.pk}'
 
     @property
+    def order_delete(self):
+        items=self.item_set.exclude(state="ordenado")
+        if items.exists():
+            return False
+        return True
+    
+    @property
+    def order_cant_paid(self):
+        items=self.item_set.filter(state__in=['ordenado','preparando','finalizado']).first()
+        if items:
+            return False
+        return True
+    
+
+    @property
     def total_paid(self):
         return self.transfer + self.cash
     

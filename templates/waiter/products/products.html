@@ -1,0 +1,55 @@
+{% load static %}
+
+<div class="offcanvas  offcanvas-top h-75" tabindex="-1" id="offcanvasTop" >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasTopLabel">Añadir producto</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div 
+                
+            class=" nav-scroller  mb-3">
+                    
+            <nav class="nav nav-pills pt-1 pb-2 mb-0 justify-content-between gap-1">
+                {% if categories %}
+                {% for category in categories %}
+                
+                <input type="radio" class="btn-check" name="categories" id="{{category.name}}{{category.pk}}" autocomplete="off"
+                {% if categories.all.0.pk == category.pk %}checked{% endif %}
+                >
+                <label 
+                hx-get="{% url 'product_list_results' pk=order.pk %}?categories={{category.pk}}"
+                hx-target="#ProductList"
+                hx-trigger="click"
+                hx-swap="innerHTML"
+                hx-indicator="#spinnerProductListResult{{category.pk}}"
+                class="btn btn-outline-dark d-flex justify-content-center align-items-center" for="{{category.name}}{{category.pk}}">
+                <span id="spinnerProductListResult{{category.pk}}" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>
+                {{category.name}}</label>
+
+                {% endfor %}
+                {% endif %}
+            
+                
+            </nav>
+            
+        </div> 
+            <div 
+            hx-get="{% url 'product_list_results' pk=order.pk %}?categories={{categories.all.0.pk}}"
+            hx-target="#ProductList"
+            hx-trigger="load"
+            hx-swap="innerHTML"
+            hx-indicator="#spinnerProductListResult"
+            ></div>
+        <div class="w-100 position-relative d-flex justify-content-center align-items-center">
+            <div id="spinnerProductListResult" class="htmx-indicator w-100 h-100  loadding-blur position-absolute d-flex justify-content-center align-items-center"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <div class="col-12 mb-2 mb-lg-0  position-relative" id="ProductList">
+            </div>
+          </div>
+    </div>
+  </div>

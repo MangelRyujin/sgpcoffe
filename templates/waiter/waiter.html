@@ -1,0 +1,31 @@
+{% extends 'waiter/base.html' %}
+{% load static %}
+
+{% block contend %}
+{% include "waiter/orderItemDelete/modalOrderItemDelete.html" %}
+{% include "waiter/orderItemCancel/modalOrderItemCancel.html" %}
+{% include "waiter/orderItemAdd/modalOrderItemAdd.html" %}
+{% include "waiter/orderDetail/modalOrderDetail.html" %}
+{% include "waiter/orderItemUtil/modalOrderItemUtil.html" %}
+{% include "waiter/orderChangeTable/modalOrderChangeTable.html" %}
+{% include "waiter/orderSold/modalOrderSold.html" %}
+<div 
+hx-get="{% url 'charge_table' pk=tables.all.0.pk %}"
+hx-target="#TableResults"
+hx-trigger="load"
+hx-swap="innerHTML"
+hx-indicator="#spinner"></div>
+
+<div class="w-100 h-100 position-relative d-flex justify-content-center align-items-center">
+<div id="spinner" class="htmx-indicator w-100 h-100  loadding-blur position-absolute  d-flex justify-content-center align-items-center"
+style="z-index:100;">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<div class="w-100 h-100" id="TableResults">
+  
+</div> 
+</div>
+{% endblock %}
+

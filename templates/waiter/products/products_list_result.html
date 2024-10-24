@@ -1,0 +1,84 @@
+{% load static %}
+
+{% if message %}
+  <div class="alert alert-dismissible alert-success d-flex align-items-center mb-2 px-2 fade show" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi-check-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+      </svg>
+      <div class="small">
+        {{message}}
+      </div>
+      <span type="button" class="btn-close px-2" data-bs-dismiss="alert" aria-label="Close"></span>
+    </div>
+    <div
+                hx-get="{% url 'order_items_result' pk=order.pk %}"
+                hx-target="#OrderItemResult"
+                hx-trigger="load"
+                hx-swap="innerHTML"
+                hx-indicator="#spinner">
+    </div>
+{% endif %}
+{% if error %}
+    <div class="alert alert-dismissible alert-danger d-flex align-items-center mb-2 px-2 fade show" role="alert">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+      </svg>
+        <div class="small">
+          {{error}}
+        </div>
+        <span type="button" class="btn-close px-2" data-bs-dismiss="alert" aria-label="Close"></span>
+      </div>
+    {% endif %}
+
+{% if products %}
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6  g-2">
+    {% for product in products %}
+
+        <div class="col text-start">
+          
+        <div class="card card-cover h-100 overflow-hidden rounded-2 shadow-sm {% if not product.available_discount_ingredients %} list-group-item list-group-item-danger  {% endif %} ">   
+            <div class="card-header p-1"><span class="fw-bold  small">{{product.name}}</span></div>    
+            <div class="card-body p-1 py-3" style="min-height:105px;">
+                {% if product.available_discount_ingredients %}
+                <form class="input-group"
+                        hx-post="{% url 'order_item_create_view' pk=order.pk %}?product={{product.pk}}&&category={{category}}"
+                        hx-target="#ProductList"
+                        hx-trigger="submit"
+                        hx-swap="innerHTML"
+                        hx-indicator="#spinnerProductCant{{product.pk}}">
+                <div class="input-group">
+                        
+                    {% csrf_token %}
+                    <button type="submit" for="productCant{{product.pk}}" class="input-group-text bg-success"
+                        >
+                        <span id="spinnerProductCant{{product.pk}}" class="htmx-indicator spinner-border spinner-border-sm me-2" ></span>
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-white bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                          </svg>
+                    </button>
+                    
+                    <input required name="cant" id="productCant{{product.pk}}" min=1 max=100 value="0" type="number" class="form-control" >
+                    
+                </div>
+                <div class="form-check mt-2">
+                    <input name="type" type="checkbox" class="form-check-input" id="productType{{product.pk}}">
+                    <label class="form-check-label" for="productType{{product.pk}}">Para llevar</label>
+                  </div>
+                </form>
+                {% else %}
+                {% endif %}
+                
+            </div>
+            <div class="card-footer p-1">{{product.discount_price}}</div>
+
+        </div>
+        
+        
+    
+      </div>
+    
+    {% endfor %}
+</div>
+
+{% endif %}

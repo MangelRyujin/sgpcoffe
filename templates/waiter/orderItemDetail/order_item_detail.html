@@ -1,0 +1,307 @@
+{% if item %}
+<div class="col position-relative" id="OrderItemCard{{item.pk}}">
+    <div id="OrderItemCardSpinner{{item.pk}}" class="htmx-indicator w-100 h-100  loadding-blur position-absolute z-10 d-flex justify-content-center align-items-center"
+    style="min-height: 200px;z-index: 100;">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class=" card h-100 list-group-item {% if item.state == 'ordenado' %}list-group-item-warning border-warning-subtle{% else %}{% if not item.state == 'cancelado' %}list-group-item-success border-success-subtle {% else %}list-group-item-danger border-danger-subtle {% endif %}{% endif %} {% if item.state == 'entregado' %}list-group-item-info border-info-subtle{% endif %} border-1 rounded  border shadow">
+                  
+      <div class="card-header d-flex {% if item.state == 'ordenado' %}border-warning-subtle{% else %}{% if not item.state == 'cancelado' %}border-success-subtle {% else %}border-danger-subtle{% endif %}{% endif %} {% if item.state == 'entregado' %}border-info-subtle{% endif %} justify-content-between p-2 align-items-center mb-1">  <div class="d-flex flex-column justify-content-center gap-1 align-items-start w-100">
+          <div class="d-flex justify-content-between w-100">
+            <span class="fw-bold">{{item.product.name}}</span>
+            {% if item.state != "cancelado" %}
+            <div class="btn-group">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="cursor-pointer bi-three-dots-vertical" viewBox="0 0 16 16" data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
+                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+              </svg>
+                <span class="visually-hidden">Toggle Dropdown</span>
+  
+              <ul class="dropdown-menu shadow">
+                {% if item.state == "finalizado" %}
+                        <li class=" p-1"><a class="dropdown-item rounded d-flex align-items-center " href="#"
+                        hx-get="{% url 'order_item_delivery_view' pk=item.pk %}" 
+                        hx-swap="outerHTML"
+                        hx-trigger="click"
+                        hx-target="#OrderItemCard{{item.pk}}" 
+                        hx-indicator="#OrderItemCardSpinner{{item.pk}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 text-success bi-check2-all" viewBox="0 0 16 16">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                        </svg>
+                    Entregado</a></li>
+                    {% endif %}
+                {% if item.is_active and item.state == "ordenado" %}
+                        <li class=" p-1"><a class="dropdown-item rounded d-flex align-items-center " href="#"
+                        hx-get="{% url 'order_item_revert_view' pk=item.pk %}" 
+                        hx-swap="outerHTML"
+                        hx-trigger="click"
+                        hx-target="#OrderItemCard{{item.pk}}" 
+                        hx-indicator="#OrderItemCardSpinner{{item.pk}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 text-success bi-check2-all" viewBox="0 0 16 16">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                        </svg>
+                    Revertir</a></li>
+                    {% endif %}
+                    {% if not item.is_active and item.state == "ordenado" %}
+                        <li class=" p-1"><a class="dropdown-item rounded d-flex align-items-center " href="#"
+                        hx-get="{% url 'order_item_check_view' pk=item.pk %}" 
+                        hx-swap="outerHTML"
+                        hx-trigger="click"
+                        hx-target="#OrderItemCard{{item.pk}}" 
+                        hx-indicator="#OrderItemCardSpinner{{item.pk}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 text-success bi-check2-all" viewBox="0 0 16 16">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                    </svg>
+                    Listo</a></li>
+                        
+                    
+                    <li class=" p-1"><a class="dropdown-item rounded d-flex align-items-center "
+                        href="#"
+                        data-bs-toggle="modal" data-bs-target="#modalOrderItemAdd"
+                        hx-get="{% url 'order_item_add_create' pk=item.pk %}" 
+                        hx-swap="innerHTML"
+                        hx-target="#OrderItemAddCreate"
+                        hx-trigger="click"
+                        >
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-2 text-success bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                          </svg>
+                          Agregado</a></li>
+                        
+                      <li>
+                        {% if item.type == "llevar" %}
+                        
+                        <li class=" p-1"><a class="dropdown-item rounded d-flex align-items-center "
+                            href="#"
+                            data-bs-toggle="modal" data-bs-target="#modalOrderItemUtil"
+                            hx-get="{% url 'order_item_util_create' pk=item.pk %}" 
+                                hx-swap="innerHTML"
+                                hx-target="#OrderItemUtilCreate"
+                                hx-trigger="click"
+                            >
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-2 text-success bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                              </svg>
+                              Util</a></li>
+                            
+                          <li>
+                            {% endif %}
+                    {% endif %}
+                    {% if item.state == "ordenado" %}
+                            <hr class="dropdown-divider"></li>
+                            <li class=" p-1"><a class="dropdown-item rounded d-flex align-items-center " href="#"
+                              data-bs-toggle="modal" data-bs-target="#modalOrderItemDelete" 
+                                    hx-get="{% url 'order_item_delete_view' pk=item.pk  %} "
+                                    hx-target="#OrderItemDelete"
+                                    hx-swap="innerHTML"
+                                    hx-trigger="click">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="text-danger me-2 bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                              </svg>
+                              Eliminar</a></li>
+                              {% else %}
+                              <li class=" p-1"><a class="dropdown-item rounded d-flex align-items-center " href="#"
+                                data-bs-toggle="modal" data-bs-target="#modalOrderItemCancel" 
+                                      hx-get="{% url 'order_item_cancel_view' pk=item.pk  %} "
+                                      hx-target="#OrderItemCancel"
+                                      hx-swap="innerHTML"
+                                      hx-trigger="click">
+                                      <svg  xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 cursor-pointer text-danger bi-x-octagon-fill" viewBox="0 0 16 16">
+                                        <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"></path>
+                                      </svg>
+                                Cancelar</a></li>
+                              
+                              {% endif %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+          
+          
+          <div class="d-flex justify-content-between w-100">
+            <span class="d-block small lh-sm ">{{item.state}}
+                {% if item.is_active and item.state == "ordenado" %}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ms-2 bi-check2-all" viewBox="0 0 16 16">
+                            <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                            <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                          </svg>
+                          {% endif %}
+            </span>
+            {% if item.type == "llevar" %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-car-front-fill" viewBox="0 0 16 16">
+                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/>
+                </svg>
+            {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-shop" viewBox="0 0 16 16">
+                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"></path>
+              </svg>
+            {% endif %}
+          </div> 
+        </div>
+        
+      </div>
+      <div class="card-body p-2 overflow-x-hidden" style="max-height: 150px; min-height:150px;">
+        {% if item.additem_set.all %}
+        <span class="d-block mb-0 small text-ellipsis-150 fw-bold">
+          Agregados         
+        </span>
+                {% for add in item.additem_set.all %}
+                <div class="d-flex justify-content-between align-items-center py-1 ">
+                  <p class=" mb-0 small lh-sm  ">
+                    <span class="d-block mb-0 small text-ellipsis-150 fw-bold">
+                      {{add.add.name}}
+                    </span>
+                    <span class="small">Cantidad: {{add.cant}}</span>
+                  </p>
+                  {% if item.state == 'ordenado'%}
+                      <div class="d-flex justify-content-center gap-2 align-items-center ">
+                        
+                        <svg
+                              hx-get="{% url 'order_item_add_delete_view' pk=add.pk %}" 
+                              hx-swap="outerHTML"
+                              hx-trigger="click"
+                              hx-target="#OrderItemCard{{item.pk}}" 
+                              hx-indicator="#OrderItemCardSpinner{{item.pk}}"
+                               
+                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="cursor-pointer text-danger bi-trash3-fill" viewBox="0 0 16 16">
+                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                        </svg>
+                      </div>
+                      {% endif %}
+                </div>
+                {% endfor %}
+                    {% else %}
+                   
+
+                    {% endif %}
+                    {% if item.utilsitem_set.all %}
+                        <span class="d-block mb-0 small text-ellipsis-150 fw-bold">
+                          Útiles         
+                        </span>
+                        {% for utils in item.utilsitem_set.all %}
+                        <div class="d-flex justify-content-between align-items-center py-1 ">
+                          <p class=" mb-0 small lh-sm  ">
+                            <span class="d-block mb-0 small text-ellipsis-150 fw-bold">{{utils.util.name}}
+                              
+                            </span>
+                            <span class="small">Cantidad: {{utils.cant}}</span>
+                          </p>
+                          {% if item.state == 'ordenado'%}
+                          <div class="d-flex justify-content-center gap-2 align-items-center ">
+                            
+                            <svg
+                              hx-get="{% url 'order_item_utils_delete_view' pk=utils.pk %}" 
+                              hx-swap="outerHTML"
+                              hx-trigger="click"
+                              hx-target="#OrderItemCard{{item.pk}}" 
+                              hx-indicator="#OrderItemCardSpinner{{item.pk}}"
+                               
+                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="cursor-pointer text-danger bi-trash3-fill" viewBox="0 0 16 16">
+                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                        </svg>
+                          </div>
+                          {% endif %}
+                        </div>
+                        {% endfor %}
+                            {% else %}
+                           
+    
+                            {% endif %}
+        {% comment %} {% if local_order.localorderitem_set %}
+          {% for local_order_item in local_order.localorderitem_set.all %}
+            <div class="d-flex justify-content-between align-items-center py-1 ">
+              <div class="d-flex align-items-center">
+                <img loading="lazy" src="{% if local_order_item.product.image_one %}{{local_order_item.product.image_one.url}}{% else %}{% static "/assets/img/icon-image-not-found-free-vector" %}{% endif %}" alt="" width="50" height="50" class="rounded-circle me-2">
+                <p class=" mb-0 small lh-sm  ">
+                  <span class="d-block mb-0 small text-ellipsis-150">{{local_order_item.product.name}}
+                    
+                  </span>
+                  <span class="small">{{local_order_item.cant}}x - $ {{local_order_item.total_price}}</span>
+                </p>
+              </div>
+              {% if local_order.state == 'p' %}
+              <div class="d-flex justify-content-center gap-2 align-items-center ">
+                <svg 
+                data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLocalOrderItemStockCreate" aria-controls="offcanvasRight"
+                hx-get="{% url 'local_order_item_stock_create' pk=local_order_item.pk %}"
+                hx-swap="innerHTML"
+                hx-target="#LocalOrderItemStockCreateForm"
+                hx-trigger="click"
+                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="cursor-pointer text-success bi-plus-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                <svg
+                      hx-post="{% url 'local_order_item_delete' pk=local_order_item.pk %}" 
+                      hx-swap="outerHTML"
+                      hx-trigger="click"
+                      hx-target="#LocalOrderCard{{local_order.pk}}" 
+                      hx-indicator="#OrderItemCardSpinner{{local_order.pk}}"
+                      hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' 
+                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="cursor-pointer text-danger bi-trash3-fill" viewBox="0 0 16 16">
+                  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                </svg>
+              </div>
+              {% endif %}
+              
+            </div>
+            {% if local_order_item.localorderitemstock_set %}
+            <div class="container px-0">
+              <div class="row row-cols-3 align-items-center py-1 g-1 ">
+                {% for local_order_item_stock in local_order_item.localorderitemstock_set.all %}
+                  <div class="col ">
+                    <div class=" border {% if local_order.state == 'p' %}list-group-item-warning border-warning{% else %}list-group-item-success border-success-subtle{% endif %} shadow-sm border-1 list-group-item-action justify-content-between p-1 d-flex align-items-center py-1 rounded-pill">
+                      <span class="small text-ellipsis">{{local_order_item_stock.cant}}x-<span >{{local_order_item_stock.stock.code}}</span> </span>
+                      {% if local_order.state == 'p' %}
+                      <svg
+                      hx-post="{% url 'local_order_item_stock_delete' pk=local_order_item_stock.pk %}" 
+                      hx-swap="outerHTML"
+                      hx-trigger="click"
+                      hx-target="#LocalOrderCard{{local_order.pk}}" 
+                      hx-indicator="#OrderItemCardSpinner{{local_order.pk}}"
+                      hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}'
+                      xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="cursor-pointer text-danger bi-x-octagon-fill" viewBox="0 0 16 16">
+                        <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
+                      </svg>
+                      {% else %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="text-success-emphasis bi-check" viewBox="0 0 16 16">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 "/>
+                      </svg>
+                      {% endif %}
+                    </div>
+                    
+                  </div>
+                  
+                {% endfor %}
+                
+                
+              </div>
+            </div>
+            {% endif %}
+            
+          {% endfor %}
+        {% endif %}
+        
+        
+      
+       {% endcomment %}
+        
+      </div>
+      <div class="card-footer {% if item.state == 'ordenado' %}border-warning-subtle{% else %}{% if not item.state == 'cancelado' %}border-success-subtle {% else %}border-danger-subtle{% endif %}{% endif %} {% if item.state == 'entregado' %}border-info-subtle{% endif %} p-2 d-flex align-items-center justify-content-between ">
+        <p class=" mb-0 small lh-sm     ">
+          <span class="d-block mb-0">Unidades: {{item.cant}} </span>
+          </p>
+          <p class=" mb-0 small lh-sm     ">
+            <span class="d-block mb-0">$ {{item.estimate_price}}</span>
+            </p>
+        
+      </div>
+    </div>
+  </div> 
+  {% endif %}

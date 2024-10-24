@@ -209,7 +209,6 @@
       {% if categories %}
         <div  class="d-flex overflow-auto pb-3">
                 {% for category in categories %}
-                    {% comment %} <a action="post" href="#"  style="width: 18rem;" class="btn btn-success-create m-3">{{category.name}}</a> {% endcomment %}
                     <form id="terminadoForm_{{category.id}}" class="m-2" method="post" hx-post="{% url 'product_sell_list' order=order.id %}"hx-target="#contenido" >
                         {% csrf_token %}
                         <input type="hidden" name="category" value="{{ category.id }}">
@@ -359,7 +358,6 @@
       {% for item in items_delivered %}
             <div class="col-12 col-md-6">
               <div class="card-item-order p-3 card col-12">
-
               <div class="card-item-order-header card-header">
                 <div class="col-12 col-md-auto d-flex justify-content-between align-items-center">
                   <h1 class="h2 delivered">{{item.delivered.product.name}}</h1>
