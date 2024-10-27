@@ -1,0 +1,170 @@
+{% load static %}
+{% if table %}
+  
+  
+  
+        <div class="fixed-top d-flex justify-content-center gap-1 mt-4 ">
+            <ul class="navbar-nav flex-row bg-dark border-2 border-dark-subtle border  bd-mode-toggle rounded shadow">
+            
+                <li class="nav-item text-nowrap ">
+                  <a href="/waiter/" class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-caret-left-fill" viewBox="0 0 16 16">
+                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-caret-left-fill" viewBox="0 0 16 16">
+                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                  </svg>
+                  </a>
+                </li>
+                
+              </ul>
+            <span
+                    hx-get="{% url 'reload_order_detail_delivery_table_view' pk=order.pk  %}"
+                    hx-target="#TableResults"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                    hx-indicator="#spinner"
+                     class="btn {% if table.state == "libre" %}btn-success {% else %} btn-danger{% endif %} text shadow rounded border-3 fw-bold "
+            >{{order.pk}}</span>
+            <ul class="navbar-nav flex-row bg-dark border-2 border-dark-subtle border  bd-mode-toggle rounded-circle shadow">
+                
+                <form class="nav-item text-nowrap ">
+                    {% csrf_token %}
+                  <a  class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                    
+                    href="{% url 'list_orders_table_view' pk=table.pk  %}"
+                    >
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-caret-left-fill" viewBox="0 0 16 16">
+                        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                      </svg>
+                      
+                  </a>
+                </form>
+                
+              </ul>
+        </div>
+        {% if order %}
+        
+          {% include "waiter/products/products.html" %}
+          <div class="container-fluid my-5 pt-4 pb-2 ">
+            <div class="w-100 h-100 position-relative pb-2 " id="OrderItemListTableDeliveryResult">
+              <div id="spinner" class="htmx-indicator w-100 h-100  loadding-blur position-absolute  d-flex justify-content-center align-items-center"
+                style="z-index:100;">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+              <div id="OrderItemResult">
+                {% include "waiter/deliveryTable/order_item_list_result.html" %}
+              </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="  d-flex gap-2  position-fixed bottom-0 end-0 mb-1 me-1 " style="z-index:1000;">
+      
+            {% if order.order_delete %}
+           
+              <ul class="navbar-nav flex-row bg-danger-subtle border-2 border-danger border  bd-mode-toggle rounded-circle shadow mb-2 "
+              
+                >
+                    
+                <li class="nav-item text-nowrap ">
+                  <a href="{% url 'order_detail_delivery_delete_view' pk=order.pk %}" class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                  >
+                    
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="text-danger bi-trash2-fill" viewBox="0 0 16 16">
+                    <path d="M2.037 3.225A.7.7 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.7.7 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z"/>
+                  </svg>
+                  </a>
+                </li>
+                
+              </ul>
+              {% endif %}
+              
+              <ul class="navbar-nav  flex-row bg-dark border-2 border-dark-subtle border  bd-mode-toggle rounded-circle shadow mb-2 ">
+                    
+                <li class="nav-item text-nowrap ">
+                  <a href="#" class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white {% if not order.item_set.all  %} opacity-50 disabled {% endif %} "
+                  type="button" data-bs-toggle="modal" data-bs-target="#modalOrderDeliverySold"
+                  hx-get="{% url 'order_delivery_sold' pk=order.pk %}"
+                            hx-target="#OrderDeliverySold"
+                            hx-trigger="click"
+                            hx-swap="innerHTML"
+                 >
+                    
+                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class=" bi-currency-dollar" viewBox="0 0 16 16">
+                  <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+                </svg>
+                
+                  </a>
+                </li>
+                
+              </ul>
+              <ul class="navbar-nav flex-row bg-dark border-2 border-dark-subtle border  bd-mode-toggle rounded-circle shadow mb-2 ">
+                    
+                <li class="nav-item text-nowrap " id="PrintBTN">
+                  {% include "waiter/print/printBTN.html" %}
+                </li>
+                </li>
+                
+              </ul>
+              <ul class="navbar-nav flex-row bg-dark border-2 border-dark-subtle border  bd-mode-toggle rounded-circle shadow mb-2 ">
+                    
+                <li class="nav-item text-nowrap ">
+                  <a href="#" class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                  type="button" data-bs-toggle="modal" data-bs-target="#modalOrderDetail"
+                  hx-get="{% url 'order_detail_view' pk=order.pk %}"
+                            hx-target="#OrderDetailModal"
+                            hx-trigger="click"
+                            hx-swap="innerHTML"
+                  >
+                    
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class=" bi-pass-fill" viewBox="0 0 16 16">
+                    <path d="M10 0a2 2 0 1 1-4 0H3.5A1.5 1.5 0 0 0 2 1.5v13A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 12.5 0zM4.5 5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1m0 2h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1 0-1"/>
+                  </svg>
+                  
+                  </a>
+                </li>
+                
+              </ul>
+              
+              
+              <ul class="navbar-nav flex-row bg-warning-subtle border-2 border-warning border  bd-mode-toggle rounded-circle shadow mb-2 ">
+                    
+                <li class="nav-item text-nowrap ">
+                  <a href="#" class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                  type="button" data-bs-toggle="modal" data-bs-target="#modalOrderChangeTableUpdate" 
+                  hx-get="{% url 'order_change_table_form_view' pk=order.pk %}"
+                            hx-target="#OrderChangeTableUpdate"
+                            hx-trigger="click"
+                            hx-swap="innerHTML"
+                  >
+                    
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="text-warning bi-pencil-fill" viewBox="0 0 16 16">
+                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                  </svg>
+                  </a>
+                </li>
+                
+              </ul>
+              <ul class="navbar-nav flex-row bg-success-subtle border-2 border-success border  bd-mode-toggle rounded-circle shadow mb-2 ">
+                  
+                <li class="nav-item text-nowrap ">
+                  <a href="#" class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                    
+                      <svg  xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="text-success bi-plus-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                  </a>
+                </li>
+                
+              </ul>
+            </div>
+
+  
+    {% endif %}

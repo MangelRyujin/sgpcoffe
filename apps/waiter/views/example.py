@@ -35,7 +35,6 @@ def charge_table(request,pk):
     order= Order.objects.filter(table=table,is_paid='no pagada').first()
     context={
         "order":order,
-        
         "table":table,
         'categories': Category.objects.filter(type='vendible')
     }
@@ -56,6 +55,7 @@ def order_change_table_form_view(request,pk):
     context={'order':order}
     response={}
     post=False
+    affter_table=order.table
     if request.method == "POST":
         post=True
         table= Table.objects.get(id=request.POST.get("table"))
@@ -66,12 +66,12 @@ def order_change_table_form_view(request,pk):
             if table.delivered == False:
                 table.state="ocupada"
                 table.save()
+            else:
+              context['affter_table']=affter_table
             order.save()
             context['message']="Cambio de mesa realizado"
         else:
             context['error']="Mesa no disponible"
-        
-           
     context['tables']=Table.objects.filter(active=True,state="libre").order_by('id')
     response = render(request,'waiter/orderChangeTable/orderChangeTableForm.html',context)
     if post:

@@ -30,6 +30,7 @@
   
 <body>
   
+
   
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark py-0">
     <div class="container-fluid">
@@ -74,19 +75,18 @@
       
     </div>
   </nav>
-      {% block contend %}
+  {% include "waiter/deliveryTable/orderDelete/modalOrderDelete.html" %}
+  {% include "waiter/deliveryTable/TableOrdersSold/modalOrderSold.html" %}
+  {% include "waiter/deliveryTable/OrderSold/modalOrderSold.html" %}
+  {% include "waiter/orderDetail/modalOrderDetail.html" %}
+  {% include "waiter/orderItemDelete/modalOrderItemDelete.html" %}
+  {% include "waiter/orderItemCancel/modalOrderItemCancel.html" %}
+  {% include "waiter/orderItemAdd/modalOrderItemAdd.html" %}
+  {% include "waiter/orderItemUtil/modalOrderItemUtil.html" %}
+  {% include "waiter/orderChangeTable/modalOrderChangeTable.html" %}
+      {% block content %}
       {% endblock %}
       
-      <nav class="navbar fixed-bottom justify-content-center align-items-center d-flex py-2 m-0 bg-dark">
-        <div class=" nav-scroller p-1 " id="TableListWaiter"
-        hx-get="{% url "table_list_update_view" %}"
-        hx-trigger="update-table-list from:body"
-        hx-swap="innerHTML">
-          {% include "waiter/tableList/table_list.html" %}
-        </div>
-        
-        
-      </nav>
 
     <!-- JavaScript Libraries -->
     

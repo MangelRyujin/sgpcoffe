@@ -1,0 +1,54 @@
+{% extends "waiter/deliveryTable/base.html" %}
+{% load static %}
+{% block content %}
+    {% if table %}
+        <div class="fixed-top d-flex justify-content-center gap-1 mt-4 ">
+            <ul class="navbar-nav flex-row bg-dark border-2 border-dark-subtle border  bd-mode-toggle rounded-circle shadow">
+            
+                <li class="nav-item text-nowrap ">
+                  <a href="/waiter/" class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                  >
+                    
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-caret-left-fill" viewBox="0 0 16 16">
+                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                  </svg>
+                  </a>
+                </li>
+                
+              </ul>
+            <span
+                    hx-get="{% url 'list_orders_table_result_view' pk=table.pk  %}"
+                    hx-target="#OrderListTableDeliveryResult"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                    hx-indicator="#spinner"
+                     class="btn {% if table.state == "libre" %}btn-success {% else %} btn-danger{% endif %} text shadow rounded border-3 fw-bold "
+            >Mesa {{table.name}}</span>
+            <ul class="navbar-nav flex-row bg-dark border-2 border-dark-subtle border  bd-mode-toggle rounded-circle shadow">
+                
+                <form class="nav-item text-nowrap ">
+                    {% csrf_token %}
+                  <a  class="nav-link ps-2 pe-2 d-flex justify-content-center align-items-center text-white "
+                    type="button" 
+                    hx-post="{% url 'order_create_delivery_view' pk=table.pk  %}"
+                    hx-target="#OrderListTableDeliveryResult"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                    hx-indicator="#spinner">
+                    
+                      <svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-plus-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                  </a>
+                </form>
+                
+              </ul>
+        </div>
+    {% endif %}
+    <div class="container-fluid my-5 pt-4 pb-2 ">
+        <div class="w-100 h-100 position-relative pb-2 " id="OrderListTableDeliveryResult">
+            {% include "waiter/deliveryTable/order_list_result.html" %}
+        </div>
+    </div>
+{% endblock content %}

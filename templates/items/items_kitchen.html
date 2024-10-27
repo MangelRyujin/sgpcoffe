@@ -5,9 +5,13 @@
           <div class="container-fluid items-row">
             <!-- Daily Feed Widget-->
             {% for item in kitchens %}
-            <div class="card-item-order p-3 card mt-1 col-12">
-              <div class="card-item-order-header card-header">
-                <h3 class="mt-1 h3 kitchen">{{item.kitchen.product.name}}</h3>
+            <div class="card-item-order p-1 card mt-1 col-12">
+              <div class="card-item-order-header card-header p-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h3 class="mt-1 h3 kitchen">{{item.kitchen.product.name}}</h3>
+                  <h3 class="mt-1 h2 delivered">{{item.kitchen.order.table.name}}</h3>
+                </div>
+                
                 {% if item.kitchen.type == "llevar" %}
                   <h3 class="mt-1 kitchen">Prioridad alta</h3>
                 {% endif %}

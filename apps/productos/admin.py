@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.productos.models import AFT, Add, Category, Ingredient, Product, ProductAddRelation, ProductIngredientRelation, Stock, StockCategory, UtilProduct
+from apps.productos.models import AFT, Add, Category, Ingredient, PrincipalStock, Product, ProductAddRelation, ProductIngredientRelation, Stock, StockCategory, UtilProduct
 
 # Register your models here.
 
@@ -90,6 +90,18 @@ class StockCategoryAdmin(admin.ModelAdmin):
 # Admin Stock 
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
+    list_display = ['name','stock','measure_unit','unit_price','storage_threshold','stock_category']
+    search_fields = ['name','measure_unit','stock_category__name']
+    list_filter = (
+        'measure_unit',
+        'stock_category'
+    )
+    readonly_fields = ('stock',)
+    list_per_page = 100
+    
+# Admin PrincipalStock 
+@admin.register(PrincipalStock)
+class PrincipalStockAdmin(admin.ModelAdmin):
     list_display = ['name','stock','measure_unit','unit_price','storage_threshold','stock_category']
     search_fields = ['name','measure_unit','stock_category__name']
     list_filter = (

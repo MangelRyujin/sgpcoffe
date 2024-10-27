@@ -29,7 +29,7 @@ urlpatterns = [
     path('reportes/',include("apps.reportes.urls")),
     path('bar-launch/',include("apps.barandkitchen.urls")),
     path('dependiente/',include("apps.waiter.urls")),
-    path('waiter',include('apps.waiter.urls')),
+    path('waiter/',include('apps.waiter.urls')),
     re_path(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),
     

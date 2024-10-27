@@ -1,6 +1,7 @@
 {% if tables %}
           <nav class="nav nav-pills pb-1 mb-0 justify-content-between gap-2 ">
             {% for table in tables  %}
+            {% if not table.delivered %}
             <input type="radio" class="btn-check" name="table" id="TableSelect{{table.pk}}" >
             <label
             hx-get="{% url 'charge_table' pk=table.pk %}"
@@ -9,6 +10,13 @@
             hx-swap="innerHTML"
             hx-indicator="#spinner"
             class="btn btn-outline-success {% if table.state == "ocupada" %} btn-outline-danger {% endif %}" for="TableSelect{{table.pk}}">{{table.name}}</label>
-            {% endfor %}
+            
+            {% else %}
+            <a
+            href="{% url "list_orders_table_view" pk=table.pk %}"
+            class="btn btn-outline-success {% if table.state == "ocupada" %} btn-outline-danger {% endif %}">{{table.name}}</a>
+            
+            {% endif %}
+           {% endfor %}
           </nav>
 {% endif %}
