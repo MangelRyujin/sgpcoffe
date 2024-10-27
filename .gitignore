@@ -5,7 +5,7 @@ __pycache__
 env
 tailwind*
 *sqlite3
-dist
+dist2
 build
 run_project.py
 run_project.spec
