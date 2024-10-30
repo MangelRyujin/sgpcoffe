@@ -102,4 +102,4 @@ def generar_html_impresion_funtion(order):
         print("Impresión exitosa")
     else:
         print("Error: " + respuesta["message"])
-    return HttpResponse(respuesta, status=404)
+    return 'OK'

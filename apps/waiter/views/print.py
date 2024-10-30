@@ -7,5 +7,6 @@ from apps.waiter.utils.generar_html_impresion import generar_html_impresion_funt
 
 def get_products_print(request,pk):
     order = Order.objects.filter(pk=pk).first()
-    generar_html_impresion_funtion(order)
-    return render(request,'waiter/print/printBTN.html')
+    response = generar_html_impresion_funtion(order)
+    context={'order':order}
+    return render(request,'waiter/print/printBTN.html',context )
