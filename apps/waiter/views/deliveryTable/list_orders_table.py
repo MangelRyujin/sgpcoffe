@@ -11,12 +11,16 @@ from apps.waiter.utils.order import order_paid_proccess_data
 
 @login_required(login_url='admin/login/')
 def order_detail_delivery_table_view(request,pk):
+    shift=Shift.objects.filter(active=True).first()
+    if shift is None:
+        return redirect('/')
     order = Order.objects.filter(pk=pk,is_paid='no pagada').first()
     context={
         'order':order,
         'table':order.table,
         'categories':Category.objects.filter(type='vendible')
         }
+    
     return render(request,'waiter/deliveryTable/order_detail.html',context)
 
 
@@ -32,6 +36,9 @@ def reload_order_detail_delivery_table_view(request,pk):
 
 @login_required(login_url='admin/login/')
 def list_orders_table_view(request,pk):
+    shift=Shift.objects.filter(active=True).first()
+    if shift is None:
+        return redirect('/')
     table = Table.objects.filter(pk=pk).first()
     orders= table.order_set.filter(is_paid="no pagada").order_by('pk')
     context={

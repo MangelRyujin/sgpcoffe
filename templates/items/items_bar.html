@@ -6,9 +6,12 @@
             {% for item in bars %}
             <div class="card-item-order p-1 card mt-1 col-12">
               <div class="card-item-order-header card-header p-2">
+                {% if item.bar.order.table.delivered %}
+                <h3 class="h2 delivered">{{item.bar.order.pk}}</h3>
+                {% endif %}
                 <div class="d-flex justify-content-between align-items-center">
-                  <h3 class="mt-1 h2 delivered">{{item.bar.product.name}}</h3>
-                  <h3 class="mt-1 h2 delivered">{{item.bar.order.table.name}}</h3>
+                  <h3 class=" h2 delivered">{{item.bar.product.name}}</h3>
+                  <h3 class=" h2 delivered">{{item.bar.order.table.name}}</h3>
                 </div>
                 
                 {% if item.bar.type == "llevar" %}

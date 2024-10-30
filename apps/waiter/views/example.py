@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required 
 from django.http import HttpResponse
 
 from apps.cuentas.forms.item_form import OrderTableForm
-from apps.cuentas.models import Item, Order
+from apps.cuentas.models import Item, Order, Shift
 from apps.mesas.models import Table
 from apps.productos.models import Category
 from apps.waiter.order_forms import CreateOrderSoldForm
@@ -17,6 +17,9 @@ def order_detail_view(request,pk):
 
 @login_required(login_url='admin/login/')
 def example_view(request):
+    shift=Shift.objects.filter(active=True).first()
+    if shift is None:
+        return redirect('/')
     tables = Table.objects.filter(active=True).order_by('id')
     context={}
     context['tables']=tables

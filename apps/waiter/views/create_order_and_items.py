@@ -80,8 +80,9 @@ def order_item_add_create(request,pk):
             'order':item.pk,
             
         }
+    print(form['add'])
     if request.POST:
-        form=AddItemForm(request.POST)
+        form=AddItemForm(request.POST,product_id=item.product.pk)
         if form.is_valid():
             item_add = form.save(commit=False)
             item_add.item=item

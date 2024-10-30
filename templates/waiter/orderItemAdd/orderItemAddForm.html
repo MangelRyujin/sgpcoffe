@@ -14,7 +14,6 @@
   {% csrf_token %}  
   <div class="input-group my-2">
     <span class="input-group-text" id="basic-addon1">Agregado</span>
-    
     <select name="add" class="form-select " required aria-label="Default select example">
       {% for add in form.add %}
       {{add}}
@@ -24,7 +23,7 @@
   
   <div class="input-group my-2">
     <span class="input-group-text" id="basic-addon1">Cantidad</span>
-    <input required name='cant' type="number" class="form-control" min=0>
+    <input required name='cant' type="number" class="form-control" min=1>
   </div>
   <div class="col-12">
     {% if message %}
@@ -51,7 +50,15 @@
         <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
       </svg>
         <div class="small">
-          {{error}}
+          {% for field, errors in error.items %}
+                                
+                                    {% for error in errors %}
+                                    <div class="small">
+                                          {{ error }}
+                                    </div> 
+                                        {% endfor %}
+                                  
+                        {% endfor %}
         </div>
         <span type="button" class="btn-close px-2" data-bs-dismiss="alert" aria-label="Close"></span>
       </div>
