@@ -26,8 +26,8 @@ def generar_html_impresion_funtion(order):
             
     """
     html_content += f"""
-            <h4>Mesa:{order.table.name}</h4>
-            <h4>Cuenta:{order.pk}</h4>
+            <h2>Mesa:{order.table.name}</h2>
+            <h2>Cuenta:{order.pk}</h2>
     """
     html_content += f"""
             <table>
