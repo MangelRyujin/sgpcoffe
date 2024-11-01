@@ -76,10 +76,20 @@
                       <a href="#">Cantidad vendida</a>
                     </div>
                   </th>
-
                   <th class="sorting" tabindex="0" rowspan="1" colspan="1">
                     <div class="text">
-                      <a href="#">Precio total</a>
+                      <a href="#">Venta</a>
+                    </div>
+                  </th>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Costo</a>
+                    </div>
+                  </th>
+                  
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Ganacia</a>
                     </div>
                   </th>
                 </tr>
@@ -90,19 +100,89 @@
                   <td class="field-place">{{product.product__name}}</td>
                   <td class="field-place">{{product.total_count}} unidades</td>
                   <td class="field-price">{{product.total_price}} CUP</td>
+                  <td class="field-price">{{product.cost_price}} CUP</td>
+                  
+                  <td class="field-price">{{product.revenue_price}} CUP</td>
                 </tr>
 
-                {% endfor %} {% else %}
+                {% endfor %} 
+                <tr role="row" class="even">
+                  <td class="field-place">Total</td>
+                  <td class="field-place">{{total_count}} unidades</td>
+                  <td class="field-price">{{total_price}} CUP</td>
+                  <td class="field-price">{{total_cost}} CUP</td>
+                  
+                  <td class="field-price">{{total_revenue}} CUP </td>
+                </tr>
+                {% else %}
 
                 <tr role="row" class="">
                   <th class="field-name text">-</th>
                   <td class="field-place">-</td>
                   <td class="field-place">-</td>
                   <td class="field-price">-</td>
+                  <td class="field-price">-</td>
                 </tr>
                 {% endif %}
               </tbody>
             </table>
+
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body table-responsive p-0">
+            <table id="result_list" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Gastos darios</a>
+                    </div>
+                  </th>
+
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Ingresos diarios</a>
+                    </div>
+                  </th>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Gastos mensuales</a>
+                    </div>
+                  </th>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Ingreso mensuales</a>
+                    </div>
+                  </th>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Ganancia total</a>
+                    </div>
+                  </th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr role="row" class="even">
+                  <td class="field-place">$ {{total_operation_amount_gasto}}</td>
+                  <td class="field-place">$ {{total_operation_amount_ingreso}}</td>
+                  <td class="field-price">$ {{total_cashOperation_amount_gasto}}</td>
+                  <td class="field-price">$ {{total_cashOperation_amount_ingreso}}</td>
+                  <td class="field-price">$ {{ganancia_total}}</td>
+        
+                </tr>
+
+                
+                
+              </tbody>
+            </table>
+
+            
           </div>
         </div>
       </div>

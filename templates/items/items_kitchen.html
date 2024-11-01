@@ -5,7 +5,7 @@
           <div class="container-fluid items-row">
             <!-- Daily Feed Widget-->
             {% for item in kitchens %}
-            <div class="card-item-order p-1 card mt-1 col-12">
+            <div class="card-item-order p-1 card mt-1 mb-2 col-12">
               <div class="card-item-order-header card-header p-2">
                 {% if item.kitchen.order.table.delivered %}
                 <h3 class="h2 delivered">{{item.kitchen.order.pk}}</h3>

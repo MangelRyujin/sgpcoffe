@@ -18,6 +18,7 @@ def items_change_kitchen_view(request):
                 if item.state == "ordenado":
                     item.state = "preparando"
                     item.revenue_price=item.revenue
+                    item.cost_price = item.inversion_cost
                     item.product.discount_ingredients(item.cant)
                     for add in AddItem.objects.filter(item=item):
                         product_add = ProductAddRelation.objects.get(add=add.add.id,product=item.product.id)
@@ -49,6 +50,7 @@ def items_change_bar_view(request):
                 if item.state == "ordenado":
                     item.state = "preparando"
                     item.revenue_price=item.revenue
+                    item.cost_price = item.inversion_cost
                     item.product.discount_ingredients(item.cant)
                     for add in AddItem.objects.filter(item=item):
                         product_add = ProductAddRelation.objects.get(add=add.add.id,product=item.product.id)

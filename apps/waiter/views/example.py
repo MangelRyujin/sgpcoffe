@@ -7,12 +7,14 @@ from apps.cuentas.models import Item, Order, Shift
 from apps.mesas.models import Table
 from apps.productos.models import Category
 from apps.waiter.order_forms import CreateOrderSoldForm
+from apps.waiter.utils.bale_list import bale_list
 from apps.waiter.utils.order import order_paid_proccess_data
 
 @login_required(login_url='admin/login/')
 def order_detail_view(request,pk):
     order = Order.objects.filter(pk=pk,is_paid='no pagada').first()
-    context={'order':order}
+    items = bale_list(order)
+    context={'order':order,'items':items}
     return render(request,'waiter/orderDetail/orderDetail.html',context)
 
 @login_required(login_url='admin/login/')

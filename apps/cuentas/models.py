@@ -234,6 +234,7 @@ class Item(models.Model):
     cant = models.PositiveIntegerField("Cant",default=1,null=False,blank=False)
     total_price = models.DecimalField('Total price', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     revenue_price = models.DecimalField('Revenue price', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
+    cost_price = models.DecimalField('Cost price', max_digits=10, default=0, decimal_places=2)
     product = models.ForeignKey(Product,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('producto'))
     order = models.ForeignKey(Order,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('cuenta'))
     
@@ -245,6 +246,10 @@ class Item(models.Model):
         return f'Pedido de {self.product}'
     
     @property
+    def total_cost(self):
+        return self.total_price-self.revenue_price
+    
+    @property
     def estimate_price(self):
         product_price=self.product.discount_price * self.cant 
         total_add_cost = Decimal(0)
@@ -253,7 +258,7 @@ class Item(models.Model):
             product_add_relation = ProductAddRelation.objects.get(
                     product=self.product,
                     add=add_item.add
-                )
+            )
             total_add_cost+=(product_add_relation.price*add_item.cant)*self.cant
         for util_item in UtilsItem.objects.filter(item=self):
             total_util_cost+=util_item.util.price*util_item.cant

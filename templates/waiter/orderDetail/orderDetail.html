@@ -11,14 +11,6 @@
       <span class="fw-bold">{{order.pk}}</span>  
     </div>
     <div class="d-flex justify-content-between w-100 mb-4 align-items-center border-bottom border-2">
-      <span class="fw-bold">Estimado en CUP:</span> 
-      <span class="fw-bold small">$ {{order.total_price}}</span>  
-    </div>
-    <div class="d-flex justify-content-between w-100 mb-4 align-items-center border-bottom border-2">
-      <span class="fw-bold">Otras monedas:</span> 
-      <span class="fw-bold small">$ {{order.rate}}</span>  
-    </div>
-    <div class="d-flex justify-content-between w-100 mb-4 align-items-center border-bottom border-2">
       <span class="fw-bold">Mesa:</span> 
       <span class="fw-bold small">{{order.table.name}}</span>  
     </div>
@@ -30,6 +22,23 @@
       <span class="fw-bold">Estado:</span> 
       <span class="fw-bold small">{{order.is_paid}}</span>  
     </div>
+    <h5 class="mb-2">Lista de pedidos</h5>
+    {% for item in items.values %}
+       <div class="d-flex justify-content-between w-100 mb-2 align-items-center ">
+          <span class="fw-bold">{{item.product}}({{item.cant}})</span> 
+          <span class="fw-bold">$ {{item.price}}</span> 
+      </div> 
+      
+    {% endfor %}
+    <div class="d-flex justify-content-between w-100 mb-2 align-items-center ">
+      <span class="fw-bold">Estimado en CUP:</span> 
+      <span class="fw-bold small">$ {{order.total_price}}</span>  
+    </div>
+    <div class="d-flex justify-content-between w-100 mb-2 align-items-center ">
+      <span class="fw-bold">Otras monedas:</span> 
+      <span class="fw-bold small">$ {{order.rate}}</span>  
+    </div>
+    
 </div>
 <div class="modal-footer border-0 flex-nowrap p-2">
       <button id="liveToastBtn" data-bs-dismiss="modal" type="button" 

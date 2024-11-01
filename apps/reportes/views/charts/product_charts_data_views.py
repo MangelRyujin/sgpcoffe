@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
-from apps.cuentas.models import Item,  Shift
+from apps.cuentas.models import CashOperation, Item, Operation,  Shift
 from utils.validates.validate_date import validate_dates
 
 @login_required(login_url='/admin/login/')
@@ -14,13 +14,48 @@ def product_statistics_view(request):
             # Filtramos los turnos por el rango de fechas proporcionado
             shifts = Shift.objects.filter(in_date__gte=start_date, in_date__lte=end_date)
             items= Item.objects.filter(order__shift__in=shifts,order__is_paid='pagada')
-            products_sold = items.values('product__name').annotate(total_price=Sum('total_price'),total_count=Sum('cant')).order_by('-total_count','-total_price')
+            products_sold = items.values('product__name').annotate(cost_price=Sum('cost_price'),total_price=Sum('total_price'),total_count=Sum('cant'),revenue_price=Sum('revenue_price')).order_by('-total_count','-total_price')
+            total_count = products_sold.aggregate(total_count=Sum('total_count'))['total_count']
             total_sales_amount = products_sold.aggregate(total_sales_sum=Sum('total_price'))['total_sales_sum']
-            
+            total_revenue_amount=products_sold.aggregate(total_revenue_sum=Sum('revenue_price'))['total_revenue_sum']
+            total_cost_amount=products_sold.aggregate(total_cost_sum=Sum('cost_price'))['total_cost_sum']
+            operations= Operation.objects.filter(operation_date__gte=start_date, operation_date__lte=end_date)
+            cashOperations = CashOperation.objects.filter(shift__in=shifts)
+            total_operation_amount_ingreso=0
+            total_operation_amount_gasto=0
+            total_operation_amount = 0
+            total_cashOperation_amount_ingreso=0
+            total_cashOperation_amount_gasto=0
+            total_cashOperation_amount=0
+            for operation in operations:
+                total_operation_amount+=operation.amount
+                if operation.operation_type == "ingreso":
+                    total_operation_amount_ingreso+=operation.amount
+                else:
+                    total_operation_amount_gasto+=operation.amount
+                
+            for cashOperation in cashOperations:
+                total_cashOperation_amount+=cashOperation.amount
+                if cashOperation.operation_type == "ingreso":
+                    total_cashOperation_amount_ingreso+=cashOperation.amount
+                else:
+                    total_cashOperation_amount_gasto+=cashOperation.amount
+                    
             # Preparamos los datos para enviarlos a la plantilla
             context = {
                 'products': products_sold,
                 'total_price': total_sales_amount,
+                'total_revenue':total_revenue_amount,
+                'total_cost':total_cost_amount,
+                'total_count':total_count,
+
+                'total_operation_amount_ingreso':total_operation_amount_ingreso,
+                'total_operation_amount_gasto':total_operation_amount_gasto,
+
+                'total_cashOperation_amount_ingreso':total_cashOperation_amount_ingreso,
+                'total_cashOperation_amount_gasto':total_cashOperation_amount_gasto,
+                
+                'ganancia_total':total_revenue_amount + total_cashOperation_amount_ingreso + total_operation_amount_ingreso - total_operation_amount_gasto - total_cashOperation_amount_gasto
                 
             }
             print(products_sold)
@@ -28,6 +63,9 @@ def product_statistics_view(request):
         else:
             return render(request, "charts/product_statistics.html", {'message':message})
     else:
+        # for item in Item.objects.all():
+        #         item.cost_price = item.total_price - item.revenue_price
+        #         item.save()
         return render(request, "charts/product_statistics.html", {})
 
   
