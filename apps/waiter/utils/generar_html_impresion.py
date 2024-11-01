@@ -75,15 +75,6 @@ def generar_html_impresion_funtion(order):
             "argumentos": [],
         },
         {
-        "nombre": "CargarImagenLocalEImprimir",
-        "argumentos": [
-        f"{BASE_DIR_LOGO}\\logo2.jpg",
-        380,
-        0,
-        True
-        ]
-        },
-        {
         "nombre": "GenerarImagenAPartirDeHtmlEImprimir",
         "argumentos": [
             html_content,
