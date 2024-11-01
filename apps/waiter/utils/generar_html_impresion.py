@@ -21,13 +21,21 @@ def generar_html_impresion_funtion(order):
         <body>
             <h1>Rueda de la fortuna</h1>
             <h2>Gracias por escogernos</h2>
+            
+           
+            
+    """
+    html_content += f"""
+            <h4>Mesa:{order.table.name}</h4>
+            <h4>Cuenta:{order.pk}</h4>
+    """
+    html_content += f"""
             <table>
                 <tr class="total">
                     <th><h2>Producto</h2></th>
                     <th><h2>Precio</h2></th>
                 </tr>
     """
-
     total_price = order.total_price
     rate = order.rate
     
