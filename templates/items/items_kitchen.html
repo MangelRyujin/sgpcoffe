@@ -27,6 +27,9 @@
                   <span class="h5 kitchen">{{item.kitchen.estimate_price}}</span>
                   CUP
                 </p>
+                {% if item.kitchen.message %}
+                <span class="d-block lh-sm text-danger mb-2">{{item.kitchen.message}}</span>
+                {% endif %}
                 <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
                   <!-- Formulario oculto para enviar la petición POST -->
                   {% if item.kitchen.state == "ordenado" %}

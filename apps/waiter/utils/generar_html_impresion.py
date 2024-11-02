@@ -13,13 +13,13 @@ def generar_html_impresion_funtion(order):
             <style>
                 body { font-family: Arial, sans-serif; text-align:center;}
                 table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-                th, td { border: 1px solid black; padding: 5px; text-align: left; }
+                th, td { border: 0px solid black; padding: 5px; text-align: left; }
                 .total { font-weight: bold; background-color: #f0f0f0; }
                 .containers { width: 100%; display: flex; justify-content: space-between; align-items: center; }
             </style>
         </head>
         <body>
-            <h1>Rueda de la fortuna</h1>
+            <h1>La Rueda de la Fortuna</h1>
             <h2>Gracias por escogernos</h2>
             
            
@@ -44,7 +44,7 @@ def generar_html_impresion_funtion(order):
     for item in items:
         html_content += f"""
         <tr>
-            <td><h3>{item.product.name}</h3></td>
+            <td><h3>{item.cant}-{item.product.name}</h3></td>
             <td><h3>${Decimal(item.total_price):.2f}</h3></td>
         </tr>
         """

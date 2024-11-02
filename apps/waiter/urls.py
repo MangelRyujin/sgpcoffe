@@ -30,6 +30,7 @@ urlpatterns = [
     path('order_item_util_create/<int:pk>/', order_item_util_create, name='order_item_util_create'),
     path('order_create_delivery_view/<int:pk>/', order_create_delivery_view, name='order_create_delivery_view'),
     path('reload_order_detail_delivery_table_view/<int:pk>/', reload_order_detail_delivery_table_view, name='reload_order_detail_delivery_table_view'),
+    path('order_item_add_message/<int:pk>/', order_item_add_message, name='order_item_add_message'),
     
     # Update
     path('order_change_table_form_view/<int:pk>/', order_change_table_form_view, name='order_change_table_form_view'),

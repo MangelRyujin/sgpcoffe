@@ -26,6 +26,9 @@
                   <span class="h5 delivered">{{item.bar.estimate_price}}</span>
                   CUP
                 </p>
+                {% if item.bar.message %}
+                  <span class="d-block lh-sm text-danger mb-2">{{item.bar.message}}</span>
+                {% endif %}
                 <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
                   <!-- Formulario oculto para enviar la petición POST -->
                   {% if item.bar.state == "ordenado" %}
@@ -40,35 +43,35 @@
                         <input type="hidden" name="item" value="{{ item.bar.id }}">
                         <button type="submit" class="btn btn-primary float-right ">Terminado</button>
                     </form> 
-                {% endif %}
+                  {% endif %}
                 </div>
                 
                 <h2 class="h5 fw-normal mb-0">
                   Agregados y Útiles
                 </h2>
-                {% for add in item.add %}
-                  <div class="p-3 border-bottom border-gray-200">
-                    <div class="d-flex justify-content-between">
-                      <div class="ms-3">
-                        <h5 class="fw-normal">{{add.add.name}}</h5>
-                        <p class="mb-0 text-xs text-light lh-1">
-                          Cantidad: {{add.cant}}
-                        </p>
+                  {% for add in item.add %}
+                    <div class="p-3 border-bottom border-gray-200">
+                      <div class="d-flex justify-content-between">
+                        <div class="ms-3">
+                          <h5 class="fw-normal">{{add.add.name}}</h5>
+                          <p class="mb-0 text-xs text-light lh-1">
+                            Cantidad: {{add.cant}}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   {% endfor %}
                   {% for util in item.util %}
-                  <div class="p-3 border-bottom border-gray-200">
-                    <div class="d-flex justify-content-between">
-                      <div class="ms-3">
-                        <h5 class="fw-normal">{{util.util.name}}</h5>
-                        <p class="mb-0 text-xs text-light lh-1">
-                          Cantidad: {{util.cant}}
-                        </p>
+                    <div class="p-3 border-bottom border-gray-200">
+                      <div class="d-flex justify-content-between">
+                        <div class="ms-3">
+                          <h5 class="fw-normal">{{util.util.name}}</h5>
+                          <p class="mb-0 text-xs text-light lh-1">
+                            Cantidad: {{util.cant}}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   {% endfor %}
                   
                 

@@ -33,7 +33,7 @@ class AddRelationsInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name','active','place','price']
-    search_fields = ['name','categories__name',]
+    search_fields = ['name','categories__name','ingredients__name']
     list_filter = (
         'place',
         'active',

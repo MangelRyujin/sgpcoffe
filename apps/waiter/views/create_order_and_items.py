@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required 
 from django.http import HttpResponse
 
-from apps.cuentas.forms.item_form import AddItemForm, ItemForm, UtilItemForm
+from apps.cuentas.forms.item_form import AddItemForm, ItemForm, OrderItemMessageForm, UtilItemForm
 from apps.cuentas.models import Item, Order, Shift
 from apps.mesas.models import Table
 from apps.productos.models import Category, Product
@@ -113,3 +113,24 @@ def order_item_util_create(request,pk):
             context['error']=form.errors
     context['form']=form    
     return render(request,'waiter/orderItemUtil/orderItemUtilForm.html',context)
+
+
+@login_required(login_url='admin/login/')
+def order_item_add_message(request,pk):
+    item = Item.objects.filter(pk=pk).first()
+    form=OrderItemMessageForm(instance=item)
+    context={
+            'item':item,
+            'order':item.pk,
+            
+            
+        }
+    if request.POST:
+        form=OrderItemMessageForm(request.POST,instance=item)
+        if form.is_valid():
+            form.save()
+            context['message']=f"Nota añadida correctamente"
+        else:
+            context['error']=form.errors
+    context['form']=form    
+    return render(request,'waiter/orderItemMessage/orderItemMessageForm.html',context)

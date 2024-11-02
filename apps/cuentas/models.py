@@ -229,6 +229,7 @@ class Item(models.Model):
         ('local','local'),
     )
     is_active = models.BooleanField(default=False)
+    message= models.TextField(blank=True)
     state = models.CharField(max_length=10, choices=STATE_CHOICES, default='ordenado') 
     type = models.CharField(max_length=7, choices=TYPE_CHOICES, default='local') 
     cant = models.PositiveIntegerField("Cant",default=1,null=False,blank=False)

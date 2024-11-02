@@ -92,3 +92,11 @@ class ItemMotiveCancelMessageForm(forms.ModelForm):
     class Meta:
         model = ItemMotiveCancelMessage
         fields = ['motive']       
+
+
+class OrderItemMessageForm(forms.ModelForm):
+    
+    class Meta:
+        model = Item
+        fields = ['message']    
+        
