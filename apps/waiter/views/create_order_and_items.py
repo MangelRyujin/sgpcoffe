@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required 
-from django.http import HttpResponse
-
 from apps.cuentas.forms.item_form import AddItemForm, ItemForm, OrderItemMessageForm, UtilItemForm
 from apps.cuentas.models import Item, Order, Shift
 from apps.mesas.models import Table
 from apps.productos.models import Category, Product
+from apps.waiter.views.filters import ProductFilter
 
 @login_required(login_url='admin/login/')
 def order_create_view(request,pk):
@@ -38,12 +37,18 @@ def product_list_results(request,pk):
     order = Order.objects.filter(pk=pk).first()
     get_copy = request.GET.copy()
     category=get_copy.get('categories') or None
-    products = Product.objects.filter(active=True,categories=category)
+    if request.POST:
+        data = {'name':request.POST['keyword'] or ''}
+        products_filter = ProductFilter(data, queryset=Product.objects.filter(active=True))
+        products=products_filter.qs 
+    else:
+        products = Product.objects.filter(active=True,categories=category) 
     context={
         'order':order,
         'category':category,
         'products': products
     }
+    print(category)
     return render(request,'waiter/products/products_list_result.html',context)
 
 @login_required(login_url='admin/login/')
