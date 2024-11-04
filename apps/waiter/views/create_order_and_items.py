@@ -48,15 +48,14 @@ def product_list_results(request,pk):
         'category':category,
         'products': products
     }
-    print(category)
     return render(request,'waiter/products/products_list_result.html',context)
 
 @login_required(login_url='admin/login/')
 def order_item_create_view(request,pk):
     if request.POST:
         order = Order.objects.filter(pk=pk).first()
-        products= Product.objects.filter(categories=request.GET.get('category'))
         product = Product.objects.filter(pk=request.GET.get('product')).first()
+        products= Product.objects.filter(categories=product.categories.first())
         context={
             'order':order,
             'products':products,
@@ -85,7 +84,6 @@ def order_item_add_create(request,pk):
             'order':item.pk,
             
         }
-    print(form['add'])
     if request.POST:
         form=AddItemForm(request.POST,product_id=item.product.pk)
         if form.is_valid():

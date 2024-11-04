@@ -6,16 +6,18 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+      
       <form class="input-group mb-3">
             {% csrf_token %}
         <input type="search" class="form-control" placeholder="Buscar producto" aria-label="ProductsSearch" aria-describedby="basic-addon1"
         name="keyword" 
-        hx-post="{% url 'product_list_results' pk=order.pk %} " 
+        hx-post="{% url 'product_list_results' pk=order.pk %}?categories={{categories.all.0.pk}}" 
         hx-trigger=" input changed delay:500ms, keyword" 
         hx-target="#ProductList" 
         hx-indicator="#spinnerSearchProduct"
        
         >
+        
         <span class="input-group-text position-relative d-flex justify-content-center align-items-center" id="basic-addon1">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>

@@ -199,6 +199,7 @@ class Product(models.Model):
     PRODUCTION_PLACE_CHOICES = (
         ('cocina', 'cocina'),
         ('bar', 'bar'),
+        ('waiter', 'waiter'),
     )
     place = models.CharField("lugar de elaboración",max_length=7, choices=PRODUCTION_PLACE_CHOICES, default='cocina') 
     name = models.CharField('nombre', max_length=255, blank=False , null=False)
