@@ -25,7 +25,7 @@
             <div class="container-fluid">
               <div class="col-12 pb-4" id="change-list-filters">
                 <form id="changelist-search" class="form-group" method="GET">
-                  <div class="col-2 form-group min-select  mt-3">
+                  <div class="col-1 form-group min-select  mt-3">
                     <select class="form-control search-filter select2-hidden-accessible" name="paid_method">
                       <option value="">Método de pago</option>
                       <option value="transferencia">Transferencia</option>
@@ -33,7 +33,12 @@
                       <option value="ambos">Ambos</option>
                     </select>
                   </div>
-    
+                  <div class="col-1 form-group min-select mt-3">
+                    <select class="form-control search-filter select2-hidden-accessible" name="message">
+                      <option value="false">Todo</option>
+                      <option value="true">Contiene mensajes</option>
+                      </select>
+                  </div>
                   <div class="col-2 form-group min-select mt-3">
                     <select class="form-control search-filter select2-hidden-accessible" name="user">
                       <option value="">usuario</option>
@@ -46,7 +51,7 @@
                       {% endif %}
                       </select>
                   </div>
-                  <div class="col-2 form-group min-select mt-3">
+                  <div class="col-1 form-group min-select mt-3">
                     <select class="form-control search-filter select2-hidden-accessible" name="table">
                       <option value="">mesa</option>
                       {% if users %}

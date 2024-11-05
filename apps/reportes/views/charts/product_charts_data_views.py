@@ -13,12 +13,18 @@ def product_statistics_view(request):
         if validation_result:
             # Filtramos los turnos por el rango de fechas proporcionado
             shifts = Shift.objects.filter(in_date__gte=start_date, in_date__lte=end_date)
-            items= Item.objects.filter(order__shift__in=shifts,order__is_paid='pagada')
-            products_sold = items.values('product__name').annotate(cost_price=Sum('cost_price'),total_price=Sum('total_price'),total_count=Sum('cant'),revenue_price=Sum('revenue_price')).order_by('-total_count','-total_price')
-            total_count = products_sold.aggregate(total_count=Sum('total_count'))['total_count']
-            total_sales_amount = products_sold.aggregate(total_sales_sum=Sum('total_price'))['total_sales_sum']
-            total_revenue_amount=products_sold.aggregate(total_revenue_sum=Sum('revenue_price'))['total_revenue_sum']
-            total_cost_amount=products_sold.aggregate(total_cost_sum=Sum('cost_price'))['total_cost_sum']
+            items= Item.objects.filter(order__shift__in=shifts,order__is_paid='pagada',state__in=["entregado","cancelado"])
+            products_sold = items.values('product__name','product__pk').annotate(cost_price=Sum('cost_price'),total_price=Sum('total_price'),total_count=Sum('cant'),revenue_price=Sum('revenue_price')).order_by('-total_count','-total_price')
+            for item in items:
+                if item.state == "cancelado":
+                    for product in products_sold:
+                        if product['product__pk']==item.product.pk:
+                            product['revenue_price']-=item.revenue_price
+            total_count = products_sold.aggregate(total_count=Sum('total_count'))['total_count'] or 0
+            total_sales_amount = products_sold.aggregate(total_sales_sum=Sum('total_price'))['total_sales_sum'] or 0
+            # products_sold.aggregate(total_revenue_sum=Sum('revenue_price'))['total_revenue_sum'] or 0
+            total_revenue_amount=sum(product['revenue_price'] for product in products_sold) or 0
+            total_cost_amount=products_sold.aggregate(total_cost_sum=Sum('cost_price'))['total_cost_sum'] or 0
             operations= Operation.objects.filter(operation_date__gte=start_date, operation_date__lte=end_date)
             cashOperations = CashOperation.objects.filter(shift__in=shifts)
             total_operation_amount_ingreso=0

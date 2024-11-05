@@ -152,6 +152,10 @@
                   >
                   CUP
                 </p>
+                {% if item.delivered.message %}
+                <h3 class="mt-1">Mensaje</h3>
+                <span class="d-block lh-sm text-danger mb-1">{{item.delivered.message}}</span>
+                {% endif %}
                 {% if item.add %}
                   <h2 class="h5 pt-3 fw-normal delivered mb-0">
                     Agregados
@@ -226,6 +230,11 @@
                   Precio total estimado:
                   <span class="h5 cancel">{{item.cancel.total_price}}</span> CUP
                 </p>
+                {% if item.cancel.message %}
+                <h3 class="mt-1 cancel">Mensaje</h3>
+                <span class="d-block lh-sm text-danger mb-1">{{item.cancel.message}}</span>
+                {% endif %}
+                
                 {% if item.motive %}
                   <h3 class="mt-1 cancel">Motivo</h3>
                   {% if item.motive.motive %}
