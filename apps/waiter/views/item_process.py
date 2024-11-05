@@ -61,6 +61,36 @@ def order_item_delivery_view(request,pk):
     }
     return render(request,'waiter/orderItemDetail/order_item_detail.html',context)
 
+@login_required(login_url='admin/login/')
+def order_item_delivery_waiter_view(request,pk):
+    item = Item.objects.filter(pk=pk).first()
+    error=''
+    if item.state == "ordenado" and item.product.place == "dependiente":
+        try:
+            error = validate_product_discount_ingredient(item)
+            if error =='':
+                item.revenue_price=item.revenue
+                item.cost_price = item.inversion_cost
+                item.product.discount_ingredients(item.cant)
+                for add in AddItem.objects.filter(item=item):
+                    product_add = ProductAddRelation.objects.get(add=add.add.id,product=item.product.id)
+                    product_add.discount_add(item.cant,add.cant)
+                for util in UtilsItem.objects.filter(item=item):
+                    util.discount_util()
+                item.state = "entregado"
+                item.total_price = item.estimate_price
+                item.save()
+        except Item.DoesNotExist:
+            error = "Ítem no encontrado."
+        except ValueError:
+            error = "ID de ítem inválido."
+        
+    context={
+        'item':item,
+        'error':error
+    }
+    return render(request,'waiter/orderItemDetail/order_item_detail.html',context)
+
 
 @login_required(login_url='/admin/login/')
 def items_change_waiter_delivery_view(request):

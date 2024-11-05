@@ -199,9 +199,9 @@ class Product(models.Model):
     PRODUCTION_PLACE_CHOICES = (
         ('cocina', 'cocina'),
         ('bar', 'bar'),
-        ('waiter', 'waiter'),
+        ('dependiente', 'dependiente'),
     )
-    place = models.CharField("lugar de elaboración",max_length=7, choices=PRODUCTION_PLACE_CHOICES, default='cocina') 
+    place = models.CharField("lugar de elaboración",max_length=11, choices=PRODUCTION_PLACE_CHOICES, default='cocina') 
     name = models.CharField('nombre', max_length=255, blank=False , null=False)
     price = models.DecimalField('precio', max_digits=10, default=0, decimal_places=2, blank= False, null= False)
     discount = models.FloatField('descuento en %',default=0.0)

@@ -42,6 +42,7 @@ urlpatterns = [
     path('order_change_table_delivery_form_view/<int:pk>/', order_change_table_delivery_form_view, name='order_change_table_delivery_form_view'),
     path('order_delivery_sold/<int:pk>/', order_delivery_sold, name='order_delivery_sold'),
     path('table_order_delivery_sold/<int:pk>/', table_order_delivery_sold, name='table_order_delivery_sold'),
+    path('order_item_delivery_waiter_view/<int:pk>/', order_item_delivery_waiter_view, name='order_item_delivery_waiter_view'),
     
     
     # Delete
