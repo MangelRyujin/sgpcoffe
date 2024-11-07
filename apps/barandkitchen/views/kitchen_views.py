@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from apps.barandkitchen.utils.items import charge_items
+from apps.barandkitchen.utils.items import all_charge_kitchen_items
 from apps.cuentas.models import AddItem, Item, UtilsItem
 from django.contrib.auth.decorators import login_required
 
@@ -8,15 +8,15 @@ from utils.product_validate.validate_ingredients_and_add_cant import validate_pr
 
 
 @login_required(login_url='/admin/login/')
-def bar_and_kitchen_elaboration_items(request):
-    return render(request,'bar_and_kitchen/items_bar_and_kitchen.html',context=charge_items())
+def kitchen_elaboration_items(request):
+    return render(request,'bar_and_kitchen/items_kitchen_proccess.html',context=all_charge_kitchen_items())
 
 @login_required(login_url='/admin/login/')
-def bar_and_kitchen_ordenado(request):
-    return render(request,'bar_and_kitchen/items/items.html',context=charge_items())
+def kitchen_ordenado(request):
+    return render(request,'bar_and_kitchen/items/items_kitchen.html',context=all_charge_kitchen_items())
 
 @login_required(login_url='/admin/login/')
-def items_proccess_view(request,pk):
+def items_kitchen_proccess_view(request,pk):
     error=""
     if request.POST:
         item = Item.objects.filter(pk=pk,state="ordenado",is_active=True).first()
@@ -33,15 +33,15 @@ def items_proccess_view(request,pk):
                 util.discount_util()
             item.state = "preparando"
             item.save()
-    context=charge_items()
+    context=all_charge_kitchen_items()
     context['error']=error
-    return render(request,'bar_and_kitchen/items/items.html',context)
+    return render(request,'bar_and_kitchen/items/items_kitchen.html',context)
 
 
 @login_required(login_url='/admin/login/')
-def items_finish_view(request,pk):
+def items_kitchen_finish_view(request,pk):
     if request.POST:
         item = Item.objects.filter(pk=pk,state="preparando").first()
         item.state = "finalizado"
         item.save()
-    return render(request,'bar_and_kitchen/items/items.html',context=charge_items())
+    return render(request,'bar_and_kitchen/items/items_kitchen.html',context=all_charge_kitchen_items())

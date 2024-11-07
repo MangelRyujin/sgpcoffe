@@ -8,11 +8,16 @@ from utils.product_validate.validate_ingredients_and_add_cant import validate_pr
 from django.db.models import Q
 
 
-def charge_items():
+def all_charge_bar_items():
     context ={
         "bars":charge_bar_items(),
-        "kitchens":charge_kitchen_items(),
         "bars_success":charge_bar_success_items(),
+        } 
+    return context
+
+def all_charge_kitchen_items():
+    context ={
+        "kitchens":charge_kitchen_items(),
         "kitchens_success":charge_kitchen_success_items(),
         } 
     return context

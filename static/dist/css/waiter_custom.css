@@ -46,10 +46,10 @@
     cursor: pointer !important;
   }
   
-@media (max-width: 640px) {
+@media (max-width: 575px) {
     .overflow-y-sm-auto{
       overflow-y: auto;
-      max-height: 450px !important;
+      max-height: 800px !important;
       padding-bottom: 10px;
     }
     

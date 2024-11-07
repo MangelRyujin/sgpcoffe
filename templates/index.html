@@ -84,16 +84,31 @@
         {% endif %}
         <div class="card-modul col-12 col-lg-4 col-md-5">
             <div class="card-modul-header">
-                <h5 class="m-0">Elaboración de barra y launch</h5>
+                <h5 class="m-0">Elaboración de la barra</h5>
             </div>
             <div class="card-modul-body">
                 <div class="card-modul-body text-center">
                     
-                    <span class="text-light">Visualizar pedidos entrantes de la cocina y el bar.</span>
+                    <span class="text-light">Visualizar pedidos entrantes en el bar.</span>
                     
                 </div>
                 {% comment %} btn-success {% endcomment %}
-                <a href="{% url 'bar_and_kitchen_elaboration_items' %}" class="btn  btn-info btn-modul-view">Acceder</a>
+                <a href="{% url 'bar_elaboration_items' %}" class="btn  btn-info btn-modul-view">Acceder</a>
+                
+            </div>
+        </div>
+        <div class="card-modul col-12 col-lg-4 col-md-5">
+            <div class="card-modul-header">
+                <h5 class="m-0">Elaboración del launch</h5>
+            </div>
+            <div class="card-modul-body">
+                <div class="card-modul-body text-center">
+                    
+                    <span class="text-light">Visualizar pedidos entrantes en la cocina.</span>
+                    
+                </div>
+                {% comment %} btn-success {% endcomment %}
+                <a href="{% url 'kitchen_elaboration_items' %}" class="btn  btn-info btn-modul-view">Acceder</a>
                 
             </div>
         </div>

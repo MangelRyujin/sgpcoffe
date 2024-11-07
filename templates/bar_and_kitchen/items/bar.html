@@ -1,6 +1,6 @@
 {% if bars %}
 
-<ul class="row row-cols-1  g-4 list-unstyled mt-1 overflow-y-sm-auto">
+<ul class="row row-cols-1 row-cols-sm-2  g-4 list-unstyled mt-1 ">
     {% for item in bars %}
     <li class="col position-relative ">
         <div class="position-absolute end-0 top-0 bg-dark  border-2 rounded border py-0 px-2 me-3 " style="transform:translateY(-22px); z-index:100;">
@@ -24,7 +24,7 @@
         </div>
         <div class="card list-group-item list-group-item-warning list-group-item-action shadow-sm rounded">
             <div class="card-header p-1"><strong class="small">{{item.bar.product.name}}</strong></div>
-            <div class="card-body p-1 overflow-y-auto" style="max-height:120px; min-height:60px;">
+            <div class="card-body p-1 overflow-y-auto" style="max-height:100px; min-height:100px;">
                 {% if item.add %}
                 <span class="d-block mb-0 small text-ellipsis-150 fw-bold">
                     Agregados         
@@ -60,8 +60,8 @@
                 
                     <form 
                     class="d-flex justify-content-center align-items-center position-relative"
-                    hx-post="{% url 'items_proccess_view' pk=item.bar.pk %}"
-                    hx-target="#BarAndKitchenOrdernado"
+                    hx-post="{% url 'items_bar_proccess_view' pk=item.bar.pk %}"
+                    hx-target="#BarOrdernado"
                     hx-swap="innerHTML"
                     hx-trigger="submit"
                     hx-indicator="#SpinnerOrderItem{{item.bar.pk}}"
