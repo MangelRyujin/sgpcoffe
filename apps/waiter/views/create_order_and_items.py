@@ -71,7 +71,7 @@ def order_item_create_view(request,pk):
                 )
                 context['message']=f"{product.name} añadido correctamente"
             else:
-                context['error'] = f"{product.name} no puede ser pedido ya que no existe cantidad existente"
+                context['error'] = f"{product.name} no puede ser pedido ya que no existe suficiente para crear esa cantidad"
         return render(request,'waiter/products/products_list_result.html',context)
     
     

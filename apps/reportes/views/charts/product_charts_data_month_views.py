@@ -16,7 +16,7 @@ def get_filter_month_options(request):
     grouped_purchases = Shift.objects.annotate(year=ExtractYear("in_date")).values("year").order_by("-year").distinct()
     options = [purchase["year"] for purchase in grouped_purchases]
     # Agrupa los productos por nombre y cuenta cuántas veces aparecen
-    products = Product.objects.values('name').annotate(count=Count('name')).order_by('-count')
+    products = Product.objects.values('name').annotate(count=Count('name')).order_by('name')
 
     # Convierte los resultados en una lista de nombres de productos
     product_names = [product['name'] for product in products]

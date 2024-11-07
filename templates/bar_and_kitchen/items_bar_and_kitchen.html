@@ -1,0 +1,15 @@
+{% extends 'bar_and_kitchen/base.html' %}
+{% load static %}
+
+{% block contend %}
+<div id="BarAndKitchenOrdernado"
+hx-get="{% url 'bar_and_kitchen_ordenado' %}"
+hx-swap="innerHTML"
+hx-target="#BarAndKitchenOrdernado"
+hx-trigger="every 20s"
+hx-scheduler="true"
+>
+{% include "bar_and_kitchen/items/items.html" %}
+<div>
+{% endblock %}
+
