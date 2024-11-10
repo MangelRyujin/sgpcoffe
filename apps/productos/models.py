@@ -44,6 +44,11 @@ class Stock(models.Model):
     def update_stock(self, quantity):
         self.stock = self.stock + quantity
         self.save()
+    
+    def is_danger(self):
+        if self.stock <= self.storage_threshold and self.stock > 0:
+          return True
+        return False
 
 # Stock  model
 class PrincipalStock(models.Model):

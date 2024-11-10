@@ -38,9 +38,7 @@
       </a>
       
       <div class="d-flex align-items-center" >
-        
-        <ul class="nav-menu mb-0 list-unstyled d-flex flex-md-row align-items-md-center " >
-          <div id="notificationStock"
+        <div id="notificationStock"
           hx-get="{% url 'notification_empty_view' %}"
           hx-swap="innerHTML"
           hx-trigger="load, every 60s"
@@ -48,7 +46,10 @@
           hx-target="#notificationStock"
            >
             
-          </div>
+      </div>
+
+        <ul class="nav-menu mb-0 list-unstyled d-flex flex-md-row align-items-md-center " >
+       
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark  shadow-sm "  aria-labelledby="languages">
             <li>
               <a class="dropdown-item" rel="nofollow" href="/admin/logout/" >

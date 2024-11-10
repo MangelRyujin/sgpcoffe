@@ -194,6 +194,13 @@ class Order(models.Model):
             return False
         return True
     
+    @property
+    def contain_item_message(self):
+        for item in self.item_set.all():
+            if item.message:
+                return True
+        return False
+    
 
     @property
     def total_paid(self):

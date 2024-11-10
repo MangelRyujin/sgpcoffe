@@ -20,11 +20,14 @@ from django.conf import settings
 from django.views.static import serve
 from django.conf.urls.static import static
 
-from coffee.views.home_view import home_view
+from coffee.views.home_view import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view,name='home'),
+    path('notificaciones/',notification_view,name='notification_view'),
+    path('notification_empty_view/',notification_empty_view,name='notification_empty_view'),
+    
     path('ventas/',include("apps.cuentas.urls")),
     path('reportes/',include("apps.reportes.urls")),
     path('bar-launch/',include("apps.barandkitchen.urls")),

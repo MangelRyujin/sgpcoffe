@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
 from apps.mesas.models import Table
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 @login_required(login_url='/admin/login/')
@@ -16,14 +17,17 @@ def order_view(request):
     if request.GET.get('message'):
         if get_copy['message'] == 'false':
             orders = OrderFilter(request.GET, queryset=Order.objects.filter(is_paid="pagada").order_by('-pk'))
+            paginator = Paginator(orders.qs, 100 ) 
         else:
-            orders = OrderFilter(request.GET, queryset=Order.objects.filter(is_paid="pagada",item__message__isnull=False).exclude(
-            item__message=''
-        ).distinct().order_by('-pk'))
-            
+            orders = OrderFilter(request.GET, queryset=Order.objects.filter(is_paid="pagada").order_by('-pk'))
+            list=[]
+            for order in orders.qs:
+                if order.contain_item_message:
+                    list.append(order)
+            paginator = Paginator(list, 100 ) 
     else:   
         orders = OrderFilter(request.GET, queryset=Order.objects.filter(is_paid="pagada").order_by('-pk'))
-    paginator = Paginator(orders.qs, 100 ) 
+        paginator = Paginator(orders.qs, 100 ) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     context ={"orders":orders.qs,"users":users,"tables":tables,"pagination":page_obj,'parameters': parameters,} 
