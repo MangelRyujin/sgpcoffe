@@ -8,8 +8,8 @@
 {% include "waiter/orderDetail/modalOrderDetail.html" %}
 {% include "waiter/orderItemUtil/modalOrderItemUtil.html" %}
 {% include "waiter/orderChangeTable/modalOrderChangeTable.html" %}
-{% include "waiter/orderSold/modalOrderSold.html" %}
 {% include "waiter/orderItemMessage/modalOrderItemMessage.html" %}
+{% include "waiter/orderSold/modalOrderSold.html" %}
 
 <div 
 hx-get="{% url 'charge_table' pk=tables.all.0.pk %}"

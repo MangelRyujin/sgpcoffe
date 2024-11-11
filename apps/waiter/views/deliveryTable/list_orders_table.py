@@ -152,7 +152,7 @@ def order_delivery_sold(request,pk):
             context["message"]="Pago realizado con éxito"
         else:
             context["form"]=form
-    response= render(request,'waiter/deliveryTable/OrderSold/OrderSoldVerify.html',context)
+    response= render(request,'waiter/deliveryTable/orderSold/orderSoldVerify.html',context)
     return response
 
 @login_required(login_url='/admin/login/')
@@ -177,7 +177,7 @@ def table_order_delivery_sold(request,pk):
             context["message"]="Pago realizado con éxito"
         else:
             context["form"]=form
-    response= render(request,'waiter/deliveryTable/TableOrdersSold/OrderSoldVerify.html',context)
+    response= render(request,'waiter/deliveryTable/TableOrdersSold/orderSoldVerify.html',context)
     return response
 
 @login_required(login_url='admin/login/')

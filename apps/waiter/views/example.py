@@ -108,7 +108,7 @@ def order_sold(request,pk):
             context["message"]="Pago realizado con éxito"
         else:
             context["form"]=form
-    response= render(request,'waiter/orderSold/OrderSoldVerify.html',context)
+    response= render(request,'waiter/orderSold/orderSoldVerify.html',context)
     if valid:
         response['HX-Trigger']='update-table-list'
     return response
