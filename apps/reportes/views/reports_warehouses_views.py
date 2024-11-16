@@ -8,8 +8,8 @@ from utils.validates.validate_date import validate_dates
 
 @login_required(login_url='/admin/login/')
 def reports_warehouses_view(request):
-    stocks= Stock.objects.all().annotate(total_cost=Sum('stock')*Sum('unit_price')).order_by('name')
-    stocks2= PrincipalStock.objects.all().annotate(total_cost=Sum('stock')*Sum('unit_price')).order_by('name')
+    stocks= Stock.objects.filter(stock_category__name="Consumibles").annotate(total_cost=Sum('stock')*Sum('unit_price')).order_by('name')
+    stocks2= PrincipalStock.objects.filter(stock_category__name="Consumibles").annotate(total_cost=Sum('stock')*Sum('unit_price')).order_by('name')
     context={
         'stocks':stocks,
         'stocks2':stocks2,
