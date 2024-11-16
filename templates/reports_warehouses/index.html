@@ -1,0 +1,106 @@
+{% extends 'base_landing.html' %} 
+{% load static %}
+
+
+{% block contend %}
+<div class="container mt-4 py-4">
+  <h2>Almacen del local</h2>
+  <div class="row mb-4" >
+    <div class="col-12 col-md-7" >
+      <div class="table-responsive  table-bordered mt-0" >
+        <caption>Total de stocks mostrados <strong>{{stocks|length}}</strong> precio total $ <strong>{{total_cost|floatformat:2}}</strong> </caption>
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center ">
+              <th  scope="col">Nombre</th>
+              <th  scope="col">Cantidad</th>
+              <th  scope="col">Umbral</th>
+              <th scope="col">Costo</th>
+              <th scope="col">Costo total</th>
+              
+            </tr>
+          </thead>
+          <tbody >
+          {% for stock in stocks %}
+              <tr class="text-center {{stock.stock_in_warehouse}}"
+              hx-get="{% url "reports_warehouses_stock_movement_view" pk=stock.pk %}"
+              hx-trigger="click"
+              hx-target="#LoadStockMovements"
+              >
+                  <td class="border small table-min">{{stock.name}}</td>  
+                  <td class="border small ">{{stock.stock}}</td>  
+                  <td class="border small ">{{stock.storage_threshold}}</td>  
+                  <td class="border small">{{stock.unit_price|floatformat:2}}</td>
+                  <td class="border small">{{stock.total_cost|floatformat:2}}</td>   
+              </tr>
+              
+          {% endfor %}
+            <tr class="text-center table-dark">
+                <td class="border small table-min">Total</td>  
+                <td class="border small ">-</td>  
+                <td class="border small ">-</td> 
+                <td class="border small">{{sum_cost|floatformat:2}}</td> 
+                <td class="border small">{{total_cost|floatformat:2}}</td> 
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        
+          
+    </div>
+    <div class="col-12 col-md-5" id="LoadStockMovements">
+      {% include "reports_warehouses/movement_list.html" %}
+    </div>
+  </div>
+
+  <h2>Almacen principal</h2>
+  <div class="row" >
+    <div class="col-12 col-md-7" >
+      <div class="table-responsive  table-bordered mt-0" >
+        <caption>Total de stocks mostrados <strong>{{stocks2|length}}</strong> precio total $ <strong>{{total_cost2|floatformat:2}}</strong> </caption>
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center ">
+              <th  scope="col">Nombre</th>
+              <th  scope="col">Cantidad</th>
+              <th  scope="col">Umbral</th>
+              <th scope="col">Costo</th>
+              <th scope="col">Costo total</th>
+              
+            </tr>
+          </thead>
+          <tbody >
+          {% for stock in stocks2 %}
+              <tr class="text-center {{stock.stock_in_warehouse}}"
+              hx-get="{% url "reports_warehouses_stock_principal_movement_view" pk=stock.pk %}"
+              hx-trigger="click"
+              hx-target="#LoadPrincipalStockMovements"
+              >
+                  <td class="border small table-min">{{stock.name}}</td>  
+                  <td class="border small ">{{stock.stock}}</td>  
+                  <td class="border small ">{{stock.storage_threshold}}</td>  
+                  <td class="border small">{{stock.unit_price|floatformat:2}}</td>
+                  <td class="border small">{{stock.total_cost|floatformat:2}}</td>   
+              </tr>
+              
+          {% endfor %}
+            <tr class="text-center table-dark">
+                <td class="border small table-min">Total</td>  
+                <td class="border small ">-</td>  
+                <td class="border small ">-</td> 
+                <td class="border small">{{sum_cost2|floatformat:2}}</td> 
+                <td class="border small">{{total_cost2|floatformat:2}}</td> 
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        
+          
+    </div>
+    <div class="col-12 col-md-5" id="LoadPrincipalStockMovements">
+      {% include "reports_warehouses/movement_list.html" %}
+    </div>
+  </div>
+  
+</div>
+{% endblock %}

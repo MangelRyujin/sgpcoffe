@@ -49,6 +49,14 @@ class Stock(models.Model):
         if self.stock <= self.storage_threshold and self.stock > 0:
           return True
         return False
+    
+    def stock_in_warehouse(self):
+        if self.stock <= self.storage_threshold:
+            if self.stock == 0:
+                return "table-danger"
+            else:
+                return "table-warning"
+        return "table-ligth"   
 
 # Stock  model
 class PrincipalStock(models.Model):
@@ -69,6 +77,19 @@ class PrincipalStock(models.Model):
     class Meta:
         verbose_name = "Almacen Principal"
         verbose_name_plural = "Almacen Principal"
+
+    def is_danger(self):
+        if self.stock <= self.storage_threshold and self.stock > 0:
+          return True
+        return False
+    
+    def stock_in_warehouse(self):
+        if self.stock <= self.storage_threshold:
+            if self.stock == 0:
+                return "table-danger"
+            else:
+                return "table-warning"
+        return "table-ligth"   
 
     def __str__(self):
         return f'{self.name}'

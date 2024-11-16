@@ -10,6 +10,7 @@ def product_statistics_view(request):
         start_date = request.POST.get('shift__in_date_after')
         end_date = request.POST.get('shift__in_date_before')
         validation_result, message = validate_dates(start_date, end_date)
+        total_sales_amount=0
         if validation_result:
             # Filtramos los turnos por el rango de fechas proporcionado
             shifts = Shift.objects.filter(in_date__gte=start_date, in_date__lte=end_date)
@@ -20,8 +21,11 @@ def product_statistics_view(request):
                     for product in products_sold:
                         if product['product__pk']==item.product.pk:
                             product['revenue_price']-=item.revenue_price
+                            product['total_price']-=item.total_price
+                else:
+                    total_sales_amount+=item.total_price
             total_count = products_sold.aggregate(total_count=Sum('total_count'))['total_count'] or 0
-            total_sales_amount = products_sold.aggregate(total_sales_sum=Sum('total_price'))['total_sales_sum'] or 0
+            # total_sales_amount = products_sold.aggregate(total_sales_sum=Sum('total_price'))['total_sales_sum'] or 0
             # products_sold.aggregate(total_revenue_sum=Sum('revenue_price'))['total_revenue_sum'] or 0
             total_revenue_amount=sum(product['revenue_price'] for product in products_sold) or 0
             total_cost_amount=products_sold.aggregate(total_cost_sum=Sum('cost_price'))['total_cost_sum'] or 0

@@ -95,3 +95,26 @@ class PrincipalStockMovements(models.Model):
 
     def __str__(self):
         return f"Movimiento realizado por el usario {self.user},dia {self.created_date} a las {self.created_time}"
+    
+    def clean(self):
+        if self.type == 'salida':
+            if self.stock.stock - self.cant < 0:
+                raise ValidationError("La operación resultaría en un stock negativo.")
+
+
+    def save(self, *args, **kwargs):
+        if self.type == 'entrada':
+            self.stock.update_stock(self.cant)
+        elif self.type == 'salida':
+            self.clean()
+            self.stock.update_stock(-self.cant) 
+        super().save(*args, **kwargs)
+      
+        
+    def delete(self, *args, **kwargs):
+        cant_before_deletion = self.cant
+        if self.type == 'entrada':
+            self.stock.update_stock(-cant_before_deletion)
+        elif self.type == 'salida':
+            self.stock.update_stock(cant_before_deletion)
+        super().delete(*args, **kwargs)

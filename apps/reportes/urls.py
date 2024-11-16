@@ -8,6 +8,7 @@ from apps.reportes.views.charts.product_charts_data_anual_views import get_filte
 from apps.reportes.views.charts.product_charts_data_anual_price_views import get_product_sales_price_chart,spend_product_per_customer_price_chart,payment_product_success_price_chart
 
 from apps.reportes.views.reports_views import reports_view
+from apps.reportes.views.reports_warehouses_views import reports_warehouses_stock_movement_view, reports_warehouses_stock_principal_movement_view, reports_warehouses_view
 
 
 
@@ -32,5 +33,10 @@ urlpatterns = [
     path("estadisticas/day/price/sales/<int:month>/<int:monthYear>/<str:monthproduct>/<str:monthproduct2>/<str:monthproduct3>/", get_day_sales_price_chart, name="product-day-price-sales"),
     path("estadisticas/month/price/spend-per-customer/<int:month>/<int:monthYear>/<str:monthproduct>/<str:monthproduct2>/<str:monthproduct3>/", spend_month_per_customer_price_chart, name="product-month-price-spend-per-customer"),
     path("estadisticas/month/price/payment-success/<int:month>/<int:monthYear>/<str:monthproduct>/<str:monthproduct2>/<str:monthproduct3>/", payment_month_success_price_chart, name="product-month-price-payment-success"),
-
+    # Wharehouses
+    path('reportes-de-almacenes/',reports_warehouses_view,name='reports_warehouses_view'),
+    path('reportes-de-almacenes-movimientos-stock/<int:pk>',reports_warehouses_stock_movement_view,name='reports_warehouses_stock_movement_view'),
+    path('reportes-de-almacenes-movimientos-stock-principal/<int:pk>',reports_warehouses_stock_principal_movement_view,name='reports_warehouses_stock_principal_movement_view'),
+    
+    
 ]
