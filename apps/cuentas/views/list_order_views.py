@@ -24,10 +24,10 @@ def order_view(request):
             for order in orders.qs:
                 if order.contain_item_message:
                     list.append(order)
-            paginator = Paginator(list, 100 ) 
+            paginator = Paginator(list, 2 ) 
     else:   
         orders = OrderFilter(request.GET, queryset=Order.objects.filter(is_paid="pagada").order_by('-pk'))
-        paginator = Paginator(orders.qs, 100 ) 
+        paginator = Paginator(orders.qs, 2 ) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     context ={"orders":orders.qs,"users":users,"tables":tables,"pagination":page_obj,'parameters': parameters,} 

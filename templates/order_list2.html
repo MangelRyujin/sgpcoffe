@@ -1,0 +1,219 @@
+{% extends 'base_landing.html' %} 
+{% load static %} 
+
+
+{% block contend %}
+
+<div class="mt-4" style="min-height: 520.438px">
+      <div class="container-fluid">
+        <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+          <div class="row p-3">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item h1 "><a class="" href="/">Módulos</a></li>
+              <li class="breadcrumb-item h1 active">Cuentas</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="container-fluid">
+          <section
+          id="content"
+          class="content"
+          data-select2-id="select2-data-content"
+          >
+            <div class="container-fluid">
+              <div class="col-12 pb-4" id="change-list-filters">
+                <form id="changelist-search" class="form-group row" method="GET">
+                  <div class="col-6 col-sm-3 col-lg-2 form-group min-select  mt-3">
+                    <select class="form-control search-filter select2-hidden-accessible" name="paid_method">
+                      <option value="">Método de pago</option>
+                      <option value="transferencia">Transferencia</option>
+                      <option value="efectivo">Efectivo</option>
+                      <option value="ambos">Ambos</option>
+                    </select>
+                  </div>
+                  <div class="col-6 col-sm-3 col-lg-2 form-group min-select mt-3">
+                    <select class="form-control search-filter select2-hidden-accessible" name="message">
+                      <option value="false">Todo</option>
+                      <option value="true">Contiene mensajes</option>
+                      </select>
+                  </div>
+                  <div class="col-6 col-sm-3 col-lg-2 form-group min-select mt-3">
+                    <select class="form-control search-filter select2-hidden-accessible" name="user">
+                      <option value="">usuario</option>
+                      {% if users %}
+                        {% for user in users %}
+                          <option value="{{user.id}}">{{user.username}}</option>
+                        {% endfor %}
+                      {% else %}
+                      <option value="">no existen usuarios</option>
+                      {% endif %}
+                      </select>
+                  </div>
+                  <div class="col-6 col-sm-3 col-lg-2 form-group min-select mt-3">
+                    <select class="form-control search-filter select2-hidden-accessible" name="table">
+                      <option value="">mesa</option>
+                      {% if users %}
+                        {% for table in tables %}
+                          <option value="{{table.id}}">{{table.name}}</option>
+                        {% endfor %}
+                      {% else %}
+                      <option value="">no existen mesas</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                  <div class="col-6 col-sm-3 col-lg-2 form-group min-select mt-3">
+                    <input type="date" class="input-date col-12 form-group " name="shift__in_date_after" placeholder="Desde">
+                  </div>
+                  <div class="col-6 col-sm-3 col-lg-2 form-group min-select mt-3">
+                    <input type="date" class="input-date col-12 form-group " name="shift__in_date_before" placeholder="Hasta">
+                  </div>      
+                  <div class="col-12 form-group min-select mt-3" id="search_group">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                  </div>
+                </form>
+                
+              </div>
+              <div class="col-12">
+                  {% if pagination.has_next or pagination.has_previous%}
+                  <nav aria-label="Page navigation">
+                      <ul class="pagination  pb-3 overflow-auto"> 
+                          
+                            {% for page_number in pagination.paginator.page_range %}
+                                <li class=" page-item {% if page_number == pagination.number %}active{% endif %}">
+                                    <a class="pagination-item-order page-link" href="?page={{ page_number }}&{{ parameters }}">{{ page_number }}</a>
+                                </li>
+                            {% endfor %}
+
+                      </ul>
+                  </nav>
+                  {% endif %}
+
+                <div data-select2-id="select2-data-11-t58z">
+                        <div class="row">
+                          <div class="col-12">
+                            
+                              <div class=" table-responsive p-0">
+                                <table id="result_list" class="table table-striped table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <span href="#">Cuenta</span>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <span href="#">Usuario</span>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <span href="#">Mesa</span>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <span href="#">Método de pago</span>
+                                        </div>
+                                      </th>
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <span href="#">Turno</span>
+                                        </div>
+                                      </th>
+    
+                                      <th
+                                        class="sorting"
+                                        tabindex="0"
+                                        rowspan="1"
+                                        colspan="1"
+                                      >
+                                        <div class="text">
+                                          <span href="#">Total cobrado</span>
+                                        </div>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% if pagination %}
+                                      {% for order in pagination %}
+                                          <tr role="row" class="even">
+                                            <th class="field-name text">
+                                              <a href="{% url 'order_detail' pk=order.pk %}"
+                                                >Cuenta {{order.id}}</a
+                                              >
+                                            </th>
+                                            <td class="field-place">{{order.user}}</td>
+                                            <td class="field-place">{{order.table}}</td>
+                                            <td class="field-price">{{order.paid_method}}</td>
+                                            <td class="field-price">{{order.shift.in_date}}</td>
+                                            <td class="field-price">{{order.total_paid}}</td>
+                                          </tr>
+                                      
+                                      {% endfor %}
+                                      {% else %}
+                                        
+                                        <tr role="row" class="">
+                                          <th class="field-name text">
+                                            -
+                                          </th>
+                                          <td class="field-place">-</td>
+                                          <td class="field-place">-</td>
+                                          <td class="field-price">-</td>
+                                          <td class="field-price">-</td>
+                                          <td class="field-price">-</td>
+                                        </tr>
+                                    {% endif %}
+                                    
+                                     
+                                  </tbody>
+                                </table>
+                              </div>
+                        
+                       </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          
+          </section>
+        </div>
+      </div>
+</div>
+
+  
+ 
+{% endblock %}
+
+
+

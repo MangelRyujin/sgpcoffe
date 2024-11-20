@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required 
 from apps.cuentas.forms.item_form import ItemMotiveCancelMessageForm
-from apps.cuentas.models import AddItem, Item, UtilsItem
-from apps.productos.models import ProductAddRelation
+from apps.cuentas.models import AddItem, Item, Order, UtilsItem
+from apps.productos.models import Category, ProductAddRelation
 from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient
 
 @login_required(login_url='admin/login/')
@@ -122,3 +122,32 @@ def items_change_waiter_delivery_view(request):
             error = "ID de ítem inválido."
     context ={"error":error} 
     return render(request,'items_bar_and_kitchen.html',context)
+
+
+@login_required(login_url='admin/login/')
+def order_item_check_all_view(request,pk):
+    order= Order.objects.filter(table=pk,is_paid='no pagada').first()
+    items = Item.objects.filter(order=order,is_active=False,state="ordenado")
+    for item in items:
+        item.is_active =True
+        item.save()
+    context={
+        "order":order,
+        "table":order.table,
+        'categories': Category.objects.filter(type='vendible')
+    }
+    return render(request,'waiter/table.html',context)
+
+@login_required(login_url='admin/login/')
+def order_item_revert_all_view(request,pk):
+    order= Order.objects.filter(table=pk,is_paid='no pagada').first()
+    items = Item.objects.filter(order=order,is_active=True,state="ordenado")
+    for item in items:
+        item.is_active =False
+        item.save()
+    context={
+        "order":order,
+        "table":order.table,
+        'categories': Category.objects.filter(type='vendible')
+    }
+    return render(request,'waiter/table.html',context)

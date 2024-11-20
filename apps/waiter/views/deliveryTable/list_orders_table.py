@@ -186,3 +186,29 @@ def charge_delivery_table(request,pk):
     response = HttpResponse()
     response["HX-Redirect"]= f'/waiter/list_orders_table_view/{table.pk}'
     return response
+
+@login_required(login_url='admin/login/')
+def delivery_order_item_check_all_view(request,pk):
+    order= Order.objects.filter(pk=pk,is_paid='no pagada').first()
+    items = Item.objects.filter(order=order,is_active=False,state="ordenado")
+    for item in items:
+        item.is_active =True
+        item.save()
+    context={
+        "order":order,
+        
+    }
+    return render(request,'waiter/deliveryTable/order_item_list_result.html',context)
+
+@login_required(login_url='admin/login/')
+def delivery_order_item_revert_all_view(request,pk):
+    order= Order.objects.filter(pk=pk,is_paid='no pagada').first()
+    items = Item.objects.filter(order=order,is_active=True,state="ordenado")
+    for item in items:
+        item.is_active =False
+        item.save()
+    context={
+        "order":order,
+        
+    }
+    return render(request,'waiter/deliveryTable/order_item_list_result.html',context)
