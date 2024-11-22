@@ -2,7 +2,8 @@ from django.shortcuts import render
 from apps.barandkitchen.utils.items import all_charge_kitchen_items
 from apps.cuentas.models import AddItem, Item, UtilsItem
 from django.contrib.auth.decorators import login_required
-
+from django.utils import timezone
+from datetime import datetime
 from apps.productos.models import ProductAddRelation
 from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient 
 
@@ -43,5 +44,6 @@ def items_kitchen_finish_view(request,pk):
     if request.POST:
         item = Item.objects.filter(pk=pk,state="preparando").first()
         item.state = "finalizado"
+        item.end_time = datetime.now()
         item.save()
     return render(request,'bar_and_kitchen/items/items_kitchen.html',context=all_charge_kitchen_items())

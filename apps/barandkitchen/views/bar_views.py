@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.shortcuts import render
 from apps.barandkitchen.utils.items import all_charge_bar_items
 from apps.cuentas.models import AddItem, Item, UtilsItem
@@ -43,5 +44,6 @@ def items_bar_finish_view(request,pk):
     if request.POST:
         item = Item.objects.filter(pk=pk,state="preparando").first()
         item.state = "finalizado"
+        item.end_time = timezone.now()
         item.save()
     return render(request,'bar_and_kitchen/items/items_bar.html',context=all_charge_bar_items())
