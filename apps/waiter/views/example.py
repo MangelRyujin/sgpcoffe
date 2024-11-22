@@ -6,7 +6,7 @@ from apps.cuentas.forms.item_form import OrderTableForm
 from apps.cuentas.models import Item, Order, Shift
 from apps.mesas.models import Table
 from apps.productos.models import Category
-from apps.waiter.order_forms import CreateOrderSoldForm
+from apps.waiter.order_forms import CreateOrderSoldForm, UpdateOrderCustomersForm
 from apps.waiter.utils.bale_list import bale_list
 from apps.waiter.utils.order import order_paid_proccess_data
 
@@ -112,3 +112,21 @@ def order_sold(request,pk):
     if valid:
         response['HX-Trigger']='update-table-list'
     return response
+
+
+@login_required(login_url='admin/login/')
+def order_change_customers_view(request,pk):
+    order= Order.objects.filter(pk=pk,is_paid='no pagada').first()
+    form=UpdateOrderCustomersForm(instance=order)
+    context={}
+    if request.POST:
+        if order:
+            form=UpdateOrderCustomersForm(request.POST,instance=order)
+            if form.is_valid():
+                form.save()
+                context['message']="Cantidad de personas editada correctacmente"
+            else:
+              context['error']="El valor no es correcto"
+    context['order']=order
+    context['form']=form
+    return render(request,'waiter/orderChangeCustomers/orderChangeTableForm.html',context)

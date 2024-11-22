@@ -14,12 +14,12 @@ from apps.cuentas.models import ItemMotiveCancelMessage, Operation, Order, Item,
 
 
 # # # Admin add items
-# class ItemInline(admin.TabularInline):    
-#     model = Item    
-#     raw_id_fields = ('product','order',)
-#     list_display = ('product','order',)
-#     inlines = [AddItemInline]
-#     extra = 0
+class ItemInline(admin.TabularInline):    
+    model = Item    
+    raw_id_fields = ('product','order',)
+    list_display = ('product','order',)
+    # inlines = [AddItemInline]
+    extra = 0
     
 
 @admin.register(Shift)
@@ -36,19 +36,19 @@ class ShiftAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
     
 # Admin Order 
-# @admin.register(Order)
-# class OrderAdmin(admin.ModelAdmin):
-#     list_display = ['id','table','user','is_paid','paid_method','shift','total_paid','created_date','created_time']
-#     search_fields = ['user__name','table','is_paid','paid_method','created_date']
-#     list_filter = (
-#         'user__username',
-#         'table__name',
-#         'is_paid',
-#         'paid_method',
-#         'created_date',
-#     )
-#     list_per_page = 100
-#     # inlines = [ItemInline,]
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id','table','user','is_paid','paid_method','shift','total_paid','created_date','created_time']
+    search_fields = ['user__name','table','is_paid','paid_method','created_date']
+    list_filter = (
+        'user__username',
+        'table__name',
+        'is_paid',
+        'paid_method',
+        'created_date',
+    )
+    list_per_page = 100
+    inlines = [ItemInline,]
  
 @admin.register(CashOperation)
 class CashOperationAdmin(admin.ModelAdmin):
@@ -75,13 +75,13 @@ class CashOperationAdmin(admin.ModelAdmin):
 
 
 # # Admin Items 
-# @admin.register(Item)
-# class ItemAdmin(admin.ModelAdmin):
-#     list_display = ['state','cant','total_price','product','order']
-#     search_fields = ['product__name','state']
-#     list_filter = (
-#         'state',
-#     )
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['state','cant','total_price','product','order','created_time']
+    search_fields = ['product__name','state']
+    list_filter = (
+        'state',
+    )
 #     inlines = [AddItemInline,
 #                ]
  

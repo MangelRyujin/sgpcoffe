@@ -170,6 +170,7 @@ class Order(models.Model):
     shift = models.ForeignKey(Shift,on_delete=models.CASCADE,null=True,blank=True,verbose_name=_('turno'), related_name='orders') 
     created_date = models.DateField('dia de apertura',auto_now_add=True,null=True)
     created_time = models.TimeField('hora de apertura',auto_now_add=True,null=True)
+    customers= models.PositiveIntegerField("Cantidad de clientes",default=1)
     table = models.ForeignKey(Table,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('mesa')) 
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('usuario'))
     
@@ -240,6 +241,8 @@ class Item(models.Model):
     state = models.CharField(max_length=10, choices=STATE_CHOICES, default='ordenado') 
     type = models.CharField(max_length=7, choices=TYPE_CHOICES, default='local') 
     cant = models.PositiveIntegerField("Cant",default=1,null=False,blank=False)
+    created_time = models.TimeField('hora de inicio',auto_now_add=True,null=True)
+    end_time = models.TimeField('hora de finalización',auto_now_add=False,auto_now=False,null=True)
     total_price = models.DecimalField('Total price', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     revenue_price = models.DecimalField('Revenue price', max_digits=10, default=0, decimal_places=2, blank= True, null= True)
     cost_price = models.DecimalField('Cost price', max_digits=10, default=0, decimal_places=2)

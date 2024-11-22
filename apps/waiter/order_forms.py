@@ -5,6 +5,14 @@ from decimal import Decimal
 
 from apps.cuentas.models import Order
 
+
+class UpdateOrderCustomersForm(forms.ModelForm):
+    
+    class Meta:
+        model = Order
+        # exclude =  ['is_paid','paid_method','cash','transfer','total_paid','total_price','shift','created_date','created_time','table','user']
+        fields = ['customers']
+        
 class CreateOrderSoldForm(forms.ModelForm):
     total_paid = forms.DecimalField()
     total_price = forms.DecimalField()
@@ -20,3 +28,4 @@ class CreateOrderSoldForm(forms.ModelForm):
 
         if total_paid != total_price:
             raise ValidationError(_(f"El total a pagar debe de ser igual a $ {total_paid}."))
+        
