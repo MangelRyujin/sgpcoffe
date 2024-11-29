@@ -39,10 +39,10 @@ def product_list_results(request,pk):
     category=get_copy.get('categories') or None
     if request.POST:
         data = {'name':request.POST['keyword'] or ''}
-        products_filter = ProductFilter(data, queryset=Product.objects.filter(active=True))
+        products_filter = ProductFilter(data, queryset=Product.objects.filter(active=True).order_by('name'))
         products=products_filter.qs 
     else:
-        products = Product.objects.filter(active=True,categories=category) 
+        products = Product.objects.filter(active=True,categories=category).order_by('name')
     context={
         'order':order,
         'category':category,

@@ -6,7 +6,7 @@
 <div class="container mt-4 py-4">
   <h2>Almacen del local</h2>
   <div class="row mb-4" >
-    <div class="col-12 col-md-7" >
+    <div class="col-12 col-md-7 overflow-y-auto" style="max-height:600px" >
       <div class="table-responsive  table-bordered mt-0" >
         <caption>Total de stocks mostrados <strong>{{stocks|length}}</strong> precio total $ <strong>{{total_cost|floatformat:2}}</strong> </caption>
         <table class="table table-hover">
@@ -20,7 +20,8 @@
               
             </tr>
           </thead>
-          <tbody >
+          <tbody  >
+           
           {% for stock in stocks %}
               <tr class="text-center {{stock.stock_in_warehouse}}"
               hx-get="{% url "reports_warehouses_stock_movement_view" pk=stock.pk %}"
@@ -35,6 +36,7 @@
               </tr>
               
           {% endfor %}
+          
             <tr class="text-center table-dark">
                 <td class="border small table-min">Total</td>  
                 <td class="border small ">-</td>  
@@ -48,14 +50,14 @@
         
           
     </div>
-    <div class="col-12 col-md-5" id="LoadStockMovements">
+    <div class="col-12 col-md-5 overflow-y-auto" style="max-height:600px" id="LoadStockMovements">
       {% include "reports_warehouses/movement_list.html" %}
     </div>
   </div>
 
   <h2>Almacen principal</h2>
   <div class="row" >
-    <div class="col-12 col-md-7" >
+    <div class="col-12 col-md-7 overflow-y-auto" style="max-height:600px"  >
       <div class="table-responsive  table-bordered mt-0" >
         <caption>Total de stocks mostrados <strong>{{stocks2|length}}</strong> precio total $ <strong>{{total_cost2|floatformat:2}}</strong> </caption>
         <table class="table table-hover">
@@ -97,7 +99,7 @@
         
           
     </div>
-    <div class="col-12 col-md-5" id="LoadPrincipalStockMovements">
+    <div class="col-12 col-md-5 overflow-y-auto" style="max-height:600px" id="LoadPrincipalStockMovements">
       {% include "reports_warehouses/movement_list.html" %}
     </div>
   </div>

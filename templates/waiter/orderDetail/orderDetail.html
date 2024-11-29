@@ -32,6 +32,10 @@
     {% endfor %}
     <div class="d-flex justify-content-between w-100 mb-2 align-items-center ">
       <span class="fw-bold">Estimado en CUP:</span> 
+      <span class="fw-bold small">$ {{order.order_estimate_total_price}}</span>  
+    </div>
+    <div class="d-flex justify-content-between w-100 mb-2 align-items-center ">
+      <span class="fw-bold">Total en CUP:</span> 
       <span class="fw-bold small">$ {{order.total_price}}</span>  
     </div>
     <div class="d-flex justify-content-between w-100 mb-2 align-items-center ">

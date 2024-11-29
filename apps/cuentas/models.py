@@ -215,6 +215,14 @@ class Order(models.Model):
         return total
     
     @property
+    def order_estimate_total_price(self):
+        total = Decimal(0)
+        for item in Item.objects.filter(order=self).exclude(state="cancelado"):
+            total+=item.estimate_price
+        return total or 0
+    
+    
+    @property
     def rate(self):
         rate = Coin.objects.first()
         if rate:
