@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required 
 from django.http import HttpResponse
@@ -113,7 +114,16 @@ def order_sold(request,pk):
         response['HX-Trigger']='update-table-list'
     return response
 
-
+@login_required(login_url='/admin/login/')
+def validate_transfer_sold(request,pk):
+    order = Order.objects.filter(pk=pk).first()
+    transfer = request.GET.get('transfer',0)
+    context={
+        "cash": order.total_price - Decimal(transfer) or 0
+    }
+    return render(request,'waiter/orderSold/cash.html',context)
+    
+    
 @login_required(login_url='admin/login/')
 def order_change_customers_view(request,pk):
     order= Order.objects.filter(pk=pk,is_paid='no pagada').first()

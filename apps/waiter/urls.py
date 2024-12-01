@@ -21,6 +21,7 @@ urlpatterns = [
     path('list_orders_table_result_view/<int:pk>/', list_orders_table_result_view, name='list_orders_table_result_view'),
     path('reload_order_sold_detail_delivery_table_view/<int:pk>/', reload_order_sold_detail_delivery_table_view, name='reload_order_sold_detail_delivery_table_view'),
     path('charge_delivery_table/<int:pk>/', charge_delivery_table, name='charge_delivery_table'),
+    path('validate_transfer_sold/<int:pk>/', validate_transfer_sold, name='validate_transfer_sold'),
     
     
     # Create
