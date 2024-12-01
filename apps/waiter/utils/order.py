@@ -2,8 +2,9 @@ from decimal import Decimal
 
 # Payment methods proccess data
 def order_paid_proccess_data(data,total_price):
-    cash= Decimal(data["cash"] or 0 ) 
+    
     transfer=Decimal(data["transfer"] or 0) 
+    cash= total_price-transfer
     payment_type = data["payment_method"]
     if payment_type == 'efectivo':
       data={
