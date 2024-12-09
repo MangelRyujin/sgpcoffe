@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import site
 from django.contrib.admin import DateFieldListFilter
 
-from apps.cuentas.models import ItemMotiveCancelMessage, Operation, Order, Item, AddItem, Shift, UtilsItem, CashOperation
+from apps.cuentas.models import *
 # Register your models here.
 
 # # Admin add items
@@ -12,6 +12,8 @@ from apps.cuentas.models import ItemMotiveCancelMessage, Operation, Order, Item,
 #     list_display = ('add',)
 #     extra = 0
 
+
+admin.site.register(OperationType)
 
 # # # Admin add items
 class ItemInline(admin.TabularInline):    
@@ -52,14 +54,15 @@ class OrderAdmin(admin.ModelAdmin):
  
 @admin.register(CashOperation)
 class CashOperationAdmin(admin.ModelAdmin):
-    list_display = ('operation_type', 'shift', 'payment_type', 'amount', 'description', 'user' , 'created_date')
+    list_display = ('operation_type', 'shift', 'payment_type','type', 'amount', 'description', 'user' , 'created_date')
     list_select_related = ["shift", "user"]
-    search_fields = ('operation_type', 'user__username', 'payment_type', 'description', 'created_date')
+    search_fields = ('operation_type', 'user__username', 'payment_type','type', 'description', 'created_date')
     list_filter = (
         'operation_type',
         'shift',
         'payment_type',
         'description',
+        'type',
         'user',
         ('created_date', DateFieldListFilter),
     )
@@ -103,13 +106,14 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Operation)
 class OperationAdmin(admin.ModelAdmin):
-    list_display = ('id' ,'operation_type', 'payment_type', 'amount', 'user' , 'created_date','operation_date')
+    list_display = ('id' ,'operation_type', 'payment_type','type', 'amount', 'user' , 'created_date','operation_date')
     list_select_related = [ "user"]
-    search_fields = ('operation_type', 'user__username', 'payment_type', 'description','operation_date')
+    search_fields = ('operation_type', 'user__username', 'payment_type', 'description','operation_date','type')
     list_filter = (
         'operation_type',
         'payment_type',
         'description',
+        'type',
         'user',
         # ('created_date', DateFieldListFilter),
         # ('operation_date', DateFieldListFilter),

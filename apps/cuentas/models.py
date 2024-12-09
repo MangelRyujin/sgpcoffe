@@ -13,6 +13,16 @@ from decimal import Decimal
 
 User = get_user_model()
 
+class OperationType(models.Model):
+    name = models.CharField('Nombre',max_length=150)
+    
+    
+    def __str__(self) -> str:
+        return f'{self.name}'
+    
+    class Meta:
+        verbose_name = 'Tipo de operacione'
+        verbose_name_plural = 'Tipos de operaciones'
     
 class Operation(models.Model):
     MOVEMENT_TYPES_CHOICES = (
@@ -23,6 +33,7 @@ class Operation(models.Model):
         ('transferencia', 'Transferencia'),
         ('efectivo', 'Efectivo'),
     )
+    type = models.ForeignKey(OperationType,on_delete=models.PROTECT,null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('Usuario'), related_name='user_operation')
     operation_type = models.CharField('Tipo de movimiento',max_length=13, choices=MOVEMENT_TYPES_CHOICES, default='ingreso')
     payment_type = models.CharField('Método de pago',max_length=13, choices=PAYMENT_METHODS_CHOICES, default='efectivo')
@@ -135,6 +146,7 @@ class CashOperation(models.Model):
         ('transferencia', 'Transferencia'),
         ('efectivo', 'Efectivo'),
     )
+    type = models.ForeignKey(OperationType,on_delete=models.PROTECT,null=True,blank=True)
     shift = models.ForeignKey(Shift,on_delete=models.CASCADE,null=True,blank=True,verbose_name=_('Turno'), related_name='movimientos') 
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('Usuario'), related_name='movimientos')
     operation_type = models.CharField('Tipo de movimiento',max_length=13, choices=MOVEMENT_TYPES_CHOICES, default='ingreso')

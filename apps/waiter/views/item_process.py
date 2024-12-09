@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required 
-from apps.cuentas.forms.item_form import ItemMotiveCancelMessageForm
+from apps.cuentas.forms.item_form import ItemChangeCantForm, ItemForm, ItemMotiveCancelMessageForm
 from apps.cuentas.models import AddItem, Item, Order, UtilsItem
 from apps.productos.models import Category, ProductAddRelation
+from apps.waiter.utils.items_chage_cant import decrement_change_cant, increase_change_cant
 from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient
 
 @login_required(login_url='admin/login/')
@@ -151,3 +152,35 @@ def order_item_revert_all_view(request,pk):
         'categories': Category.objects.filter(type='vendible')
     }
     return render(request,'waiter/table.html',context)
+
+@login_required(login_url='admin/login/')
+def order_item_change_cant_view(request,pk):
+    item = Item.objects.filter(pk=pk).first()
+    context={
+        "item":item,
+    }
+    message=''
+    error=''
+    form=ItemChangeCantForm(instance=item)
+    if request.POST:
+        cant=item.cant
+        form=ItemChangeCantForm(request.POST,instance=item)
+        if form.is_valid():
+            cant_edit= cant - int(request.POST['cant'])
+            if item.state != "ordenado":
+                if cant < int(request.POST['cant']):
+                    message,error =increase_change_cant(item,cant_edit*-1)
+                elif cant > int(request.POST['cant']):
+                    message =decrement_change_cant(item,cant_edit)
+                else:
+                    message=f"Se mantiene la misma cantidad"
+            if error:
+                context['error']=error
+            else:
+                form.save()
+                if message:
+                    context['message']=message
+                else:
+                    context['message']="Cantidad editada correctamente"
+    context['form']=form
+    return render(request,'waiter/orderItemCantChange/orderItemCantChangeForm.html',context)

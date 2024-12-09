@@ -55,7 +55,7 @@ def order_item_create_view(request,pk):
     if request.POST:
         order = Order.objects.filter(pk=pk).first()
         product = Product.objects.filter(pk=request.GET.get('product')).first()
-        products= Product.objects.filter(categories=product.categories.first())
+        products= Product.objects.filter(categories=product.categories.first()).order_by('name')
         context={
             'order':order,
             'products':products,

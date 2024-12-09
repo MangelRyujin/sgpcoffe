@@ -100,3 +100,8 @@ class OrderItemMessageForm(forms.ModelForm):
         model = Item
         fields = ['message']    
         
+        
+class ItemChangeCantForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = [ 'cant']

@@ -270,6 +270,10 @@ class Product(models.Model):
     def discount_ingredients(self,cant):
         for ingredient in self.ingredient_relations.all():
             ingredient.discount_ingredient(cant)
+    
+    def revert_ingredients(self,cant):
+        for ingredient in self.ingredient_relations.all():
+            ingredient.revert_ingredient(cant)
 
 # Product add relation ManyToMany
 class ProductIngredientRelation(models.Model):
@@ -294,6 +298,10 @@ class ProductIngredientRelation(models.Model):
     def discount_ingredient(self,cant):
         self.ingredient.stock.stock-= cant*self.measure_unit_qty
         self.ingredient.stock.save()
+        
+    def revert_ingredient(self,cant):
+        self.ingredient.stock.stock+= cant*self.measure_unit_qty
+        self.ingredient.stock.save()
 
 # Product add relation ManyToMany
 class ProductAddRelation(models.Model):
@@ -313,4 +321,8 @@ class ProductAddRelation(models.Model):
 
     def discount_add(self,cant,cant_add):
         self.add.stock.stock-= cant*(self.measure_unit_qty*cant_add)
+        self.add.stock.save()
+        
+    def revert_add(self,cant,cant_add):
+        self.add.stock.stock+= cant*(self.measure_unit_qty*cant_add)
         self.add.stock.save()
