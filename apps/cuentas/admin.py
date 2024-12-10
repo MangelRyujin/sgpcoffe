@@ -80,7 +80,7 @@ class CashOperationAdmin(admin.ModelAdmin):
 # # Admin Items 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ['state','cant','total_price','product','order','created_time']
+    list_display = ['state','cant','total_price','product','order','created_time','end_time']
     search_fields = ['product__name','state']
     list_filter = (
         'state',

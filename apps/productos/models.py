@@ -251,6 +251,15 @@ class Product(models.Model):
         return f'{self.name}'
     
     @property
+    def Costo_total(self):
+        cost= sum(ingredient.ingredient.stock.unit_price * ingredient.measure_unit_qty  for ingredient in self.ingredient_relations.all())
+        return round(cost,2)
+    
+    @property
+    def Porcentaje_de_ganancia(self):
+        return f'{round(((self.Costo_total * 100) / self.price),2)} % ' 
+    
+    @property
     def available_discount_ingredients(self):
         for ingredient in self.ingredient_relations.all():
             if ingredient.cant_discount_ingredient(1) == False:

@@ -38,6 +38,7 @@ class ProductAdmin(admin.ModelAdmin):
         'place',
         'active',
     )
+    readonly_fields = ('Costo_total','Porcentaje_de_ganancia',)
     inlines = [IngredientsRelationsInline,
                AddRelationsInline,
                ]
