@@ -176,11 +176,12 @@ def order_item_change_cant_view(request,pk):
                     message=f"Se mantiene la misma cantidad"
             if error:
                 context['error']=error
-            else:
-                form.save()
-                if message:
-                    context['message']=message
-                else:
-                    context['message']="Cantidad editada correctamente"
+            if message:
+                context['message']=message
+            if message == '':
+                context['message']="Cantidad editada correctamente"
+            item=form.save(commit=False)
+            item.total_price= item.estimate_price
+            item.save()
     context['form']=form
     return render(request,'waiter/orderItemCantChange/orderItemCantChangeForm.html',context)
