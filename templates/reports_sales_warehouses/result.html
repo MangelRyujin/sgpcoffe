@@ -1,0 +1,45 @@
+
+    <div class="col-12 col-md-7" >
+      <div class="table-responsive  table-bordered mt-0" >
+        <caption>Stock mostrado <strong>{{stock.name}}</strong> cantidad actual <strong>{{stock.stock}}</strong> {{stock.measure_unit}} </caption>
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center ">
+              <th  scope="col">Nombre</th>
+              <th  scope="col">Cantidad</th>
+              <th  scope="col">Cost</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Ganancia</th>
+              
+            </tr>
+          </thead>
+          <tbody  >
+           
+          {% for item in items %}
+              <tr class="text-center ">
+                  <td class="border small table-min">{{item.product.name}}</td>  
+                  <td class="border small ">{{item.cant}}</td>  
+                  <td class="border small ">{{item.cost_price}}</td>  
+                  <td class="border small">{{item.total_price|floatformat:2}}</td>
+                  <td class="border small">{{item.revenue_price|floatformat:2}}</td>   
+              </tr>
+              
+          {% endfor %}
+          
+          
+            <tr class="text-center table-dark">
+                <td class="border small table-min">-</td>  
+                <td class="border small ">-</td>  
+                <td class="border small ">-</td> 
+                <td class="border small">-</td> 
+                <td class="border small">-</td> 
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        
+          
+    </div>
+    <div class="col-12 col-md-5 overflow-y-auto" style="max-height:600px" id="LoadStockMovements">
+      {% include "reports_sales_warehouses/movement_list.html" %}
+    </div>

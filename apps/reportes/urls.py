@@ -8,6 +8,7 @@ from apps.reportes.views.charts.product_charts_data_anual_views import get_filte
 from apps.reportes.views.charts.product_charts_data_anual_price_views import get_product_sales_price_chart,spend_product_per_customer_price_chart,payment_product_success_price_chart
 
 from apps.reportes.views.products_time_proccess import products_time_proccess
+from apps.reportes.views.reports_sales_warehouses_views import reports_result_sales_warehouses_view, reports_sales_warehouses_view
 from apps.reportes.views.reports_views import reports_view
 from apps.reportes.views.reports_warehouses_views import reports_warehouses_stock_movement_view, reports_warehouses_stock_principal_movement_view, reports_warehouses_view
 
@@ -38,6 +39,11 @@ urlpatterns = [
     path('reportes-de-almacenes/',reports_warehouses_view,name='reports_warehouses_view'),
     path('reportes-de-almacenes-movimientos-stock/<int:pk>',reports_warehouses_stock_movement_view,name='reports_warehouses_stock_movement_view'),
     path('reportes-de-almacenes-movimientos-stock-principal/<int:pk>',reports_warehouses_stock_principal_movement_view,name='reports_warehouses_stock_principal_movement_view'),
+    # Wharehouse result sale products
+    path('reportes-de-ventas-de-almacenes/',reports_sales_warehouses_view,name='reports_sales_warehouses_view'),
+    path('resultado-de-reportes-de-ventas-de-almacenes/',reports_result_sales_warehouses_view,name='reports_result_sales_warehouses_view'),
+    
+    
     # Product time proccess
     path('reportes-de-tiempo-por-producto/',products_time_proccess,name='products_time_proccess'),
     

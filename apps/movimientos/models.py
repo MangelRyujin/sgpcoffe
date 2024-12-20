@@ -47,12 +47,20 @@ class StockMovements(models.Model):
 
 
     def save(self, *args, **kwargs):
+        can_change = self.stock.stock
         if self.type == 'entrada':
             self.stock.update_stock(self.cant)
         elif self.type == 'salida':
             self.clean()
             self.stock.update_stock(-self.cant) 
         super().save(*args, **kwargs)
+        if self.pk:  
+               HistoryStockMovements.objects.create(
+                    movement=self,
+                    can_change=can_change,
+                    unit_price=self.stock.unit_price
+                )
+
       
         
     def delete(self, *args, **kwargs):
@@ -118,3 +126,37 @@ class PrincipalStockMovements(models.Model):
         elif self.type == 'salida':
             self.stock.update_stock(cant_before_deletion)
         super().delete(*args, **kwargs)
+        
+        
+# Create model HistoryStockMovements.
+class HistoryStockMovements(models.Model):
+    movement = models.ForeignKey(StockMovements,on_delete=models.CASCADE,null=False,blank=False,verbose_name=_('stock_movements'))
+    can_change = models.DecimalField('Cantidad en ese momento', max_digits=10, default=0, decimal_places=2)
+    unit_price = models.DecimalField('Precio por unidad en ese momento', max_digits=10, default=0, decimal_places=2)
+    
+    class Meta:
+        """Meta definition for StockMovements."""
+
+        verbose_name = 'Historico de movimiento en almacen'
+        verbose_name_plural = 'Historicos de movimiento en stock'
+
+
+    def __str__(self):
+        return f"Historico del movimiento ({self.movement})"
+    
+    @property
+    def stock(self):
+        return self.movement.stock.name
+    
+    @property
+    def movimiento(self):
+        return f'{self.movement.type} de {self.movement.cant}'
+    
+    @property
+    def cantidad_actualizada_despues_del_movimiento_actual(self):
+        cant = self.can_change + self.movement.cant if self.movement.type=="entrada" else self.can_change - self.movement.cant
+        return cant
+    
+    @property
+    def cantidad_actual(self):
+        return self.movement.stock.stock

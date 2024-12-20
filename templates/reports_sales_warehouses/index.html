@@ -1,0 +1,37 @@
+{% extends 'base_landing.html' %} 
+{% load static %}
+
+
+{% block contend %}
+<div class="container mt-4 py-4">
+  <h2>Almacen del local</h2>
+  <form class="row my-3 g-4" hx-get="{% url "reports_result_sales_warehouses_view" %}" hx-trigger="submit"
+  hx-indicator="#spinnerResult" hx-swap="innerHTML" hx-target="#Result">      
+      <div class="col-12 col-sm-6 col-md-4 ">
+        <div class="input-group mb-3">
+            <input type="date" required class="form-control" name="shift__in_date" placeholder="Hasta">
+          </div>
+      </div>     
+      <div class="col-12 col-sm-6 col-md-4 ">
+        <div class="input-group mb-3">
+            <select name="stock" required class="form-control">
+              {% for stock in stocks %}
+                <option value="{{stock.pk}}">{{stock.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+      </div>    
+      <div class="col-12 col-md-4   " id="search_group">
+        <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-center">
+          <div id="spinnerResult" class="htmx-indicator spinner-grow spinner-grow-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          Buscar</button>
+      </div>
+</form>
+  
+<div class="row mb-4" id="Result" >
+</div> 
+  
+</div>
+{% endblock %}
