@@ -5,12 +5,19 @@ from django.contrib.admin import DateFieldListFilter
 from apps.cuentas.models import *
 # Register your models here.
 
-# # Admin add items
-# class AddItemInline(admin.TabularInline):    
-#     model = AddItem    
-#     raw_id_fields = ('add',)
-#     list_display = ('add',)
-#     extra = 0
+# Admin add items
+class AddItemInline(admin.TabularInline):    
+    model = AddItem    
+    raw_id_fields = ('add',)
+    list_display = ('add',)
+    extra = 0
+    
+# Admin add items
+class IngredientItemInline(admin.TabularInline):    
+    model = IngredientItem    
+    raw_id_fields = ('ingredient',)
+    list_display = ('ingredient',)
+    extra = 0
 
 
 admin.site.register(OperationType)
@@ -85,8 +92,8 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = (
         'state',
     )
-#     inlines = [AddItemInline,
-#                ]
+    inlines = [AddItemInline,IngredientItemInline
+               ]
  
  
 # @admin.register(Item)

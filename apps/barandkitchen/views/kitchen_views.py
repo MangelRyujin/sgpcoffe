@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import datetime
 from apps.productos.models import ProductAddRelation
+from apps.waiter.utils.ingredients_items import create_ingredients_item
 from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient 
 
 
@@ -26,6 +27,7 @@ def items_kitchen_proccess_view(request,pk):
             item.total_price=item.estimate_price
             item.revenue_price=item.revenue
             item.cost_price = item.inversion_cost
+            create_ingredients_item(item)
             item.product.discount_ingredients(item.cant)
             for add in AddItem.objects.filter(item=item):
                 product_add = ProductAddRelation.objects.get(add=add.add.id,product=item.product.id)

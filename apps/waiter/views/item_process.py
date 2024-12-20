@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from apps.cuentas.forms.item_form import ItemChangeCantForm, ItemForm, ItemMotiveCancelMessageForm
 from apps.cuentas.models import AddItem, Item, Order, UtilsItem
 from apps.productos.models import Category, ProductAddRelation
+from apps.waiter.utils.ingredients_items import create_ingredients_item, remove_ingredients_item
 from apps.waiter.utils.items_chage_cant import decrement_change_cant, increase_change_cant
 from utils.product_validate.validate_ingredients_and_add_cant import validate_product_discount_ingredient
 
@@ -72,6 +73,7 @@ def order_item_delivery_waiter_view(request,pk):
             if error =='':
                 item.revenue_price=item.revenue
                 item.cost_price = item.inversion_cost
+                create_ingredients_item(item)
                 item.product.discount_ingredients(item.cant)
                 for add in AddItem.objects.filter(item=item):
                     product_add = ProductAddRelation.objects.get(add=add.add.id,product=item.product.id)
@@ -183,5 +185,6 @@ def order_item_change_cant_view(request,pk):
             item=form.save(commit=False)
             item.total_price= item.estimate_price
             item.save()
+            remove_ingredients_item(item)
     context['form']=form
     return render(request,'waiter/orderItemCantChange/orderItemCantChangeForm.html',context)

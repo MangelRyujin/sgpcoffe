@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from apps.coins.models import Coin
 from apps.mesas.models import Table
-from apps.productos.models import Add, Product, ProductAddRelation, UtilProduct
+from apps.productos.models import Add, Ingredient, Product, ProductAddRelation, UtilProduct
 from django.contrib import admin
 from django.db.models import Sum
 from decimal import Decimal 
@@ -326,6 +326,20 @@ class AddItem(models.Model):
 
     def __str__(self) -> str:
         return f'Item agregado {self.add.name}'
+    
+# Order Ingredient item model.
+class IngredientItem(models.Model):
+    cant = models.DecimalField('Cantidad', max_digits=10, default=0, decimal_places=2)
+    cost = models.DecimalField('Costo', max_digits=10, default=0, decimal_places=2)
+    ingredient = models.ForeignKey(Ingredient,on_delete=models.PROTECT,null=False,blank=False,verbose_name=_('ingrediente'))
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, blank=True,verbose_name=_('pedido'))
+    
+    class Meta:   
+        verbose_name = 'Ingrediente de pedido'
+        verbose_name_plural = 'Ingredientes de pedidos'
+
+    def __str__(self) -> str:
+        return f'Item agregado {self.ingredient.name}'
 
 
 # Order UtilsItem model.
