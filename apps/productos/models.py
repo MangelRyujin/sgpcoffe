@@ -257,6 +257,8 @@ class Product(models.Model):
     
     @property
     def Porcentaje_de_ganancia(self):
+        if self.price == 0:
+            return f'{round(100-((self.Costo_total * 100) / 100),2)} % '
         return f'{round(100-((self.Costo_total * 100) / self.price),2)} % ' 
     
     @property
