@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
@@ -12,22 +13,18 @@ def product_statistics_view(request):
         validation_result, message = validate_dates(start_date, end_date)
         total_sales_amount=0
         if validation_result:
-            # Filtramos los turnos por el rango de fechas proporcionado
             shifts = Shift.objects.filter(in_date__gte=start_date, in_date__lte=end_date)
             items= Item.objects.filter(order__shift__in=shifts,order__is_paid='pagada',state__in=["entregado","cancelado"])
             products_sold = items.values('product__name','product__pk').annotate(cost_price=Sum('cost_price'),total_price=Sum('total_price'),total_count=Sum('cant'),revenue_price=Sum('revenue_price')).order_by('-total_count','-total_price')
             for item in items:
                 if item.state == "cancelado":
-                    for product in products_sold:
-                        if product['product__pk']==item.product.pk:
-                            product['revenue_price']-=item.revenue_price
-                            product['total_price']-=item.total_price
+                    pass
                 else:
                     total_sales_amount+=item.total_price
+            for product in products_sold:
+                product['revenue_price'] = product['total_price']-product['cost_price']
             total_count = products_sold.aggregate(total_count=Sum('total_count'))['total_count'] or 0
-            # total_sales_amount = products_sold.aggregate(total_sales_sum=Sum('total_price'))['total_sales_sum'] or 0
-            # products_sold.aggregate(total_revenue_sum=Sum('revenue_price'))['total_revenue_sum'] or 0
-            total_revenue_amount=sum(product['revenue_price'] for product in products_sold) or 0
+            total_revenue_amount=sum(product['total_price'] - product['cost_price'] for product in products_sold) or 0
             total_cost_amount=products_sold.aggregate(total_cost_sum=Sum('cost_price'))['total_cost_sum'] or 0
             operations= Operation.objects.filter(operation_date__gte=start_date, operation_date__lte=end_date)
             cashOperations = CashOperation.objects.filter(shift__in=shifts)
@@ -68,7 +65,6 @@ def product_statistics_view(request):
                 'ganancia_total':total_revenue_amount + total_cashOperation_amount_ingreso + total_operation_amount_ingreso - total_operation_amount_gasto - total_cashOperation_amount_gasto
                 
             }
-            print(products_sold)
             return render(request, "charts/product_statistics.html", context)
         else:
             return render(request, "charts/product_statistics.html", {'message':message})

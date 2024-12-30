@@ -1,0 +1,36 @@
+
+    <div class="col-12">
+      <div class="table-responsive  table-bordered mt-0" >
+        {% if start_date and end_date %}<caption>Fecha {{start_date}} hasta {{end_date}}</caption>{% endif %}
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center ">
+              <th  scope="col ">Order</th>
+              <th  scope="col">Fecha</th>
+              <th  scope="col">Hora</th>
+              <th  scope="col">Clientes</th>
+
+              
+            </tr>
+          </thead>
+          <tbody  >
+           
+          {% for order in orders %}
+              <tr class="text-center ">
+                  <td class="border small ">{{order.pk}}</td>  
+                  <td class="border small order-min">{{order.created_date}}</td>  
+                  <td class="border small order-min">{{order.created_time}}</td> 
+                  <td class="border small ">{{order.customers}}</td> 
+   
+                  
+                  
+                  
+              </tr>
+              
+          {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        
+          
+    </div>

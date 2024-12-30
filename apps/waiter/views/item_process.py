@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required 
 from apps.cuentas.forms.item_form import ItemChangeCantForm, ItemForm, ItemMotiveCancelMessageForm
@@ -43,6 +44,8 @@ def order_item_cancel_view(request,pk):
                 form_message.item=item
                 form_message.save()
                 item.state = "cancelado"
+                item.total_price = 0
+                item.revenue_price = f'{item.cost_price}'
                 item.save()
                 context['item']=item
                 return render(request,'waiter/orderItemDetail/order_item_detail.html',context)

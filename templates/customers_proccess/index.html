@@ -4,7 +4,7 @@
 
 {% block contend %}
 <div class="container mt-4 py-4">
-    <h2>Tiempos</h2>
+    <h2>Clientes atendidos</h2>
     <form class="row my-3 g-4" method="post" acction="{% url "products_time_proccess" %}">
         {% csrf_token %}
         <div class="col-6 col-md-4  ">
@@ -34,27 +34,32 @@
     <div class="row mt-2 mb-4" >
       <div class="col-12">
         <div class="table-responsive  table-bordered mt-0" >
-          <caption>Total de productos mostrados <strong>{{products|length}}</strong> entre la fecha {{start_date}} y {{end_date}}</caption>
+          {% if start_date and end_date %}<caption>Fecha {{start_date}} hasta {{end_date}}</caption>{% endif %}
           <table class="table table-hover">
             <thead>
-              <tr class="text-center ">
-                <th  scope="col ">ID</th>
-                <th  scope="col">Producto</th>
-                <th  scope="col">Cantidad</th>
-                <th scope="col">Promedio de tiempo</th>
+              <tr class="text-center "
+              
+              >
+                <th  scope="col ">Mesa</th>
+                <th  scope="col">Total</th>
+                <th  scope="col">Media</th>
 
                 
               </tr>
             </thead>
             <tbody  >
-             
-            {% for product in products %}
-                <tr class="text-center ">
-                    <td class="border small ">{{product.product__pk}}</td>  
-                    <td class="border small table-min">{{product.product__name}}</td>  
-                    <td class="border small ">{{product.total_count}}</td> 
+            {% for table in tables %}
+                <tr class="text-center "
+                hx-get="{% url 'customers_proccess_charge_orders' pk=table.pk start_date=start_date end_date=end_date %}"
+                hx-trigger="click"
+                hx-target="#ChargeOrdersForTable"
+                hx-indicator="#spinner"
+              >
+                    <td class="border small ">{{table.name}}</td>  
+                    <td class="border small table-min">{{table.cant}}</td>  
+                    <td class="border small ">{{table.avg}}</td> 
                     
-                    <td class="border small table-min {{product.bg}}"><strong>{{product.avg_time}}</strong></td>
+                    
                     
                 </tr>
                 
@@ -69,6 +74,14 @@
     </div>
   
     
-    
+   <div class="d-flex justify-content-center align-items-center py-4 position-relative" >
+    <div id="spinner" class="htmx-indicator w-100 h-100  loadding-blur position-absolute   justify-content-center align-items-center"  >
+      <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status" >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div  class="col-12" id="ChargeOrdersForTable" >
+    </div> 
+   </div> 
   </div>
 {% endblock %}

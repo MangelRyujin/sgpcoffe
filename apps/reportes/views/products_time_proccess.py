@@ -40,7 +40,6 @@ def products_time_proccess(request):
                 product['avg_time']= timedelta(seconds=0)
             
         context['products'] = product_avg_time
-        print(product_avg_time)
     return render(request, "products_time_proccess/index.html", context)
 
   

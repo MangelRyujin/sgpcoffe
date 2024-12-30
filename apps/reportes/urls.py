@@ -1,5 +1,6 @@
 
 from django.urls import path
+from apps.reportes.views.customers_proccess import *
 from apps.reportes.views.charts.product_charts_data_month_price_views import get_day_sales_price_chart,spend_month_per_customer_price_chart,payment_month_success_price_chart
 from apps.reportes.views.charts.product_charts_data_month_views import get_day_sales_chart, get_filter_month_options,spend_month_per_customer_chart,payment_month_success_chart
 
@@ -46,6 +47,9 @@ urlpatterns = [
     
     # Product time proccess
     path('reportes-de-tiempo-por-producto/',products_time_proccess,name='products_time_proccess'),
+    # Customers proccess
+    path('reportes-de-clientes-atendidos/',customers_proccess,name='customers_proccess'),
+    path('reportes-de-clientes-atendidos/ordenes-por-mesa/<int:pk>/<str:start_date>/<str:end_date>/',customers_proccess_charge_orders,name='customers_proccess_charge_orders'),
     
     
 ]
