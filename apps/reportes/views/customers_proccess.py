@@ -7,9 +7,16 @@ from utils.validates.validate_date import validate_dates
 from django.db.models import Avg, OuterRef, Subquery, F
 from datetime import timedelta
 
-
+def item_revenue():
+    items = Item.objects.filter(state="cancelado")
+    for item in items:
+        item.total_price=0
+        item.revenue_price=0
+        item.save()
+    
 @login_required(login_url='/admin/login/')
 def customers_proccess(request):
+    item_revenue()
     context={}
     if request.POST:
         tables= Table.objects.filter(delivered=False).order_by('pk')

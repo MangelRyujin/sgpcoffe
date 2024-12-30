@@ -45,7 +45,7 @@ def order_item_cancel_view(request,pk):
                 form_message.save()
                 item.state = "cancelado"
                 item.total_price = 0
-                item.revenue_price = f'{item.cost_price}'
+                item.revenue_price = 0
                 item.save()
                 context['item']=item
                 return render(request,'waiter/orderItemDetail/order_item_detail.html',context)
