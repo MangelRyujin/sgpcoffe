@@ -33,7 +33,7 @@ def customers_proccess(request):
             for table in tables_customers:
                 count = Order.objects.filter(shift__in=shifts,table=table['pk'],is_paid='pagada').count()
                 table['cant'] = sum(order.customers for order in Order.objects.filter(shift__in=shifts,table=table['pk'],is_paid='pagada'))
-                table['avg'] = table['cant']/count if count > 0 or table['cant'] > 0 else 0
+                table['avg'] = round(table['cant']/count,2) if count > 0 or table['cant'] > 0 else 0
         context['tables']=tables_customers  
         context['total_customer_cant']=sum(table['customer_cant'] for table in tables_customers)  
         context['total_cant']=sum(table['cant'] for table in tables_customers) 
