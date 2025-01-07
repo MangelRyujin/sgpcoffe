@@ -24,8 +24,9 @@ def product_statistics_view(request):
                     if item.state == "cancelado" and product['product__pk']==item.product.pk:
                         product['total_count_cancel']+=item.cant
                         product['total_cost_cancel']+=item.cost_price
-                    else:
-                        total_sales_amount+=item.total_price   
+            for item in items:
+                if item.state == "entregado":
+                    total_sales_amount+=item.total_price   
             total_count = products_sold.aggregate(total_count=Sum('total_count'))['total_count'] or 0
             total_cost_amount_cancel=sum(product['total_cost_cancel'] for product in products_sold) or 0
             total_count_cancel=sum(product['total_count_cancel'] for product in products_sold) or 0
