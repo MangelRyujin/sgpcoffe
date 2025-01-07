@@ -41,7 +41,8 @@
               
               >
                 <th  scope="col ">Mesa</th>
-                <th  scope="col">Total</th>
+                <th  scope="col">Clientes atendidos</th>
+                <th  scope="col">Aproximado a atender</th>
                 <th  scope="col">Media</th>
 
                 
@@ -49,7 +50,8 @@
             </thead>
             <tbody  >
             {% for table in tables %}
-                <tr class="text-center "
+            
+                <tr class="text-center {% if table.avg < table.customer_cant and table.avg > 0 %} table-danger{% endif %} "
                 hx-get="{% url 'customers_proccess_charge_orders' pk=table.pk start_date=start_date end_date=end_date %}"
                 hx-trigger="click"
                 hx-target="#ChargeOrdersForTable"
@@ -57,6 +59,7 @@
               >
                     <td class="border small ">{{table.name}}</td>  
                     <td class="border small table-min">{{table.cant}}</td>  
+                    <td class="border small table-min">{{table.customer_cant}}</td>  
                     <td class="border small ">{{table.avg}}</td> 
                     
                     
@@ -64,6 +67,17 @@
                 </tr>
                 
             {% endfor %}
+            <tr class="text-center "
+                
+              >
+                    <td class="border small ">-</td>  
+                    <td class="border small table-min">{{total_cant}}</td>  
+                    <td class="border small table-min">{{total_customer_cant}}</td>  
+                    <td class="border small "></td> 
+                    
+                    
+                    
+                </tr>
               </tbody>
             </table>
           </div>

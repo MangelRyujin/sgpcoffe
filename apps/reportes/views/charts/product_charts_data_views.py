@@ -16,14 +16,19 @@ def product_statistics_view(request):
             shifts = Shift.objects.filter(in_date__gte=start_date, in_date__lte=end_date)
             items= Item.objects.filter(order__shift__in=shifts,order__is_paid='pagada',state__in=["entregado","cancelado"])
             products_sold = items.values('product__name','product__pk').annotate(cost_price=Sum('cost_price'),total_price=Sum('total_price'),total_count=Sum('cant'),revenue_price=Sum('revenue_price')).order_by('-total_count','-total_price')
-            for item in items:
-                if item.state == "cancelado":
-                    pass
-                else:
-                    total_sales_amount+=item.total_price
             for product in products_sold:
                 product['revenue_price'] = product['total_price']-product['cost_price']
+                product['total_count_cancel'] = 0
+                product['total_cost_cancel'] = 0
+                for item in items:
+                    if item.state == "cancelado" and product['product__pk']==item.product.pk:
+                        product['total_count_cancel']+=item.cant
+                        product['total_cost_cancel']+=item.cost_price
+                    else:
+                        total_sales_amount+=item.total_price   
             total_count = products_sold.aggregate(total_count=Sum('total_count'))['total_count'] or 0
+            total_cost_amount_cancel=sum(product['total_cost_cancel'] for product in products_sold) or 0
+            total_count_cancel=sum(product['total_count_cancel'] for product in products_sold) or 0
             total_revenue_amount=sum(product['total_price'] - product['cost_price'] for product in products_sold) or 0
             total_cost_amount=products_sold.aggregate(total_cost_sum=Sum('cost_price'))['total_cost_sum'] or 0
             operations= Operation.objects.filter(operation_date__gte=start_date, operation_date__lte=end_date)
@@ -55,7 +60,8 @@ def product_statistics_view(request):
                 'total_revenue':total_revenue_amount,
                 'total_cost':total_cost_amount,
                 'total_count':total_count,
-
+                'total_count_cancel':total_count_cancel,
+                'total_cost_amount_cancel':total_cost_amount_cancel,
                 'total_operation_amount_ingreso':total_operation_amount_ingreso,
                 'total_operation_amount_gasto':total_operation_amount_gasto,
 

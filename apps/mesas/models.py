@@ -15,6 +15,7 @@ class Table(models.Model):
     state = models.CharField("estado",max_length=7, choices=PRODUCTION_PLACE_CHOICES, default='libre') 
     name = models.CharField('nombre', max_length=255, blank=False , null=False, unique=True)
     active = models.BooleanField("activo",default=True)
+    customer_cant= models.PositiveIntegerField('aproximado de clientes', default=2)
 
     # Define fields here
 

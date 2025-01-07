@@ -29,12 +29,14 @@ def customers_proccess(request):
             context['error']=message
         if validation_result:
             shifts = Shift.objects.filter(in_date__gte=start_date, in_date__lte=end_date)
-            tables_customers = tables.values('pk','name')
+            tables_customers = tables.values('pk','name','customer_cant')
             for table in tables_customers:
                 count = Order.objects.filter(shift__in=shifts,table=table['pk'],is_paid='pagada').count()
                 table['cant'] = sum(order.customers for order in Order.objects.filter(shift__in=shifts,table=table['pk'],is_paid='pagada'))
                 table['avg'] = table['cant']/count if count > 0 or table['cant'] > 0 else 0
-        context['tables']=tables_customers    
+        context['tables']=tables_customers  
+        context['total_customer_cant']=sum(table['customer_cant'] for table in tables_customers)  
+        context['total_cant']=sum(table['cant'] for table in tables_customers) 
     return render(request, "customers_proccess/index.html", context)
 
 

@@ -78,6 +78,16 @@
                   </th>
                   <th class="sorting" tabindex="0" rowspan="1" colspan="1">
                     <div class="text">
+                      <a href="#">Cantidad cancelado</a>
+                    </div>
+                  </th>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
+                      <a href="#">Costo por cancelación</a>
+                    </div>
+                  </th>
+                  <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                    <div class="text">
                       <a href="#">Venta</a>
                     </div>
                   </th>
@@ -98,26 +108,30 @@
                 {% if products %} {% for product in products %}
                 <tr role="row" class="even">
                   <td class="field-place">{{product.product__name}}</td>
-                  <td class="field-place">{{product.total_count}} unidades</td>
+                  <td class="field-place">{{product.total_count}}</td>
+                  <td class="field-place">{{product.total_count_cancel}}</td>
+                  <td class="field-price">{{product.total_cost_cancel}} CUP</td>
                   <td class="field-price">{{product.total_price}} CUP</td>
                   <td class="field-price">{{product.cost_price}} CUP</td>
-                  
+
                   <td class="field-price">{{product.revenue_price}} CUP</td>
                 </tr>
 
                 {% endfor %} 
                 <tr role="row" class="even">
                   <td class="field-place">Total</td>
-                  <td class="field-place">{{total_count}} unidades</td>
+                  <td class="field-place">{{total_count}}</td>
+                  <td class="field-place">{{total_count_cancel}}</td>
+                  <td class="field-price">{{total_cost_amount_cancel}} CUP</td>
                   <td class="field-price">{{total_price}} CUP</td>
                   <td class="field-price">{{total_cost}} CUP</td>
-                  
                   <td class="field-price">{{total_revenue}} CUP </td>
                 </tr>
                 {% else %}
 
                 <tr role="row" class="">
                   <th class="field-name text">-</th>
+                  <td class="field-place">-</td>
                   <td class="field-place">-</td>
                   <td class="field-place">-</td>
                   <td class="field-price">-</td>
